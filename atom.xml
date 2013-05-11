@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2013-05-11T13:43:31-07:00</updated>
+  <updated>2013-05-11T13:54:01-07:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -18,7 +18,21 @@
     <link href="http://akgupta.ca/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/"/>
     <updated>2013-05-11T13:39:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development</id>
-    <content type="html"><![CDATA[]]></content>
+    <content type="html"><![CDATA[<p>Hello</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">p</span> <span class="n">x</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+<p><span class="math">\[\int_x dx = 0\]</span></p>]]></content>
   </entry>
   
 </feed>
