@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[My Octopress Blog]]></title>
+  <link href="http://akgupta.ca/atom.xml" rel="self"/>
+  <link href="http://akgupta.ca/"/>
+  <updated>2013-05-11T13:42:17-07:00</updated>
+  <id>http://akgupta.ca/</id>
+  <author>
+    <name><![CDATA[Amit Kumar Gupta]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Setting up PostgreSQL with MacPorts for Ruby on Rails development]]></title>
+    <link href="http://akgupta.ca/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/"/>
+    <updated>2013-05-11T13:39:00-07:00</updated>
+    <id>http://akgupta.ca/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development</id>
+    <content type="html"><![CDATA[]]></content>
+  </entry>
+  
+</feed>
