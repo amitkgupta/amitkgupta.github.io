@@ -2,11 +2,11 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://amitkgupta.github.io
+url: http://akgupta.ca
 title: My Octopress Blog
 subtitle: A blogging framework for hackers.
-author: Your Name
-simple_search: https://www.google.com/search
+author: Amit Kumar Gupta
+simple_search: http://google.com/search
 description:
 
 # Default date format is "ordinal" (resulting in "July 22nd 2007")
@@ -33,13 +33,16 @@ destination: public
 plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
-markdown: rdiscount
-rdiscount:
-  extensions:
-    - autolink
-    - footnotes
-    - smart
-highlighter: pygments # default python pygments have been replaced by pygments.rb
+markdown: pandoc
+pandoc:
+  skip: false
+  flags: '--smart --mathjax'
+#rdiscount:
+#  extensions:
+#    - autolink
+#    - footnotes
+#    - smart
+pygments: false # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
 paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
