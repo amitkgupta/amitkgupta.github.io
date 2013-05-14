@@ -9,11 +9,7 @@
   <meta name="author" content="Amit Kumar Gupta">
 
   
-  <meta name="description" content="Hello 1
-2
-3
-def foo(x) p x
-end \[\int_x dx = 0\]">
+  <meta name="description" content="This post is pretty much just what the title says. If you develop in Rails, on a Mac, using PostgreSQL as your database and MacPorts as your package &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,7 +95,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
   </header>
 
 
-<div class="entry-content"><p>Hello</p>
+<div class="entry-content"><p>This post is pretty much just what the title says. If you develop in Rails, on a Mac, using PostgreSQL as your database and MacPorts as your package management system of choice, it can be hard to get everything set up and going. This is especially true if you’re new to absolutely everything, which was my situation when I first tried to do this. Part of what was hard was that most of the advice on the Internet was just a bunch of commands to run with little explanation, so it was hard to know what you had to do to customize it for your environment. So this explanation is hopefully a little more thorough. However, if you’re impatient and just want the <strong>TL;DR</strong>, here it is (with several implicit assumptions):</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -107,13 +103,157 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</span><span class='line'>  <span class="nb">p</span> <span class="n">x</span>
-</span><span class='line'><span class="k">end</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo port install postgresql92-server
+</span><span class='line'>sudo mkdir -p /opt/local/var/db/postgresql92/defaultdb
+</span><span class='line'>sudo chown postgres:postgres /opt/local/var/db/postgresql92/defaultdb
+</span><span class='line'>sudo su postgres -c <span class="s1">&#39;/opt/local/lib/postgresql92/bin/initdb -D /opt/local/var/db/postgresql92/defaultdb&#39;</span>
+</span><span class='line'>sudo su postgres
+</span><span class='line'>/opt/local/lib/postgresql92/bin/pg_ctl -D /opt/local/var/db/postgresql92/defaultdb/ -l /opt/local/var/db/postgresql92/defaultdb/server.log start
+</span><span class='line'><span class="nb">exit</span>
+</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;PATH=/opt/local/lib/postgresql92/bin/:$PATH&#39;</span> &gt;&gt; ~/.bashrc
+</span><span class='line'><span class="nb">source</span> ~/.bashrc
+</span><span class='line'>rails new my_app --database<span class="o">=</span>postgresql
+</span><span class='line'>sed -e <span class="s1">&#39;s/username: my_app/username: postgres/g&#39;</span> -i <span class="s1">&#39;&#39;</span> my_app/config/database.yml
+</span><span class='line'><span class="nb">cd </span>my_app
+</span><span class='line'>rake db:create:all
 </span></code></pre></td></tr></table></div></figure>
 </notextile>
 </div>
-<p><span class="math">\[\int_x dx = 0\]</span></p></div>
+
+<p>In order to use a PostgreSQL database for development, you’ll need, in addition to the PostgreSQL package itself, a PostgreSQL server for your application to talk to. The PostgreSQL server package has the basic PostgreSQL package as a dependency, so we’ll just run the command to install the server and we’ll get both. The <strong>server</strong> package will allow you to run a process that serves your database, and the basic package provides a <strong>client</strong> that your Rails app will use to connect to and interact with (read, write, etc.) the database being served.</p>
+<p>Pick the version of PostgreSQL you want to install. At the time I wrote this, the latest was 9.2.x so we’ll go with that:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo port install postgresql92-server
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>You’ll likely see the following instructions in the installation output</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>To create a database instance, after install <span class="k">do</span>
+</span><span class='line'><span class="k"> </span>sudo mkdir -p /opt/local/var/db/postgresql92/defaultdb
+</span><span class='line'> sudo chown postgres:postgres /opt/local/var/db/postgresql92/defaultdb
+</span><span class='line'> sudo su postgres -c <span class="s1">&#39;/opt/local/lib/postgresql92/bin/initdb -D</span>
+</span><span class='line'><span class="s1">/opt/local/var/db/postgresql92/defaultdb&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>Now in order to start a PostgreSQL server process, it needs an initial database cluster within which you will create your databases. To do this you need to create a directory for an initial database cluster and tell PostgreSQL to initialize that directory for use with a PostgreSQL database cluster. PostgreSQL doesn’t allow the superuser to initialize a database cluster. The user used to initialize the database cluster should be one that will exist on any machine that has PostgreSQL, allowing you to collaborate on your Rails app with people using different machines, thus it makes sense to use the ‘postgres’ user. The above commands will:</p>
+<ol type="1">
+<li>Create the directory for an initial default database cluster</li>
+<li>Change ownership of the directory to the ‘postgres’ user</li>
+<li>Initializes the directory as a PostgreSQL database cluster on behalf of the ‘postgres’ user.</li>
+</ol>
+<p>After you do this, you’ll see the following instructions in the output:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>Success. You can now start the database server using:
+</span><span class='line'>
+</span><span class='line'>    /opt/local/lib/postgresql92/bin/postgres -D /opt/local/var/db/postgresql92/defaultdb
+</span><span class='line'>or
+</span><span class='line'>    /opt/local/lib/postgresql92/bin/pg_ctl -D /opt/local/var/db/postgresql92/defaultdb -l logfile start
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>The first will start the server in the foreground, which you probably don’t want. The second will start it in the background, but dump a log file in whatever directory you execute the command, which you don’t want either. You’ll also need to start the server as the ‘postgres’ user, which the above command doesn’t do as is, so the solution is to:</p>
+<ol type="1">
+<li>Switch to the ‘postgres’ user</li>
+<li>Issue the above command (with a better path for the log file)</li>
+<li>Exit from being the ‘postgres’ user</li>
+</ol>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo su postgres
+</span><span class='line'>/opt/local/lib/postgresql92/bin/pg_ctl -D /opt/local/var/db/postgresql92/defaultdb/ -l /opt/local/var/db/postgresql92/defaultdb/server.log start
+</span><span class='line'><span class="nb">exit</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>Now when you go to create your Rails project, it will install the <code>pg</code> gem for working with PostgreSQL, and it’ll configure itself to use the first <code>psql</code> (PostgreSQL client) it finds in your <code>$PATH</code> environment variable. Your system comes with one, but you’ll want to use the one you just installed. Assuming you’re using a <code>.bashrc</code> (or <code>.bash_profile</code>) file for initial setup of your bash environment for shell sessions, add</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">PATH</span><span class="o">=</span>/opt/local/lib/postgresql92/bin/:<span class="nv">$PATH</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>to the bottom of the <code>.bashrc</code> (or <code>.bash_profile</code>) file. Don’t forget to</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">source</span> ~/.bashrc
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>for the change to take effect.</p>
+<p>Now that you’re done setting up your system for PostgreSQL, you are ready to create and setup a Rails app that uses PostgreSQL. Start with:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rails new my_app --database<span class="o">=</span>postgresql
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>The standard <code>rails new my_app</code> does a whole bunch of initial setup and file creation for your Rails app. Adding the <code>--database=postgresql</code> flag ensures that your Rails setup includes some PostgreSQL-specific things, such as adding the <code>pg</code> gem to your Gemfile, and pre-populating some of the database configuration properties in the <code>my_app/config/database.yml</code> file. We’ll need to edit that file a little. Go to <code>my_app/config/database.yml</code> and change the username for the development and test databases to ‘postgres’. What this does is ensure that when your Rails app uses the PostgreSQL client to try to access the database cluster served by your PostgreSQL server, it does so with the credentials of the user who owns that cluster, namely the ‘postgres’ user.</p>
+<p>While you’re in that file, you can get rid of the section for the production database altogether if you’re deploying to CloudFoundry or Heroku, since they will overwrite whatever you have there anyways.</p>
+<p>Finally, create the development and test databases that your Rails app will use. (These databases will be created within your default cluster).</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake db:create:all
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>Now you’re totally ready to go!</p></div>
 
 
   <footer>
