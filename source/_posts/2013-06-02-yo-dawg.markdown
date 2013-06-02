@@ -1,0 +1,47 @@
+---
+layout: post
+title: "Yo Dawg, I Herd You Like Math"
+date: 2013-06-02 12:23
+comments: true
+categories: 
+---
+I've been playing around with R lately, and recently learned about [knitr](http://yihui.name/knitr/).  It's an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an `.html.erb` file into a `.html` file), where the resulting LaTeX file has the output of the R code.  It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files.  I've got a [little project](https://github.com/amitkgupta/knit_tds) which:  
+
+1. Runs a Python script which will use Selenium to scrape a web page for 2012 NFL passing statistics.
+1. "Knits" a TeX file with embedded R that cleans the raw scraped data, produces a histogram of touchown passes for teams, and displays the teams with the least and greatest number of touchdowns.
+1. Compiles the resulting TeX file and opens the resulting PDF.
+1. Cleans up any temporary work files.
+
+Here's what the pre-"knitted" LaTeX looks like with the embedded R:
+
+```latex
+\documentclass{article}
+\usepackage{graphicx}
+%% begin.rcode setup, include=FALSE
+% opts_chunk$set(fig.path='figure/latex-', cache.path='cache/latex-')
+%% end.rcode
+\begin{document}
+
+After scraping data for all passing TDs in 2012, we get the following histogram for number of TD passes by team.
+
+%% begin.rcode cache=TRUE
+% scrape <- read.csv('scrape.csv')
+% raw_data <- scrape[scrape[,"X"]!="",]
+% tds_for_passers <- transform(raw_data[c("Tm","TD")], TD = as.numeric(as.character(TD)))
+% tds_for_teams <- aggregate(tds_for_passers$TD, by=list(Team=tds_for_passers$Tm), FUN=sum)
+% hist(tds_for_teams$x)
+%% end.rcode
+
+The teams with the greatest and least TDs:
+
+%% begin.rcode
+% low_high <- c(which.min(tds_for_teams$x), which.max(tds_for_teams$x))
+% tds_for_teams[low_high,"Team"]
+%% end.rcode
+
+\end{document}
+```
+
+You can comment out the line in the `factory` script that deletes the `tds2012-out.tex` file if you want to see what it looks like post-knit.  The resulting TeX file basically contains a ton of new commonad definitions but the meat of it is what it does with your R code.  It formats and displays the R code itself, and then it displays the output of the R code.  Wherever the output is a graph, you'll see `\includegraphics[...]{...}`.  knitr will do the R computation, render the graphics, create a `figures` subdirectory and store them there for the `\includegraphics` to reference.  Whenever the output is simply text or mathematical expressions, you'll see the R output translated to pure LaTeX markup.  
+
+Pretty cool stuff!
