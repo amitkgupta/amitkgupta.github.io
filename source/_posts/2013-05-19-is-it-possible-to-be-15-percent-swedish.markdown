@@ -65,7 +65,7 @@ So here's how you can be 15% Swedish:
 1. Any ancestor of one of the marked nodes also gets marked as "entirely Swedish", and any node that's not an ancestor or descendent of a marked node is entirely non-Swedish.  Every remaining node is Swedish to the degree determined by its parents.
 1. The person at the root of this family tree will be the desired 15% Swedish.
 
-$$15% = 2^{-3} + 2^{-6} + 2^{-7} + 2^{-10} + \dots$$
+$$15\% = 2^{-3} + 2^{-6} + 2^{-7} + 2^{-10} + \dots$$
 
 So if you have great-grandma Agnetha, great-great-great-great-grandpa Bjorn, great-great-great-great-great-granpa Benny, and great-great-great-great-great-great-great-great-grandma Anni-Frid, ....  And all of them are entirely Swedish, and none of them are ancestors/descendents of one another.  And if anyone else on your family tree that isn't a blood relative of theirs is entirely non-Swedish.  Then you will be 15% Swedish!
 
@@ -73,7 +73,10 @@ So if you have great-grandma Agnetha, great-great-great-great-grandpa Bjorn, gre
 
 Okay, so all that was incredibly silly.  Can we say anything that's merely very silly?  Say you want to know if you can be 15% Swedish in real life, but within some error bounds.  Maybe you want to know if you can be 15% Swedish, give or take 1%.  Easy: find a *finitely-long* binary number that's between 0.14 and 0.16, and repeat the above steps with that number.  One simple way to do that is to start finding the binary expansion of 0.15, and stopping once you're within the desired range:
 
-$2^{-3}$?  Nope, that equal 0.125, too small.  $2^{-3} + 2^{-6}$?  Yup, that's 0.140625.
+$2^{-3}$?  
+Nope, that's 0.125, too small.  
+$2^{-3} + 2^{-6}$?  
+Yup, that's 0.140625.
 
 Could we have known ahead of time how much of the binary expansion of 0.15 we'd have to calculate before reaching the desired range?  Yup, we can do that too.  Once you've started writing a binary number out to $n$ digits, no matter what digits you add on next, the most you can add to your current number is $2^{-n}$.  For example, all the binary numbers that start with $0.11010...$ must be within $2^{-5} = 0.03125$ of one another.  So if I know I want to be within $0.01$ (in decimal, i.e. 1%) of 15%, I just have to apply the above reasoning backwards.  $\log _2(0.01) ~ -4.605...$ so if I figure things out back more than 4.605 generations, that's enough.  So I really only need to figure things out 5 generations back.  5 generations back I have 32 ancestors.  The closest fraction of the form x/32 to 0.15 is 5/32.  So I know that if I have exactly 5 totally Swedish level-5 ancestors and the remaining 27 level-5 ancestors are totally non-Swedish, I will be within 1% of being 15% Swedish (I'll be 15.625% Swedish to be exact).
 
