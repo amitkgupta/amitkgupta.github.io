@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>My Octopress Blog</title>
+  <title>So you still don't understand Hindley-Milner? - My Octopress Blog</title>
   <meta name="author" content="Amit Kumar Gupta">
 
   
-  <meta name="description" content="This question came up as a joke during a team standup a few months ago. Although the obvious answer is “no,” if you’re willing to play fast and loose &hellip;">
+  <meta name="description" content="I was out for drinks with some friends from work, and one of them found out I “speak math.” He had come across this StackOverflow question and asked &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://akgupta.ca">
+  <link rel="canonical" href="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
@@ -67,90 +67,12 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/">Is It Possible to Be 15% Swedish?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-19T13:32:00-07:00" pubdate data-updated="true">May 19<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>This question came up as a joke during a team standup a few months ago. Although the obvious answer is “no,” if you’re willing to play fast and loose with your metaphysics for a bit, the answer can be “yes” and there’s a cute solution that ties together binary numbers and binary trees. This post itself is a bit of a joke in that it’s just for fun, but it might be nice to see the familiar concepts of binary numbers and binary trees in a new light.</p>
-<h2 id="the-obvious-answer-is-no">The obvious answer is “no”</h2>
-<p>Let’s quickly see why the real life answer is “no.” But first we should lay out the assumptions implicit in the problem. We’re going to assume that at some point in time, everyone was either entirely Swedish or entirely non-Swedish. There’s a chicken-and-egg problem that we’re sweeping under the rug here, but that’s what rugs are for. Next we’re assuming that every person after that point in time has their Swedishness wholly and equally determined by their parents Swedishness. So if mom is 17% Swedish and dad is 66% Swedish, then baby is ½ x 17% + ½ x 66% = 41.5% Swedish.</p>
-<p>So why is 15% impossible? Or, for that matter, all the numbers in the previous example: 17%, 66%, 41.5%? The reason is that any person’s Swedishness must be a fraction which, in lowest terms, must have a denominator that is a power of 2. There’s an easy proof by induction. Initially everyone is either entirely Swedish or entirely non-Swedish. In lowest terms these fractions can be expressed as 1/1 and 0/1, respectively. The denominator, 1, is a power of 2 (fyi <span class="math">\(2^0 = 1\)</span>). Now, assuming a mom and dad are Swedish in proportions <span class="math">\(m/2^M\)</span> and <span class="math">\(d/2^D\)</span> respectively, their offspring will be this Swedish:</p>
-<p><span class="math">\[\frac{2^Dm + 2^Md}{2^{D+M+2}}\]</span></p>
-<p>The denominator is a power of 2, and reducing this fraction to lower terms will not change that fact. Numbers like 15%, a.k.a. 15/100, or 3/20 in lowest terms, have denominators which aren’t powers of 2, and that’s why no one can ever really be 15% Swedish.</p>
-<h2 id="but-what-if">But what if…?</h2>
-<p>What if we keep the assumption that Swedishness is determined equally by the parents’ Swedishnesses, but without assuming there was some point in time where everyone was either entirely Swedish or entirely non-Swedish? Let’s weaken that assumption to simply state that every person has an ancestor that’s either entirely Swedish or entirely non-Swedish. And let’s do one more crazy thing: let’s allow human history to go back infinitely through the generations, with no beginning. So there could be an infinitely long lineage of Swedes without there being a first Swede. If it helps, imagine a family tree that’s infinitely tall, with no original top level. In this universe of bastardized metaphysics, can you be 15% Swedish? Why yes!</p>
-<h2 id="binary-numbers-and-trees">Binary numbers and trees</h2>
-<p>We know how decimal numbers work. 12.34 as a decimal number means</p>
-<p><span class="math">\[1 \times 10^1 + 2 \times 10^0 + 3 \times 10^{-1} + 4 \times 10^{-2}\]</span></p>
-<p>Binary numbers work the same way, with 2’s instead of 10’s. So the number four is:</p>
-<p><span class="math">\[1 \times 2^2 + 0 \times 2^1 + 0 \times 2^0\]</span></p>
-<p>So it’s represented as <span class="math">\(100\)</span> in binary. Similarly one-half is:</p>
-<p><span class="math">\[0 \times 2^0 + 1 \times 2^{-1}\]</span></p>
-<p>So it’s represented as <span class="math">\(0.1\)</span> in binary. What about a number like one-third? It’s equal to the value of the following infinite sum:</p>
-<p><span class="math">\[0 \times 10^0 + 3\times 10^{-1} + 3\times 10^{-2} + \dots\]</span></p>
-<p>So it’s represented as <span class="math">\(0.33&#8230;\)</span> in decimal. It’s also equal to the following infinite sum:</p>
-<p><span class="math">\[0 \times 2^0 + 0 \times 2^{-1} + 1 \times 2{-2} + 0 \times 2^{-3} + 1 \times 2^{-4} + 0 \times 2^{-5} + 1 \times 2^{-6} + \dots\]</span></p>
-<p>So it’s represented as <span class="math">\(0.010101&#8230;\)</span> in binary.</p>
-<p>Now why do we care? Well, if you’ve read this far, then you care because you can use the binary representation of a number to figure out what a person’s family tree could look like if their Swedishness was equal to that number. For example, how can you be <span class="math">\(1/2\)</span> Swedish? Well <span class="math">\(0.1\)</span> is the binary representation of <span class="math">\(1/2\)</span>, and this tells us that if we have 1 parent who is entirely Swedish (and hence all the ancestors on that side are entirely Swedish), and one parent who is entirely non-Swedish (along with all their ancestors), then you can be 1/2 Swedish.</p>
-<p>How about a more involved example. To be <span class="math">\(3/16\)</span> Swedish, which is <span class="math">\(0.0011\)</span> in binary, you can accomplish this by first having 1 great-grandparent who is entirely Swedish, let’s call her Agnetha. Agnetha’s parents will of course have to be entirley Swedish too. In addition to them you’ll need one more great-great-grandparent who’s entirley Swedish, let’s call him Bjorn. If you have great-grandma Agnetha and great-great-grandpa Bjorn who are entirely Swedish (as must be all their ancestors), and if all of your ancestors who aren’t descendents of Agnetha and Bjorn are entirely non-Swedish, then you’ll be exactly <span class="math">\(3/16\)</span> Swedish. How does this look in terms of your family tree? If we say you are at level 0, your parents at level 1, etc. then what we get is the following:</p>
-<p>The first full Swede is Agnetha, on level 3.<br />The next full Swede who isn’t logically “forced” to be Swedish on account of being Agnetha’s ancestor is Bjorn, on level 4.<br />There are no other full Swedes except Agnetha’s and Bjorn’s ancestors.<br />Everyone else is entirely non-Swedish unless they’re “forced” to be a bit Swedish on account of being descendents of Agnetha and/or Bjorn.</p>
-<p>Notice how the “level 3” and “level 4” correspond to the locations of the 1’s in the binary expansion of 3/16? If you go back to the simpler example of 1/2, which was <span class="math">\(0.1\)</span> in binary, you’ll see that we have one full Swede on level 1 and everyone except that person’s ancestors is fully non-Swedish.</p>
-<h2 id="putting-it-all-together">Putting it all together</h2>
-<p>So here’s how you can be 15% Swedish:</p>
-<ol type="1">
-<li>Express 15% in binary, it’ll be infinitely long.</li>
-<li>Use the binary number as a recipe for marking the certain nodes at certain levels of an infinite binary (family) tree as “entirely Swedish”.</li>
-<li>Any ancestor of one of the marked nodes also gets marked as “entirely Swedish”, and any node that’s not an ancestor or descendent of a marked node is entirely non-Swedish. Every remaining node is Swedish to the degree determined by its parents.</li>
-<li>The person at the root of this family tree will be the desired 15% Swedish.</li>
-</ol>
-<p><span class="math">\[15% = 2^{-3} + 2^{-6} + 2^{-7} + 2^{-10} + \dots\]</span></p>
-<p>So if you have great-grandma Agnetha, great-great-great-great-grandpa Bjorn, great-great-great-great-great-granpa Benny, and great-great-great-great-great-great-great-great-grandma Anni-Frid, …. And all of them are entirely Swedish, and none of them are ancestors/descendents of one another. And if anyone else on your family tree that isn’t a blood relative of theirs is entirely non-Swedish. Then you will be 15% Swedish!</p>
-<h2 id="back-to-real-life-sort-of">Back to real life, sort of</h2>
-<p>Okay, so all that was incredibly silly. Can we say anything that’s merely very silly? Say you want to know if you can be 15% Swedish in real life, but within some error bounds. Maybe you want to know if you can be 15% Swedish, give or take 1%. Easy: find a <em>finitely-long</em> binary number that’s between 0.14 and 0.16, and repeat the above steps with that number. One simple way to do that is to start finding the binary expansion of 0.15, and stopping once you’re within the desired range:</p>
-<p><span class="math">\(2^{-3}\)</span>? Nope, that equal 0.125, too small. <span class="math">\(2^{-3} + 2^{-6}\)</span>? Yup, that’s 0.140625.</p>
-<p>Could we have known ahead of time how much of the binary expansion of 0.15 we’d have to calculate before reaching the desired range? Yup, we can do that too. Once you’ve started writing a binary number out to <span class="math">\(n\)</span> digits, no matter what digits you add on next, the most you can add to your current number is <span class="math">\(2^{-n}\)</span>. For example, all the binary numbers that start with <span class="math">\(0.11010&#8230;\)</span> must be within <span class="math">\(2^{-5} = 0.03125\)</span> of one another. So if I know I want to be within <span class="math">\(0.01\)</span> (in decimal, i.e. 1%) of 15%, I just have to apply the above reasoning backwards. <span class="math">\(\log _2(0.01) ~ -4.605&#8230;\)</span> so if I figure things out back more than 4.605 generations, that’s enough. So I really only need to figure things out 5 generations back. 5 generations back I have 32 ancestors. The closest fraction of the form x/32 to 0.15 is 5/32. So I know that if I have exactly 5 totally Swedish level-5 ancestors and the remaining 27 level-5 ancestors are totally non-Swedish, I will be within 1% of being 15% Swedish (I’ll be 15.625% Swedish to be exact).</p>
-<figure>
-<img src="http://images3.wikia.nocookie.net/__cb20080726160313/muppet/images/thumb/3/34/Swedishchef-myspace.jpg/300px-Swedishchef-myspace.jpg" />
-</figure></div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don&#8217;t Understand Hindley-Milner?</a></h1>
+      <h1 class="entry-title">So You Still Don't Understand Hindley-Milner?</h1>
     
     
       <p class="meta">
@@ -173,7 +95,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
   </header>
 
 
-  <div class="entry-content"><p>I was out for drinks with some friends from work, and one of them found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
+<div class="entry-content"><p>I was out for drinks with some friends from work, and one of them found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
 <p><img src="http://i.stack.imgur.com/hZhjl.png" /><br /><br></p>
 <p>Before we figure out what it means, let’s get an idea for why we care in the first place. <a href="http://www.codecommit.com/blog/scala/what-is-hindley-milner-and-why-is-it-cool">Daniel Spiewak’s blog post</a> gives a really nice explanation of the purpose of the HM algorithm, in addition to an in-depth example of its application:</p>
 <blockquote>
@@ -325,22 +247,16 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <p><span class="math">\[x:\alpha\]</span> <span class="math">\[y:\alpha\]</span></p>
 <p>mean different things. The latter means <span class="math">\(x\)</span> and <span class="math">\(y\)</span> definitely have the same type (even though what that type is may not have been pinned down). The former tells you nothing about how the types of <span class="math">\(x\)</span> and <span class="math">\(y\)</span> are related. The difference is, when <span class="math">\(\alpha\)</span> is mentioned inside the scope of a <span class="math">\(\forall\)</span>, as is the case in <span class="math">\(\forall \alpha . \alpha \rightarrow \alpha\)</span>, that <span class="math">\(\alpha\)</span> is just a dummy, and can be swapped out for any other type variable regardless of the rest of the context. So we can interpret the statement “<span class="math">\(\alpha\)</span> isn’t freely mentioned in the context <span class="math">\(\Gamma\)</span>” to say, “<span class="math">\(\alpha\)</span> is either never mentioned at all, or, if it is, it’s only ever mentioned as a dummy and could in principle be swapped out for something entirely different without changing the semantics of the assumptions/knowledge in our context.”</p>
 <p>And that’s it. Questions? Comments? Let me know.</p></div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/">Setting Up PostgreSQL With MacPorts for Ruby on Rails Development</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Amit Kumar Gupta</span></span>
+
+      
 
 
 
@@ -352,184 +268,34 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
   
 
 
-<time datetime="2013-05-11T13:39:00-07:00" pubdate data-updated="true">May 11<span>th</span>, 2013</time>
-        
-      </p>
+<time datetime="2013-05-14T01:12:00-07:00" pubdate data-updated="true">May 14<span>th</span>, 2013</time>
+      
+
+
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>This post is pretty much just what the title says. If you develop in Rails, on a Mac, using PostgreSQL as your database and MacPorts as your package management system of choice, it can be hard to get everything set up and going. This is especially true if you’re new to absolutely everything, which was my situation when I first tried to do this. Part of what was hard was that most of the advice on the Internet was just a bunch of commands to run with little explanation, so it was hard to know what you had to do to customize it for your environment. So this explanation is hopefully a little more thorough. However, if you’re impatient and just want the <strong>TL;DR</strong>, here it is (with several implicit assumptions):</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo port install postgresql92-server
-</span><span class='line'>sudo mkdir -p /opt/local/var/db/postgresql92/defaultdb
-</span><span class='line'>sudo chown postgres:postgres /opt/local/var/db/postgresql92/defaultdb
-</span><span class='line'>sudo su postgres -c <span class="s1">&#39;/opt/local/lib/postgresql92/bin/initdb -D /opt/local/var/db/postgresql92/defaultdb&#39;</span>
-</span><span class='line'>sudo su postgres
-</span><span class='line'>/opt/local/lib/postgresql92/bin/pg_ctl -D /opt/local/var/db/postgresql92/defaultdb/ -l /opt/local/var/db/postgresql92/defaultdb/server.log start
-</span><span class='line'><span class="nb">exit</span>
-</span><span class='line'><span class="nb">echo</span> <span class="s1">&#39;PATH=/opt/local/lib/postgresql92/bin/:$PATH&#39;</span> &gt;&gt; ~/.bashrc
-</span><span class='line'><span class="nb">source</span> ~/.bashrc
-</span><span class='line'>rails new my_app --database<span class="o">=</span>postgresql
-</span><span class='line'>sed -e <span class="s1">&#39;s/username: my_app/username: postgres/g&#39;</span> -i <span class="s1">&#39;&#39;</span> my_app/config/database.yml
-</span><span class='line'><span class="nb">cd </span>my_app
-</span><span class='line'>rake db:create:all
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>In order to use a PostgreSQL database for development, you’ll need, in addition to the PostgreSQL package itself, a PostgreSQL server for your application to talk to. The PostgreSQL server package has the basic PostgreSQL package as a dependency, so we’ll just run the command to install the server and we’ll get both. The <strong>server</strong> package will allow you to run a process that serves your database, and the basic package provides a <strong>client</strong> that your Rails app will use to connect to and interact with (read, write, etc.) the database being served.</p>
-<p>Pick the version of PostgreSQL you want to install. At the time I wrote this, the latest was 9.2.x so we’ll go with that:</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo port install postgresql92-server
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>You’ll likely see the following instructions in the installation output</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>To create a database instance, after install <span class="k">do</span>
-</span><span class='line'><span class="k"> </span>sudo mkdir -p /opt/local/var/db/postgresql92/defaultdb
-</span><span class='line'> sudo chown postgres:postgres /opt/local/var/db/postgresql92/defaultdb
-</span><span class='line'> sudo su postgres -c <span class="s1">&#39;/opt/local/lib/postgresql92/bin/initdb -D</span>
-</span><span class='line'><span class="s1">/opt/local/var/db/postgresql92/defaultdb&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>Now in order to start a PostgreSQL server process, it needs an initial database cluster within which you will create your databases. To do this you need to create a directory for an initial database cluster and tell PostgreSQL to initialize that directory for use with a PostgreSQL database cluster. PostgreSQL doesn’t allow the superuser to initialize a database cluster. The user used to initialize the database cluster should be one that will exist on any machine that has PostgreSQL, allowing you to collaborate on your Rails app with people using different machines, thus it makes sense to use the ‘postgres’ user. The above commands will:</p>
-<ol type="1">
-<li>Create the directory for an initial default database cluster</li>
-<li>Change ownership of the directory to the ‘postgres’ user</li>
-<li>Initializes the directory as a PostgreSQL database cluster on behalf of the ‘postgres’ user.</li>
-</ol>
-<p>After you do this, you’ll see the following instructions in the output:</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>Success. You can now start the database server using:
-</span><span class='line'>
-</span><span class='line'>    /opt/local/lib/postgresql92/bin/postgres -D /opt/local/var/db/postgresql92/defaultdb
-</span><span class='line'>or
-</span><span class='line'>    /opt/local/lib/postgresql92/bin/pg_ctl -D /opt/local/var/db/postgresql92/defaultdb -l logfile start
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>The first will start the server in the foreground, which you probably don’t want. The second will start it in the background, but dump a log file in whatever directory you execute the command, which you don’t want either. You’ll also need to start the server as the ‘postgres’ user, which the above command doesn’t do as is, so the solution is to:</p>
-<ol type="1">
-<li>Switch to the ‘postgres’ user</li>
-<li>Issue the above command (with a better path for the log file)</li>
-<li>Exit from being the ‘postgres’ user</li>
-</ol>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>sudo su postgres
-</span><span class='line'>/opt/local/lib/postgresql92/bin/pg_ctl -D /opt/local/var/db/postgresql92/defaultdb/ -l /opt/local/var/db/postgresql92/defaultdb/server.log start
-</span><span class='line'><span class="nb">exit</span>
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>Now when you go to create your Rails project, it will install the <code>pg</code> gem for working with PostgreSQL, and it’ll configure itself to use the first <code>psql</code> (PostgreSQL client) it finds in your <code>$PATH</code> environment variable. Your system comes with one, but you’ll want to use the one you just installed. Assuming you’re using a <code>.bashrc</code> (or <code>.bash_profile</code>) file for initial setup of your bash environment for shell sessions, add</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">PATH</span><span class="o">=</span>/opt/local/lib/postgresql92/bin/:<span class="nv">$PATH</span>
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>to the bottom of the <code>.bashrc</code> (or <code>.bash_profile</code>) file. Don’t forget to</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">source</span> ~/.bashrc
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>for the change to take effect.</p>
-<p>Now that you’re done setting up your system for PostgreSQL, you are ready to create and setup a Rails app that uses PostgreSQL. Start with:</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rails new my_app --database<span class="o">=</span>postgresql
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>The standard <code>rails new my_app</code> does a whole bunch of initial setup and file creation for your Rails app. Adding the <code>--database=postgresql</code> flag ensures that your Rails setup includes some PostgreSQL-specific things, such as adding the <code>pg</code> gem to your Gemfile, and pre-populating some of the database configuration properties in the <code>my_app/config/database.yml</code> file. We’ll need to edit that file a little. Go to <code>my_app/config/database.yml</code> and change the username for the development and test databases to ‘postgres’. What this does is ensure that when your Rails app uses the PostgreSQL client to try to access the database cluster served by your PostgreSQL server, it does so with the credentials of the user who owns that cluster, namely the ‘postgres’ user.</p>
-<p>While you’re in that file, you can get rid of the section for the production database altogether if you’re deploying to CloudFoundry or Heroku, since they will overwrite whatever you have there anyways.</p>
-<p>Finally, create the development and test databases that your Rails app will use. (These databases will be created within your default cluster).</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'>rake db:create:all
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>Now you’re totally ready to go!</p></div>
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/" data-via="" data-counturl="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/" >Tweet</a>
   
   
-
-
-    </article>
   
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
 </div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/" title="Previous Post: Setting up PostgreSQL with MacPorts for Ruby on Rails development">&laquo; Setting up PostgreSQL with MacPorts for Ruby on Rails development</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/" title="Next Post: Is it possible to be 15% Swedish?">Is it possible to be 15% Swedish? &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -541,7 +307,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
       </li>
     
       <li class="post">
-        <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don&#8217;t Understand Hindley-Milner?</a>
+        <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don't Understand Hindley-Milner?</a>
       </li>
     
       <li class="post">
@@ -557,6 +323,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 
   
 </aside>
+
 
     </div>
   </div>
