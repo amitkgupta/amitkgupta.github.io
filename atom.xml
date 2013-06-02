@@ -4,7 +4,7 @@
   <title><![CDATA[Amit's Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2013-06-02T12:05:37-07:00</updated>
+  <updated>2013-06-02T12:50:20-07:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Yo Dawg, I Herd You Like Math]]></title>
+    <link href="http://akgupta.ca/blog/2013/06/02/yo-dawg/"/>
+    <updated>2013-06-02T12:23:00-07:00</updated>
+    <id>http://akgupta.ca/blog/2013/06/02/yo-dawg</id>
+    <content type="html"><![CDATA[<p>I’ve been playing around with R lately, and recently learned about <a href="http://yihui.name/knitr/">knitr</a>. It’s an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. I’ve got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
+<ol type="1">
+<li>Runs a Python script which will use Selenium to scrape a web page for 2012 NFL passing statistics.</li>
+<li>“Knits” a TeX file with embedded R that cleans the raw scraped data, produces a histogram of touchown passes for teams, and displays the teams with the least and greatest number of touchdowns.</li>
+<li>Compiles the resulting TeX file and opens the resulting PDF.</li>
+<li>Cleans up any temporary work files.</li>
+</ol>
+<p>Here’s what the pre-“knitted” LaTeX looks like with the embedded R:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='latex'><span class='line'><span class="k">\documentclass</span><span class="nb">{</span>article<span class="nb">}</span>
+</span><span class='line'><span class="k">\usepackage</span><span class="nb">{</span>graphicx<span class="nb">}</span>
+</span><span class='line'><span class="c">%% begin.rcode setup, include=FALSE</span>
+</span><span class='line'><span class="c">% opts_chunk$set(fig.path=&#39;figure/latex-&#39;, cache.path=&#39;cache/latex-&#39;)</span>
+</span><span class='line'><span class="c">%% end.rcode</span>
+</span><span class='line'><span class="k">\begin</span><span class="nb">{</span>document<span class="nb">}</span>
+</span><span class='line'>
+</span><span class='line'>After scraping data for all passing TDs in 2012, we get the following histogram for number of TD passes by team.
+</span><span class='line'>
+</span><span class='line'><span class="c">%% begin.rcode cache=TRUE</span>
+</span><span class='line'><span class="c">% scrape &lt;- read.csv(&#39;scrape.csv&#39;)</span>
+</span><span class='line'><span class="c">% raw_data &lt;- scrape[scrape[,&quot;X&quot;]!=&quot;&quot;,]</span>
+</span><span class='line'><span class="c">% tds_for_passers &lt;- transform(raw_data[c(&quot;Tm&quot;,&quot;TD&quot;)], TD = as.numeric(as.character(TD)))</span>
+</span><span class='line'><span class="c">% tds_for_teams &lt;- aggregate(tds_for_passers$TD, by=list(Team=tds_for_passers$Tm), FUN=sum)</span>
+</span><span class='line'><span class="c">% hist(tds_for_teams$x)</span>
+</span><span class='line'><span class="c">%% end.rcode</span>
+</span><span class='line'>
+</span><span class='line'>The teams with the greatest and least TDs:
+</span><span class='line'>
+</span><span class='line'><span class="c">%% begin.rcode</span>
+</span><span class='line'><span class="c">% low_high &lt;- c(which.min(tds_for_teams$x), which.max(tds_for_teams$x))</span>
+</span><span class='line'><span class="c">% tds_for_teams[low_high,&quot;Team&quot;]</span>
+</span><span class='line'><span class="c">%% end.rcode</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">\end</span><span class="nb">{</span>document<span class="nb">}</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>You can comment out the line in the <code>factory</code> script that deletes the <code>tds2012-out.tex</code> file if you want to see what it looks like post-knit. The resulting TeX file basically contains a ton of new commonad definitions but the meat of it is what it does with your R code. It formats and displays the R code itself, and then it displays the output of the R code. Wherever the output is a graph, you’ll see <code>\includegraphics[...]{...}</code>. knitr will do the R computation, render the graphics, create a <code>figures</code> subdirectory and store them there for the <code>\includegraphics</code> to reference. Whenever the output is simply text or mathematical expressions, you’ll see the R output translated to pure LaTeX markup.</p>
+<p>Pretty cool stuff!</p>]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Is it possible to be 15% Swedish?]]></title>
