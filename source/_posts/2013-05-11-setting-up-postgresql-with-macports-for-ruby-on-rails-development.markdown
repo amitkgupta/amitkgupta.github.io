@@ -23,7 +23,7 @@ sed -e 's/username: my_app/username: postgres/g' -i '' my_app/config/database.ym
 cd my_app
 rake db:create:all
 ```
-
+<!--more-->
 In order to use a PostgreSQL database for development, you'll need, in addition to the PostgreSQL package itself, a PostgreSQL server for your application to talk to.  The PostgreSQL server package has the basic PostgreSQL package as a dependency, so we'll just run the command to install the server and we'll get both.  The **server** package will allow you to run a process that serves your database, and the basic package provides a **client** that your Rails app will use to connect to and interact with (read, write, etc.) the database being served.
 
 Pick the version of PostgreSQL you want to install.  At the time I wrote this, the latest was 9.2.x so we'll go with that:

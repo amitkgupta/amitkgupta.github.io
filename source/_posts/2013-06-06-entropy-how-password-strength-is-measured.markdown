@@ -16,6 +16,7 @@ Let's step back for a sec and fill in some context.  What are we trying to do?  
 The term "entropy" has been used to refer to both kinds of calculations, but they're clearly entirely different things: the former essentially takes a string as input, the latter takes a random process as input.  Hence, "entropy is not entropy."
 
 Alright, well if entropy isn't entropy, let's see what entropies are.  We'll look at the standard mathematical formulation of the random-process-entropy which comes from information theory.  And we'll look at the function used to calculate particular-string-entropy in one of the most popular [password strength testers](http://rumkin.com/tools/password/passchk.php).  And that's all we're going to do, we'll look at how the calculations are done, without dwelling too much on the differences between the two approaches or what their use cases are.
+<!--more-->
 
 ## What is a random process?
 

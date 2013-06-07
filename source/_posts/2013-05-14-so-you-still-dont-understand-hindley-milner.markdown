@@ -6,7 +6,7 @@ comments: true
 categories: 
 ---
 
-I was out for drinks with some friends from work, and one of them found out I "speak math."  He had come across [this StackOverflow question](http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand) and asked me what it meant:
+I was out for drinks with [Josh Long](https://twitter.com/starbuxman) and some other friends from work, when found out I "speak math."  He had come across [this StackOverflow question](http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand) and asked me what it meant:
 
 ![](http://i.stack.imgur.com/hZhjl.png)  
 <br>
@@ -16,6 +16,7 @@ Before we figure out what it means, let's get an idea for why we care in the fir
 > Functionally speaking, Hindley-Milner (or “Damas-Milner”) is an algorithm for inferring value types based on use.  It literally formalizes the intuition that a type can be deduced by the functionality it supports.
 
 Okay, so we want to formalize an algorithm for inferring types of any given expression.  In this post, I'm going to touch on what it means to formalize something, then describe the building blocks of the HM formalization.  In Part 2, I'll flesh out the building blocks of the formalization.  Finally in Part 3, I'll translate that StackOverflow question.  
+<!--more-->
 
 ##What it means to formalize
 

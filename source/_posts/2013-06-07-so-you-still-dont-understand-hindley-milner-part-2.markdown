@@ -10,6 +10,7 @@ In Part 1, we said what the building blocks of the Hindley-Milner formalization 
 ##Formalizing the concept of an expression
 
 We'll give a [recursive definition](http://en.wikipedia.org/wiki/Recursive_definition) of what an expression is; in other words, we'll state what the most basic kind of expression is, we'll say how to create new, more complex expressions out of existing expressions, and we'll say that only things made in this way are valid expressions.  
+<!--more-->
 
 1. Variables are valid expressions.  
 1. If $e$ is any expression, and $x$ is any variable, then $\lambda x.e$ is an expression.  Here it helps to think of e as typically (thought not necessarily) a more complex expression involving $x$, e.g. $x^2+2$, and then $\lambda x.e$ as the anonymous function that takes an input $x$ and returns the result of evaluating the expression $e$ with the given value of $x$.  In other words, think of it like this:  

@@ -15,6 +15,7 @@ $$\underline{x:\sigma \in \Gamma}$$
 $$\Gamma \vdash x:\sigma$$
 
 This translates to: If "$x$ has type $\sigma$" is a statement in our collection of statements $\Gamma$, then from $\Gamma$ you can infer that $x$ has type $\sigma$.  Here $x$ is a variable (hence the name of this rule of inference).  Yes, it should sound that painfully obvious.  The terse, cryptic way that [Var] is expressed isn't that way because it contains some deep, difficult fact.  It's terse and succinct so that a machine can understand it and type inference can be automated.  
+<!--more-->
 
 [App]  
 

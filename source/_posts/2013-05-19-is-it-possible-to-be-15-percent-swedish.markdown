@@ -10,6 +10,7 @@ This question came up as a joke during a team standup a few months ago.  Althoug
 ## The obvious answer is "no"
 
 Let's quickly see why the real life answer is "no."  But first we should lay out the assumptions implicit in the problem.  We're going to assume that at some point in time, everyone was either entirely Swedish or entirely non-Swedish.  There's a chicken-and-egg problem that we're sweeping under the rug here, but that's what rugs are for.  Next we're assuming that every person after that point in time has their Swedishness wholly and equally determined by their parents Swedishness.  So if mom is 17% Swedish and dad is 66% Swedish, then baby is ½ x 17% + ½ x 66% = 41.5% Swedish.
+<!--more-->
 
 So why is 15% impossible?  Or, for that matter, all the numbers in the previous example: 17%, 66%, 41.5%?  The reason is that any person's Swedishness must be a fraction which, in lowest terms, must have a denominator that is a power of 2.  There's an easy proof by induction.  Initially everyone is either entirely Swedish or entirely non-Swedish.  In lowest terms these fractions can be expressed as 1/1 and 0/1, respectively.  The denominator, 1, is a power of 2 (fyi $2^0 = 1$).  Now, assuming a mom and dad are Swedish in proportions $m/2^M$ and $d/2^D$ respectively, their offspring will be this Swedish:
 

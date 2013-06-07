@@ -5,12 +5,15 @@ date: 2013-06-02 12:23
 comments: true
 categories: 
 ---
-I've been playing around with R lately, and recently learned about [knitr](http://yihui.name/knitr/).  It's an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an `.html.erb` file into a `.html` file), where the resulting LaTeX file has the output of the R code.  It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files.  I've got a [little project](https://github.com/amitkgupta/knit_tds) which:  
+I've been learning a bit of statistical computing with R lately on the side from [Chris Paciorek's Berkeley course](http://www.stat.berkeley.edu/~paciorek/teaching/teaching.html).  I just got introduced to [knitr](http://yihui.name/knitr/) and it's damned sweet! It's an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an `.html.erb` file into a `.html` file), where the resulting LaTeX file has the output of the R code.  It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files.  It let's you put math in your math, so you can math while you math.
+
+I've got a [little project](https://github.com/amitkgupta/knit_tds) which:  
 
 1. Runs a Python script which will use Selenium to scrape a web page for 2012 NFL passing statistics.
 1. "Knits" a TeX file with embedded R that cleans the raw scraped data, produces a histogram of touchown passes for teams, and displays the teams with the least and greatest number of touchdowns.
 1. Compiles the resulting TeX file and opens the resulting PDF.
 1. Cleans up any temporary work files.
+<!--more-->
 
 Here's what the pre-"knitted" LaTeX looks like with the embedded R:
 
