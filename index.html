@@ -9,7 +9,7 @@
   <meta name="author" content="Amit Kumar Gupta">
 
   
-  <meta name="description" content="My colleague Mike Sierchio wrote a cool post on password strength, and the concept of entropy. As he points out, entropy isn’t always entropy. That &hellip;">
+  <meta name="description" content="In Part 2, we finished defining all the formal terms and symbols you see in the StackOverflow question on the Hindley-Milner algorithm, so now we’re &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,6 +69,193 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/">So You Still Don&#8217;t Understand Hindley-Milner? Part 3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-07T00:22:00-07:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In Part 2, we finished defining all the formal terms and symbols you see in the StackOverflow question on the Hindley-Milner algorithm, so now we’re ready to translate what that question was asking about, namely the rules for deducing statements about type inference. Let’s get down to it!</p>
+<h2 id="the-rules-for-deducing-statements-about-type-inference">The rules for deducing statements about type inference</h2>
+<p>[Var]</p>
+<p><span class="math">\[\underline{x:\sigma \in \Gamma}\]</span> <span class="math">\[\Gamma \vdash x:\sigma\]</span></p>
+<p>This translates to: If “<span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>” is a statement in our collection of statements <span class="math">\(\Gamma\)</span>, then from <span class="math">\(\Gamma\)</span> you can infer that <span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>. Here <span class="math">\(x\)</span> is a variable (hence the name of this rule of inference). Yes, it should sound that painfully obvious. The terse, cryptic way that [Var] is expressed isn’t that way because it contains some deep, difficult fact. It’s terse and succinct so that a machine can understand it and type inference can be automated.</p>
+<p>[App]</p>
+<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
+<p>This translates to: If we can infer that <span class="math">\(e_0\)</span> is an expression whose type is <span class="math">\(\tau \rightarrow \tau &#39;\)</span> (e.g. <span class="math">\(e_0\)</span> might be an anonymous function which, according to <span class="math">\(\Gamma\)</span>, takes input of type <span class="math">\(\tau\)</span> and returns output of type <span class="math">\(\tau &#39;\)</span>), and we can infer that <span class="math">\(e_1\)</span> has type <span class="math">\(\tau\)</span>, then we may deduce that we can infer that <span class="math">\(e_0(e_1)\)</span>, the expression obtained by applying <span class="math">\(e_0\)</span> to <span class="math">\(e_1\)</span>, has type <span class="math">\(\tau &#39;\)</span>. The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function. Nothing bewildering here. By the way, this is the formalization of our <code>speak(duck)</code> example.</p>
+<p>[Abs]</p>
+<p><span class="math">\[\underline{\ \ \Gamma, x:\tau \vdash e:\tau &#39;\ \ }\]</span> <span class="math">\[\Gamma \vdash \lambda x.e:\tau \rightarrow \tau &#39;\]</span></p>
+<p>This translates to: If allowing us to assume that <span class="math">\(x\)</span> has type <span class="math">\(\tau\)</span> we were able to infer that <span class="math">\(e\)</span> has type <span class="math">\(\tau &#39;\)</span>, then we may deduce that we can infer that the abstraction/anonymization of <span class="math">\(e\)</span> with respect to the variable <span class="math">\(x\)</span>, <span class="math">\(\lambda x.e\)</span>, has type <span class="math">\(\tau \rightarrow \tau &#39;\)</span>. So, for example, we know that if <span class="math">\(x\)</span> has type <span class="math">\(\mathrm{String}\)</span>, then the expression <span class="math">\(x[0]\)</span> has type <span class="math">\(\mathrm{Char}\)</span>. Now [Abs] allows us to deduce that</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>has type <span class="math">\(\mathrm{String} \rightarrow \mathrm{Char}\)</span>.</p>
+<p>Aside. I mentioned polytypes earlier. Let’s revisit them it in this example, just to help hammer it home. So note that this function above also has type <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span>. In fact, for any type <span class="math">\(t\)</span>, the function has type <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span>. So it has many different types, <span class="math">\(\mathrm{String} \rightarrow \mathrm{Char}\)</span> being just one of them. <em>Each</em> of its types of the form <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span> is monotype. We can express that this function has <em>all</em> of these monotypes by saying that it has the polytype <span class="math">\(\forall t(\mathrm{Array}[t] \rightarrow t)\)</span>. We read that as “for all <span class="math">\(t\)</span>, the type <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span>” and we treat that whole thing as a single, yet more abstract, type. So note that when we infer the type of some expression, that doesn’t mean that said type is the <em>only</em> type of that expression. An expression can have many types, and some of these types can be specializations of more abstract types. The simplest kinds of types are monotypes: <span class="math">\(\mathrm{Int}\)</span>, <span class="math">\(\mathrm{String}\)</span>, <span class="math">\(\mathrm{String} \rightarrow \mathrm{Char}\)</span>, etc. but we can have more abstract/general types called polytypes.</p>
+<p>[Let]</p>
+<p><span class="math">\[\underline{\Gamma \vdash e_0:\sigma\ \ \ \ \Gamma , x:\sigma \vdash e_1 : \tau}\]</span> <span class="math">\[\Gamma \vdash \mbox{let } x = e_0 \mbox{ in } e_1:\tau\]</span></p>
+<p>Easy:</p>
+<p>If we can infer that <span class="math">\(e_0\)</span> has type <span class="math">\(\sigma\)</span>, and<br />If we were to assume <span class="math">\(x\)</span> had type <span class="math">\(\sigma\)</span> we could infer that <span class="math">\(e_1\)</span> has type <span class="math">\(t\)</span>,<br />Then we may deduce that we can infer that the result of letting <span class="math">\(x = e_0\)</span>, and substituting it into <span class="math">\(e_1\)</span>, has type <span class="math">\(t\)</span>.</p>
+<p>These last four rules do nothing more than formally capture our intuition about what type inferences we can make when we have variables and we do things like create anonymous functions, apply functions, and substitute expressions into other expressions. It’s something we as programmers can do intuitively, and here we’re just saying that this is something we can formally describe, what’s happening in our brains isn’t necessarily magical. It’s also worth noting that these last four rules correspond precisely with the four rules for defining what a valid expression is in the Lambda Calculus. This is not a coincidence.</p>
+<p>[Inst]</p>
+<p><span class="math">\[\underline{\Gamma \vdash e:\sigma &#39;\ \ \ \ \sigma &#39;\sqsubseteq \sigma}\]</span> <span class="math">\[\Gamma \vdash e:\sigma\]</span></p>
+<p>This is about instantiation. You can think of the monotype <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> as an instantiation of the polytype <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span>. Another word for this is “specialization”: <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> is more special than for <span class="math">\(\forall t.\mathrm{Array}[t] \rightarrow t\)</span>. We denote the “more special than” relation between types with <span class="math">\(\sqsubseteq\)</span>. So</p>
+<p><span class="math">\[\forall t. \mathrm{Array}[t] \rightarrow t \ \ \sqsubseteq\ \  \mathrm{Array}[t] \rightarrow t\]</span></p>
+<p>So the direct translation of [Inst] is: If we can infer <span class="math">\(e\)</span> has type <span class="math">\(\sigma &#39;\)</span>, and <span class="math">\(\sigma\)</span> is a specialization/instantiation of <span class="math">\(\sigma &#39;\)</span>, then we can deduce that we can infer that <span class="math">\(e\)</span> has type <span class="math">\(\sigma\)</span>. And you can think of <span class="math">\(\sigma\)</span> and <span class="math">\(\sigma &#39;\)</span> as being types like <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span> and <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span> respectively.</p>
+<p>[Gen]</p>
+<p><span class="math">\[\underline{\Gamma \vdash e:\sigma\ \ \ \ \alpha \notin \mathrm{free}(\Gamma)}\]</span> <span class="math">\[\Gamma \vdash e:\forall \alpha.\sigma\]</span></p>
+<p>This is the hardest one to understand. It really only makes sense in the context of doing a type inference using these restricted set of rules we’re outlining. It doesn’t have a very concrete analogue since it heavily depends on the concept of a variable type, something that never occurs in any real programming language, but is an indispensable concept when we’re trying to work in a meta-language that talks about types in any arbitrary real programming language. The idea can sort of be captured in this “example”:</p>
+<p>Suppose you have some variables <span class="math">\(x\)</span> and <span class="math">\(y\)</span>, and for the time being you’re assuming they have type <span class="math">\(\alpha\)</span>, where <span class="math">\(\alpha\)</span> is a variable standing for a type. You later come across an expression that you somehow manage to infer has type <span class="math">\(\alpha \rightarrow \alpha\)</span> in <em>this</em> context (the context where you’re assuming <span class="math">\(x\)</span> and <span class="math">\(y\)</span> have type <span class="math">\(\alpha\)</span>). The question is, will this function have the polytype <span class="math">\(\forall \alpha. \alpha \rightarrow \alpha\)</span>? I.e. does this function generally map objects to things of the same type, or does that only appear to be the case because you assumed <span class="math">\(x\)</span> and <span class="math">\(y\)</span> had the same type <span class="math">\(\alpha\)</span>?</p>
+<p>Since <span class="math">\(\alpha\)</span> is a variable type, i.e. it could stand for any type, we might like to think that, since we’ve inferred that <span class="math">\(e\)</span> has type <span class="math">\(\alpha \rightarrow \alpha\)</span> that it has the polytype <span class="math">\(\forall \alpha. \alpha \rightarrow \alpha\)</span>. But we can’t necessarily make this generalization without more insight into how <span class="math">\(e\)</span> is related to <span class="math">\(x\)</span> and <span class="math">\(y\)</span>; In particular, if our inference that it has type <span class="math">\(\alpha \rightarrow \alpha\)</span> is tightly coupled to our prior assumptions involving <span class="math">\(\alpha\)</span>, then we shouldn’t conclude that it generally has the polytype <span class="math">\(\forall \alpha .\alpha \rightarrow \alpha\)</span>.</p>
+<p>Here’s the translation:</p>
+<p>If some variable type <span class="math">\(\alpha\)</span> hasn’t “freely” been mentioned in our current context/set of knowledge/assumptions, and we can infer that some expression <span class="math">\(e\)</span> has some type <span class="math">\(\sigma\)</span>, then we can infer that <span class="math">\(e\)</span> has type <span class="math">\(\sigma\)</span> independent of what <span class="math">\(\alpha\)</span> turns out to be. Slightly more technically, <span class="math">\(e\)</span> has the polytype <span class="math">\(\forall \alpha . \sigma\)</span>.</p>
+<p>Okay, but what does “freely mentioned” mean? In a polytype like <span class="math">\(\forall \alpha . \alpha \rightarrow \alpha\)</span>, <span class="math">\(\alpha\)</span> isn’t “really” being mentioned. That type is the exact same as this one: <span class="math">\(\forall \beta . \beta \rightarrow \beta\)</span>. An expression with either type is just that of a function that sends any type to itself. On the other hand, <span class="math">\(x:\alpha\)</span> “really” does mention <span class="math">\(\alpha\)</span>.</p>
+<p><span class="math">\[x:\alpha\]</span> <span class="math">\[y:\beta\]</span></p>
+<p>and</p>
+<p><span class="math">\[x:\alpha\]</span> <span class="math">\[y:\alpha\]</span></p>
+<p>mean different things. The latter means <span class="math">\(x\)</span> and <span class="math">\(y\)</span> definitely have the same type (even though what that type is may not have been pinned down). The former tells you nothing about how the types of <span class="math">\(x\)</span> and <span class="math">\(y\)</span> are related. The difference is, when <span class="math">\(\alpha\)</span> is mentioned inside the scope of a <span class="math">\(\forall\)</span>, as is the case in <span class="math">\(\forall \alpha . \alpha \rightarrow \alpha\)</span>, that <span class="math">\(\alpha\)</span> is just a dummy, and can be swapped out for any other type variable regardless of the rest of the context. So we can interpret the statement “<span class="math">\(\alpha\)</span> isn’t freely mentioned in the context <span class="math">\(\Gamma\)</span>” to say, “<span class="math">\(\alpha\)</span> is either never mentioned at all, or, if it is, it’s only ever mentioned as a dummy and could in principle be swapped out for something entirely different without changing the semantics of the assumptions/knowledge in our context.”</p>
+<p>And that’s it. Questions? Comments? Let me know.</p></div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/">So You Still Don&#8217;t Understand Hindley-Milner? Part 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-07T00:19:00-07:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In Part 1, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually formulate the formalization:</p>
+<h2 id="formalizing-the-concept-of-an-expression">Formalizing the concept of an expression</h2>
+<p>We’ll give a <a href="http://en.wikipedia.org/wiki/Recursive_definition">recursive definition</a> of what an expression is; in other words, we’ll state what the most basic kind of expression is, we’ll say how to create new, more complex expressions out of existing expressions, and we’ll say that only things made in this way are valid expressions.</p>
+<ol type="1">
+<li>Variables are valid expressions.<br /></li>
+<li>If <span class="math">\(e\)</span> is any expression, and <span class="math">\(x\)</span> is any variable, then <span class="math">\(\lambda x.e\)</span> is an expression. Here it helps to think of e as typically (thought not necessarily) a more complex expression involving <span class="math">\(x\)</span>, e.g. <span class="math">\(x^2+2\)</span>, and then <span class="math">\(\lambda x.e\)</span> as the anonymous function that takes an input <span class="math">\(x\)</span> and returns the result of evaluating the expression <span class="math">\(e\)</span> with the given value of <span class="math">\(x\)</span>. In other words, think of it like this:<br />
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div></li>
+<li>If <span class="math">\(f\)</span> and <span class="math">\(e\)</span> are valid expressions, and <span class="math">\(f\)</span> can take arguments (e.g. if it’s an abstraction like explained in point 2), then <span class="math">\(f(e)\)</span> is a valid expression. This is called Application, for obvious reasons.</li>
+<li>If <span class="math">\(x\)</span> is a variable, and <span class="math">\(e_1\)</span> and <span class="math">\(e_0\)</span> are valid expressions, then substituting every occurrence of <span class="math">\(x\)</span> in <span class="math">\(e_0\)</span> for <span class="math">\(e_1\)</span> yields a valid expression. So, for example, if <span class="math">\(e_0\)</span> is the expression <span class="math">\(x^2 + 2\)</span>, and <span class="math">\(e_0\)</span> is the expression <span class="math">\(y/3\)</span>, then if we let <span class="math">\(x = e_0\)</span> in <span class="math">\(e_1\)</span>, we get the expression <span class="math">\((y/3)^2 + 2\)</span>.</li>
+</ol>
+<p>And nothing else is a valid expression.</p>
+<p>Aside: anyone paying close attention will wonder, wait, how can I make any useful expressions out of this? How do I even get <span class="math">\(x^2 + 2\)</span>, or in fact <span class="math">\(2\)</span> for that matter, out of the above? Heck, what about <span class="math">\(0\)</span>? There is nothing in the rules above which <em>obviously</em> yield the expression <span class="math">\(0\)</span>. The solution is to create expressions in the Lambda Calculus which behave like <span class="math">\(0, 1, \dots, +, \times, -, /\)</span> when interpreted correctly. In other words, we have to encode numbers, numerical operations, strings, etc. into patterns we can create with the Lambda syntax. <a href="http://palmstroem.blogspot.com/2012/05/lambda-calculus-for-absolute-dummies.html">This blog post</a> has a nice little section on numbers and numerical operations. This is a great feature of the Lambda Calculus: we have a simple syntax which we can define recursively in 4 simple clauses, and this therefore allows us to prove many things about it inductively in 4 main steps, yet the language itself has the expressive power to capture numbers, strings, and all the types and operations we could ever care about.</p>
+<h2 id="formalizing-statements-about-types">Formalizing statements about types</h2>
+<p>Let <span class="math">\(e\)</span> be any expression, that is, “<span class="math">\(e\)</span>” is a variable in our meta-language which stands for any expression in our base language, like any of the following:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">x</span>
+</span><span class='line'><span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">].</span><span class="nx">forEach</span> <span class="p">(</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="nx">print</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="p">}</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>Then if <span class="math">\(t\)</span> is any type, we can express “<span class="math">\(e\)</span> is of type <span class="math">\(t\)</span>” by</p>
+<p><span class="math">\[e:t\]</span></p>
+<p>Just like <span class="math">\(e\)</span>, <span class="math">\(t\)</span> is a variable in our meta-language, and it can stand for any type in the base language, like <span class="math">\(\mathrm{Int}\)</span>, <span class="math">\(\mathrm{String}\)</span>, etc. And just like <span class="math">\(e\)</span>, <span class="math">\(t\)</span> doesn’t necessarily need to stand for any one type in particular.</p>
+<p>One can give a formal definition for what counts as a type, just as we did for expressions above. However the abstraction gets fairly twisted, so we’ll leave it at that. I should just point out a few two key things to keep in mind:</p>
+<ol type="1">
+<li>If <span class="math">\(s\)</span> and <span class="math">\(t\)</span> are types, then so is <span class="math">\(t \rightarrow s\)</span>; it’s the type of a function with <span class="math">\(t\)</span> inputs and <span class="math">\(s\)</span> outputs.<br /></li>
+<li>If <span class="math">\(r\)</span> is a type, possibly made up of other types (just as <span class="math">\(t \rightarrow s\)</span> is made up of <span class="math">\(t\)</span> and <span class="math">\(s\)</span>, which could each potentially have been made up of other types), and <span class="math">\(\alpha\)</span> is a variable for a type, then <span class="math">\(\forall \alpha.r\)</span> is a type. That makes no sense without an example:</li>
+</ol>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="p">;</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>This function is type <span class="math">\(\mathrm{String} \rightarrow \mathrm{String}\)</span>. But it’s also <span class="math">\(\mathrm{Int} \rightarrow \mathrm{Int}\)</span>. In fact, for any type <span class="math">\(t\)</span>, it’s type <span class="math">\(t \rightarrow t\)</span>. We’re gonna say that it has type <span class="math">\(\forall t. t \rightarrow t\)</span>. Each of the types <span class="math">\(\mathrm{String} \rightarrow \mathrm{String}\)</span>, <span class="math">\(t \rightarrow t\)</span>, are “monotypes”. <span class="math">\(\forall t. t \rightarrow t\)</span> is a “polytype”. The identity function above has the abstract polytype <span class="math">\(\forall t. t \rightarrow t\)</span> which, in practice, means that for every real type <span class="math">\(t\)</span>, it has type <span class="math">\(t \rightarrow t\)</span>. If all of this has been sinking in, then we can compactly express this as:</p>
+<p><span class="math">\[\lambda x.x:\forall\alpha.\alpha \rightarrow \alpha\]</span></p>
+<h2 id="formalizing-statements-about-statements-about-types">Formalizing statements about statements about types</h2>
+<p>Now we’re going to want to formalize a bunch of rules for how we can go from some knowledge of expressions and their types to inferring types of more expressions. Remember how propositional calculus formalized Modus Ponens? We’re going to do something similar. For instance, say we want to formalize the following piece of reasoning:</p>
+<blockquote>
+<p>Suppose I’ve already been able to infer that a variable <code>duck</code> has type <code>Animal</code>.<br />Suppose furthermore that I’ve inferred that <code>speak</code> is a method of type <code>Animal -&gt; String</code>.<br />Then I can infer that <code>speak(duck)</code> has type String.</p>
+<p>And any reasoning of this form is valid type inference.</p>
+</blockquote>
+<p>We’ll formalize that as follows:</p>
+<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
+<p>Let’s first get a handle on all the symbols you see above:</p>
+<ul>
+<li><span class="math">\(\Gamma\)</span>, this will stand for the collection of statements we already know, or perhaps, the statements we’re assuming. More generally, <span class="math">\(\Gamma\)</span> should just be thought of as some collection of statements (about expressions and their types). And of course, there’s nothing special about the letter <span class="math">\(\Gamma\)</span>; capital greek letters are commonly used for sets of statements however.<br /></li>
+<li><span class="math">\(\vdash\)</span>, the “turnstile”, denotes that something can be inferred. For instance, <span class="math">\(\Gamma \vdash x:t\)</span> says that if we take the statements in <span class="math">\(\Gamma\)</span> as our assumptions/axioms/current knowledge, then we can infer that <span class="math">\(x\)</span> has type <span class="math">\(t\)</span>.<br /></li>
+<li><span class="math">\(\in\)</span>, “epsilon”, denotes membership. <span class="math">\(x:t \in \Gamma\)</span> says that the statement <span class="math">\(x:t\)</span> is a member of <span class="math">\(\Gamma\)</span>.</li>
+<li>That long horizontal bar; this line tells us that we can make the conclusion below the line if the things above the line are taken as premises in the argument. It lets us express things like, “if we can infer such and such, then we can infer such and such”, e.g.</li>
+</ul>
+<p><span class="math">\[\underline{\Gamma \vdash y:\sigma}\]</span> <span class="math">\[\Gamma \vdash x:\tau\]</span></p>
+<p>If we can infer that <span class="math">\(y\)</span> has type <span class="math">\(\sigma\)</span> from <span class="math">\(\Gamma\)</span>, then we can infer <span class="math">\(x\)</span> has type <span class="math">\(\tau\)</span> from <span class="math">\(\Gamma\)</span>.</p></div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -372,7 +559,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don&#8217;t Understand Hindley-Milner?</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don&#8217;t Understand Hindley-Milner? Part 1</a></h1>
     
     
       <p class="meta">
@@ -401,7 +588,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <blockquote>
 <p>Functionally speaking, Hindley-Milner (or “Damas-Milner”) is an algorithm for inferring value types based on use.  It literally formalizes the intuition that a type can be deduced by the functionality it supports.</p>
 </blockquote>
-<p>Okay, so we want to formalize an algorithm for inferring types of any given expression. I’m going to quickly touch on what it means to formalize something, then describe the building blocks of the HM formalization, and finally translate that StackOverflow question.</p>
+<p>Okay, so we want to formalize an algorithm for inferring types of any given expression. In this post, I’m going to touch on what it means to formalize something, then describe the building blocks of the HM formalization. In Part 2, I’ll flesh out the building blocks of the formalization. Finally in Part 3, I’ll translate that StackOverflow question.</p>
 <h2 id="what-it-means-to-formalize">What it means to formalize</h2>
 <p>Okay, so we want to talk about expressions. Arbitrary expressions. In an arbitrary language. And we want to talk about inferring types of these expressions. And we want to figure out rules for how we can infer types. And then we’re going to want to make an algorithm that uses these rules to infer types. So we’re going to need a meta-language. A language to talk about expressions in an arbitrary programming language. This meta-language should:</p>
 <ul>
@@ -428,125 +615,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <li>A formal way to talk about types, and a formal way to talk about expressions and types together. After all, the purpose of the HM algorithm is to be able to deduce statements of the form “expression <span class="math">\(e\)</span> has type <span class="math">\(t\)</span>”.</li>
 <li>A formal set of rules for deriving statements about expression types from other such statements. Rules along the lines of: “if I can already demonstrate that some expression has this type, and another expression has that type, then this third expression has this other type”. <em>Such a set of rules is exactly what you’re seeing in that SO question</em>. I’ll be translating this in full detail.</li>
 <li>An algorithm that intelligently uses the deduction rules to get from a starting point to deducing/inferring a desired conclusion statement: “the expression <span class="math">\(e\)</span> that I’m interested in has type <span class="math">\(t\)</span>”. This is the “algorithm” part for the “HM algorithm”, and that’s not something I’ll be going into in this post.</li>
-</ol>
-<h2 id="formalizing-the-concept-of-an-expression">Formalizing the concept of an expression</h2>
-<p>We’ll give a <a href="http://en.wikipedia.org/wiki/Recursive_definition">recursive definition</a> of what an expression is; in other words, we’ll state what the most basic kind of expression is, we’ll say how to create new, more complex expressions out of existing expressions, and we’ll say that only things made in this way are valid expressions.</p>
-<ol type="1">
-<li>Variables are valid expressions.<br /></li>
-<li>If <span class="math">\(e\)</span> is any expression, and <span class="math">\(x\)</span> is any variable, then <span class="math">\(\lambda x.e\)</span> is an expression. Here it helps to think of e as typically (thought not necessarily) a more complex expression involving <span class="math">\(x\)</span>, e.g. <span class="math">\(x^2+2\)</span>, and then <span class="math">\(\lambda x.e\)</span> as the anonymous function that takes an input <span class="math">\(x\)</span> and returns the result of evaluating the expression <span class="math">\(e\)</span> with the given value of <span class="math">\(x\)</span>. In other words, think of it like this:<br />
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">2</span><span class="p">;</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div></li>
-<li>If <span class="math">\(f\)</span> and <span class="math">\(e\)</span> are valid expressions, and <span class="math">\(f\)</span> can take arguments (e.g. if it’s an abstraction like explained in point 2), then <span class="math">\(f(e)\)</span> is a valid expression. This is called Application, for obvious reasons.</li>
-<li>If <span class="math">\(x\)</span> is a variable, and <span class="math">\(e_1\)</span> and <span class="math">\(e_0\)</span> are valid expressions, then substituting every occurrence of <span class="math">\(x\)</span> in <span class="math">\(e_0\)</span> for <span class="math">\(e_1\)</span> yields a valid expression. So, for example, if <span class="math">\(e_0\)</span> is the expression <span class="math">\(x^2 + 2\)</span>, and <span class="math">\(e_0\)</span> is the expression <span class="math">\(y/3\)</span>, then if we let <span class="math">\(x = e_0\)</span> in <span class="math">\(e_1\)</span>, we get the expression <span class="math">\((y/3)^2 + 2\)</span>.</li>
-</ol>
-<p>And nothing else is a valid expression.</p>
-<p>Aside: anyone paying close attention will wonder, wait, how can I make any useful expressions out of this? How do I even get <span class="math">\(x^2 + 2\)</span>, or in fact <span class="math">\(2\)</span> for that matter, out of the above? Heck, what about <span class="math">\(0\)</span>? There is nothing in the rules above which <em>obviously</em> yield the expression <span class="math">\(0\)</span>. The solution is to create expressions in the Lambda Calculus which behave like <span class="math">\(0, 1, \dots, +, \times, -, /\)</span> when interpreted correctly. In other words, we have to encode numbers, numerical operations, strings, etc. into patterns we can create with the Lambda syntax. <a href="http://palmstroem.blogspot.com/2012/05/lambda-calculus-for-absolute-dummies.html">This blog post</a> has a nice little section on numbers and numerical operations. This is a great feature of the Lambda Calculus: we have a simple syntax which we can define recursively in 4 simple clauses, and this therefore allows us to prove many things about it inductively in 4 main steps, yet the language itself has the expressive power to capture numbers, strings, and all the types and operations we could ever care about.</p>
-<h2 id="formalizing-statements-about-types">Formalizing statements about types</h2>
-<p>Let <span class="math">\(e\)</span> be any expression, that is, “<span class="math">\(e\)</span>” is a variable in our meta-language which stands for any expression in our base language, like any of the following:</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">x</span>
-</span><span class='line'><span class="nb">Math</span><span class="p">.</span><span class="nx">pow</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">].</span><span class="nx">forEach</span> <span class="p">(</span> <span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="nx">print</span><span class="p">(</span><span class="nx">x</span><span class="p">);</span> <span class="p">}</span> <span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>Then if <span class="math">\(t\)</span> is any type, we can express “<span class="math">\(e\)</span> is of type <span class="math">\(t\)</span>” by</p>
-<p><span class="math">\[e:t\]</span></p>
-<p>Just like <span class="math">\(e\)</span>, <span class="math">\(t\)</span> is a variable in our meta-language, and it can stand for any type in the base language, like <span class="math">\(\mathrm{Int}\)</span>, <span class="math">\(\mathrm{String}\)</span>, etc. And just like <span class="math">\(e\)</span>, <span class="math">\(t\)</span> doesn’t necessarily need to stand for any one type in particular.</p>
-<p>One can give a formal definition for what counts as a type, just as we did for expressions above. However the abstraction gets fairly twisted, so we’ll leave it at that. I should just point out a few two key things to keep in mind:</p>
-<ol type="1">
-<li>If <span class="math">\(s\)</span> and <span class="math">\(t\)</span> are types, then so is <span class="math">\(t \rightarrow s\)</span>; it’s the type of a function with <span class="math">\(t\)</span> inputs and <span class="math">\(s\)</span> outputs.<br /></li>
-<li>If <span class="math">\(r\)</span> is a type, possibly made up of other types (just as <span class="math">\(t \rightarrow s\)</span> is made up of <span class="math">\(t\)</span> and <span class="math">\(s\)</span>, which could each potentially have been made up of other types), and <span class="math">\(\alpha\)</span> is a variable for a type, then <span class="math">\(\forall \alpha.r\)</span> is a type. That makes no sense without an example:</li>
-</ol>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span> <span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="p">;</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>This function is type <span class="math">\(\mathrm{String} \rightarrow \mathrm{String}\)</span>. But it’s also <span class="math">\(\mathrm{Int} \rightarrow \mathrm{Int}\)</span>. In fact, for any type <span class="math">\(t\)</span>, it’s type <span class="math">\(t \rightarrow t\)</span>. We’re gonna say that it has type <span class="math">\(\forall t. t \rightarrow t\)</span>. Each of the types <span class="math">\(\mathrm{String} \rightarrow \mathrm{String}\)</span>, <span class="math">\(t \rightarrow t\)</span>, are “monotypes”. <span class="math">\(\forall t. t \rightarrow t\)</span> is a “polytype”. The identity function above has the abstract polytype <span class="math">\(\forall t. t \rightarrow t\)</span> which, in practice, means that for every real type <span class="math">\(t\)</span>, it has type <span class="math">\(t \rightarrow t\)</span>. If all of this has been sinking in, then we can compactly express this as:</p>
-<p><span class="math">\[\lambda x.x:\forall\alpha.\alpha \rightarrow \alpha\]</span></p>
-<h2 id="formalizing-statements-about-statements-about-types">Formalizing statements about statements about types</h2>
-<p>Now we’re going to want to formalize a bunch of rules for how we can go from some knowledge of expressions and their types to inferring types of more expressions. Remember how propositional calculus formalized Modus Ponens? We’re going to do something similar. For instance, say we want to formalize the following piece of reasoning:</p>
-<blockquote>
-<p>Suppose I’ve already been able to infer that a variable <code>duck</code> has type <code>Animal</code>.<br />Suppose furthermore that I’ve inferred that <code>speak</code> is a method of type <code>Animal -&gt; String</code>.<br />Then I can infer that <code>speak(duck)</code> has type String.</p>
-<p>And any reasoning of this form is valid type inference.</p>
-</blockquote>
-<p>We’ll formalize that as follows:</p>
-<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
-<p>Let’s first get a handle on all the symbols you see above:</p>
-<ul>
-<li><span class="math">\(\Gamma\)</span>, this will stand for the collection of statements we already know, or perhaps, the statements we’re assuming. More generally, <span class="math">\(\Gamma\)</span> should just be thought of as some collection of statements (about expressions and their types). And of course, there’s nothing special about the letter <span class="math">\(\Gamma\)</span>; capital greek letters are commonly used for sets of statements however.<br /></li>
-<li><span class="math">\(\vdash\)</span>, the “turnstile”, denotes that something can be inferred. For instance, <span class="math">\(\Gamma \vdash x:t\)</span> says that if we take the statements in <span class="math">\(\Gamma\)</span> as our assumptions/axioms/current knowledge, then we can infer that <span class="math">\(x\)</span> has type <span class="math">\(t\)</span>.<br /></li>
-<li><span class="math">\(\in\)</span>, “epsilon”, denotes membership. <span class="math">\(x:t \in \Gamma\)</span> says that the statement <span class="math">\(x:t\)</span> is a member of <span class="math">\(\Gamma\)</span>.</li>
-<li>That long horizontal bar; this line tells us that we can make the conclusion below the line if the things above the line are taken as premises in the argument. It lets us express things like, “if we can infer such and such, then we can infer such and such”, e.g.</li>
-</ul>
-<p><span class="math">\[\underline{\Gamma \vdash y:\sigma}\]</span> <span class="math">\[\Gamma \vdash x:\tau\]</span></p>
-<p>If we can infer that <span class="math">\(y\)</span> has type <span class="math">\(\sigma\)</span> from <span class="math">\(\Gamma\)</span>, then we can infer <span class="math">\(x\)</span> has type <span class="math">\(\tau\)</span> from <span class="math">\(\Gamma\)</span>.</p>
-<h2 id="the-rules-for-deducing-statements-about-type-inference">The rules for deducing statements about type inference</h2>
-<p>So let’s get down to it.</p>
-<p>[Var]</p>
-<p><span class="math">\[\underline{x:\sigma \in \Gamma}\]</span> <span class="math">\[\Gamma \vdash x:\sigma\]</span></p>
-<p>This translates to: If “<span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>” is a statement in our collection of statements <span class="math">\(\Gamma\)</span>, then from <span class="math">\(\Gamma\)</span> you can infer that <span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>. Here <span class="math">\(x\)</span> is a variable (hence the name of this rule of inference). Yes, it should sound that painfully obvious. The terse, cryptic way that [Var] is expressed isn’t that way because it contains some deep, difficult fact. It’s terse and succinct so that a machine can understand it and type inference can be automated.</p>
-<p>[App]</p>
-<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
-<p>This translates to: If we can infer that <span class="math">\(e_0\)</span> is an expression whose type is <span class="math">\(\tau \rightarrow \tau &#39;\)</span> (e.g. <span class="math">\(e_0\)</span> might be an anonymous function which, according to <span class="math">\(\Gamma\)</span>, takes input of type <span class="math">\(\tau\)</span> and returns output of type <span class="math">\(\tau &#39;\)</span>), and we can infer that <span class="math">\(e_1\)</span> has type <span class="math">\(\tau\)</span>, then we may deduce that we can infer that <span class="math">\(e_0(e_1)\)</span>, the expression obtained by applying <span class="math">\(e_0\)</span> to <span class="math">\(e_1\)</span>, has type <span class="math">\(\tau &#39;\)</span>. The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function. Nothing bewildering here. By the way, this is the formalization of our <code>speak(duck)</code> example.</p>
-<p>[Abs]</p>
-<p><span class="math">\[\underline{\ \ \Gamma, x:\tau \vdash e:\tau &#39;\ \ }\]</span> <span class="math">\[\Gamma \vdash \lambda x.e:\tau \rightarrow \tau &#39;\]</span></p>
-<p>This translates to: If allowing us to assume that <span class="math">\(x\)</span> has type <span class="math">\(\tau\)</span> we were able to infer that <span class="math">\(e\)</span> has type <span class="math">\(\tau &#39;\)</span>, then we may deduce that we can infer that the abstraction/anonymization of <span class="math">\(e\)</span> with respect to the variable <span class="math">\(x\)</span>, <span class="math">\(\lambda x.e\)</span>, has type <span class="math">\(\tau \rightarrow \tau &#39;\)</span>. So, for example, we know that if <span class="math">\(x\)</span> has type <span class="math">\(\mathrm{String}\)</span>, then the expression <span class="math">\(x[0]\)</span> has type <span class="math">\(\mathrm{Char}\)</span>. Now [Abs] allows us to deduce that</p>
-<div class='bogus-wrapper'>
-<notextile>
-<figure class='code'><figcaption>
-<span></span>
-</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="kd">function</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-</notextile>
-</div>
-
-<p>has type <span class="math">\(\mathrm{String} \rightarrow \mathrm{Char}\)</span>.</p>
-<p>Aside. I mentioned polytypes earlier. Let’s revisit them it in this example, just to help hammer it home. So note that this function above also has type <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span>. In fact, for any type <span class="math">\(t\)</span>, the function has type <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span>. So it has many different types, <span class="math">\(\mathrm{String} \rightarrow \mathrm{Char}\)</span> being just one of them. <em>Each</em> of its types of the form <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span> is monotype. We can express that this function has <em>all</em> of these monotypes by saying that it has the polytype <span class="math">\(\forall t(\mathrm{Array}[t] \rightarrow t)\)</span>. We read that as “for all <span class="math">\(t\)</span>, the type <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span>” and we treat that whole thing as a single, yet more abstract, type. So note that when we infer the type of some expression, that doesn’t mean that said type is the <em>only</em> type of that expression. An expression can have many types, and some of these types can be specializations of more abstract types. The simplest kinds of types are monotypes: <span class="math">\(\mathrm{Int}\)</span>, <span class="math">\(\mathrm{String}\)</span>, <span class="math">\(\mathrm{String} \rightarrow \mathrm{Char}\)</span>, etc. but we can have more abstract/general types called polytypes.</p>
-<p>[Let]</p>
-<p><span class="math">\[\underline{\Gamma \vdash e_0:\sigma\ \ \ \ \Gamma , x:\sigma \vdash e_1 : \tau}\]</span> <span class="math">\[\Gamma \vdash \mbox{let } x = e_0 \mbox{ in } e_1:\tau\]</span></p>
-<p>Easy:</p>
-<p>If we can infer that <span class="math">\(e_0\)</span> has type <span class="math">\(\sigma\)</span>, and<br />If we were to assume <span class="math">\(x\)</span> had type <span class="math">\(\sigma\)</span> we could infer that <span class="math">\(e_1\)</span> has type <span class="math">\(t\)</span>,<br />Then we may deduce that we can infer that the result of letting <span class="math">\(x = e_0\)</span>, and substituting it into <span class="math">\(e_1\)</span>, has type <span class="math">\(t\)</span>.</p>
-<p>These last four rules do nothing more than formally capture our intuition about what type inferences we can make when we have variables and we do things like create anonymous functions, apply functions, and substitute expressions into other expressions. It’s something we as programmers can do intuitively, and here we’re just saying that this is something we can formally describe, what’s happening in our brains isn’t necessarily magical. It’s also worth noting that these last four rules correspond precisely with the four rules for defining what a valid expression is in the Lambda Calculus. This is not a coincidence.</p>
-<p>[Inst]</p>
-<p><span class="math">\[\underline{\Gamma \vdash e:\sigma &#39;\ \ \ \ \sigma &#39;\sqsubseteq \sigma}\]</span> <span class="math">\[\Gamma \vdash e:\sigma\]</span></p>
-<p>This is about instantiation. You can think of the monotype <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> as an instantiation of the polytype <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span>. Another word for this is “specialization”: <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> is more special than for <span class="math">\(\forall t.\mathrm{Array}[t] \rightarrow t\)</span>. We denote the “more special than” relation between types with <span class="math">\(\sqsubseteq\)</span>. So</p>
-<p><span class="math">\[\forall t. \mathrm{Array}[t] \rightarrow t \ \ \sqsubseteq\ \  \mathrm{Array}[t] \rightarrow t\]</span></p>
-<p>So the direct translation of [Inst] is: If we can infer <span class="math">\(e\)</span> has type <span class="math">\(\sigma &#39;\)</span>, and <span class="math">\(\sigma\)</span> is a specialization/instantiation of <span class="math">\(\sigma &#39;\)</span>, then we can deduce that we can infer that <span class="math">\(e\)</span> has type <span class="math">\(\sigma\)</span>. And you can think of <span class="math">\(\sigma\)</span> and <span class="math">\(\sigma &#39;\)</span> as being types like <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span> and <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span> respectively.</p>
-<p>[Gen]</p>
-<p><span class="math">\[\underline{\Gamma \vdash e:\sigma\ \ \ \ \alpha \notin \mathrm{free}(\Gamma)}\]</span> <span class="math">\[\Gamma \vdash e:\forall \alpha.\sigma\]</span></p>
-<p>This is the hardest one to understand. It really only makes sense in the context of doing a type inference using these restricted set of rules we’re outlining. It doesn’t have a very concrete analogue since it heavily depends on the concept of a variable type, something that never occurs in any real programming language, but is an indispensable concept when we’re trying to work in a meta-language that talks about types in any arbitrary real programming language. The idea can sort of be captured in this “example”:</p>
-<p>Suppose you have some variables <span class="math">\(x\)</span> and <span class="math">\(y\)</span>, and for the time being you’re assuming they have type <span class="math">\(\alpha\)</span>, where <span class="math">\(\alpha\)</span> is a variable standing for a type. You later come across an expression that you somehow manage to infer has type <span class="math">\(\alpha \rightarrow \alpha\)</span> in <em>this</em> context (the context where you’re assuming <span class="math">\(x\)</span> and <span class="math">\(y\)</span> have type <span class="math">\(\alpha\)</span>). The question is, will this function have the polytype <span class="math">\(\forall \alpha. \alpha \rightarrow \alpha\)</span>? I.e. does this function generally map objects to things of the same type, or does that only appear to be the case because you assumed <span class="math">\(x\)</span> and <span class="math">\(y\)</span> had the same type <span class="math">\(\alpha\)</span>?</p>
-<p>Since <span class="math">\(\alpha\)</span> is a variable type, i.e. it could stand for any type, we might like to think that, since we’ve inferred that <span class="math">\(e\)</span> has type <span class="math">\(\alpha \rightarrow \alpha\)</span> that it has the polytype <span class="math">\(\forall \alpha. \alpha \rightarrow \alpha\)</span>. But we can’t necessarily make this generalization without more insight into how <span class="math">\(e\)</span> is related to <span class="math">\(x\)</span> and <span class="math">\(y\)</span>; In particular, if our inference that it has type <span class="math">\(\alpha \rightarrow \alpha\)</span> is tightly coupled to our prior assumptions involving <span class="math">\(\alpha\)</span>, then we shouldn’t conclude that it generally has the polytype <span class="math">\(\forall \alpha .\alpha \rightarrow \alpha\)</span>.</p>
-<p>Here’s the translation:</p>
-<p>If some variable type <span class="math">\(\alpha\)</span> hasn’t “freely” been mentioned in our current context/set of knowledge/assumptions, and we can infer that some expression <span class="math">\(e\)</span> has some type <span class="math">\(\sigma\)</span>, then we can infer that <span class="math">\(e\)</span> has type <span class="math">\(\sigma\)</span> independent of what <span class="math">\(\alpha\)</span> turns out to be. Slightly more technically, <span class="math">\(e\)</span> has the polytype <span class="math">\(\forall \alpha . \sigma\)</span>.</p>
-<p>Okay, but what does “freely mentioned” mean? In a polytype like <span class="math">\(\forall \alpha . \alpha \rightarrow \alpha\)</span>, <span class="math">\(\alpha\)</span> isn’t “really” being mentioned. That type is the exact same as this one: <span class="math">\(\forall \beta . \beta \rightarrow \beta\)</span>. An expression with either type is just that of a function that sends any type to itself. On the other hand, <span class="math">\(x:\alpha\)</span> “really” does mention <span class="math">\(\alpha\)</span>.</p>
-<p><span class="math">\[x:\alpha\]</span> <span class="math">\[y:\beta\]</span></p>
-<p>and</p>
-<p><span class="math">\[x:\alpha\]</span> <span class="math">\[y:\alpha\]</span></p>
-<p>mean different things. The latter means <span class="math">\(x\)</span> and <span class="math">\(y\)</span> definitely have the same type (even though what that type is may not have been pinned down). The former tells you nothing about how the types of <span class="math">\(x\)</span> and <span class="math">\(y\)</span> are related. The difference is, when <span class="math">\(\alpha\)</span> is mentioned inside the scope of a <span class="math">\(\forall\)</span>, as is the case in <span class="math">\(\forall \alpha . \alpha \rightarrow \alpha\)</span>, that <span class="math">\(\alpha\)</span> is just a dummy, and can be swapped out for any other type variable regardless of the rest of the context. So we can interpret the statement “<span class="math">\(\alpha\)</span> isn’t freely mentioned in the context <span class="math">\(\Gamma\)</span>” to say, “<span class="math">\(\alpha\)</span> is either never mentioned at all, or, if it is, it’s only ever mentioned as a dummy and could in principle be swapped out for something entirely different without changing the semantics of the assumptions/knowledge in our context.”</p>
-<p>And that’s it. Questions? Comments? Let me know.</p></div>
+</ol></div>
   
   
 
@@ -759,6 +828,14 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/">So You Still Don&#8217;t Understand Hindley-Milner? Part 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/">So You Still Don&#8217;t Understand Hindley-Milner? Part 2</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/06/06/entropy-how-password-strength-is-measured/">Entropy: How Password Strength Is Measured</a>
       </li>
     
@@ -768,14 +845,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
     
       <li class="post">
         <a href="/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/">Is It Possible to Be 15% Swedish?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don&#8217;t Understand Hindley-Milner?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/">Setting Up PostgreSQL With MacPorts for Ruby on Rails Development</a>
       </li>
     
   </ul>
