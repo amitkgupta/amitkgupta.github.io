@@ -97,7 +97,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 
 <div class="entry-content"><p>This question came up as a joke during a team standup a few months ago. Although the obvious answer is “no,” if you’re willing to play fast and loose with your metaphysics for a bit, the answer can be “yes” and there’s a cute solution that ties together binary numbers and binary trees. This post itself is a bit of a joke in that it’s just for fun, but it might be nice to see the familiar concepts of binary numbers and binary trees in a new light.</p>
 <h2 id="the-obvious-answer-is-no">The obvious answer is “no”</h2>
-<p>Let’s quickly see why the real life answer is “no.” But first we should lay out the assumptions implicit in the problem. We’re going to assume that at some point in time, everyone was either entirely Swedish or entirely non-Swedish. There’s a chicken-and-egg problem that we’re sweeping under the rug here, but that’s what rugs are for. Next we’re assuming that every person after that point in time has their Swedishness wholly and equally determined by their parents Swedishness. So if mom is 17% Swedish and dad is 66% Swedish, then baby is ½ x 17% + ½ x 66% = 41.5% Swedish.</p>
+<p>Let’s quickly see why the real life answer is “no.” But first we should lay out the assumptions implicit in the problem. We’re going to assume that at some point in time, everyone was either entirely Swedish or entirely non-Swedish. There’s a chicken-and-egg problem that we’re sweeping under the rug here, but that’s what rugs are for. Next we’re assuming that every person after that point in time has their Swedishness wholly and equally determined by their parents Swedishness. So if mom is 17% Swedish and dad is 66% Swedish, then baby is ½ x 17% + ½ x 66% = 41.5% Swedish. <!--more--></p>
 <p>So why is 15% impossible? Or, for that matter, all the numbers in the previous example: 17%, 66%, 41.5%? The reason is that any person’s Swedishness must be a fraction which, in lowest terms, must have a denominator that is a power of 2. There’s an easy proof by induction. Initially everyone is either entirely Swedish or entirely non-Swedish. In lowest terms these fractions can be expressed as 1/1 and 0/1, respectively. The denominator, 1, is a power of 2 (fyi <span class="math">\(2^0 = 1\)</span>). Now, assuming a mom and dad are Swedish in proportions <span class="math">\(m/2^M\)</span> and <span class="math">\(d/2^D\)</span> respectively, their offspring will be this Swedish:</p>
 <p><span class="math">\[\frac{2^Dm + 2^Md}{2^{D+M+2}}\]</span></p>
 <p>The denominator is a power of 2, and reducing this fraction to lower terms will not change that fact. Numbers like 15%, a.k.a. 15/100, or 3/20 in lowest terms, have denominators which aren’t powers of 2, and that’s why no one can ever really be 15% Swedish.</p>
@@ -215,6 +215,14 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
     
       <li class="post">
         <a href="/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/">Is It Possible to Be 15% Swedish?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don't Understand Hindley-Milner? Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/">Setting Up PostgreSQL With MacPorts for Ruby on Rails Development</a>
       </li>
     
   </ul>

@@ -99,7 +99,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <h2 id="the-rules-for-deducing-statements-about-type-inference">The rules for deducing statements about type inference</h2>
 <p>[Var]</p>
 <p><span class="math">\[\underline{x:\sigma \in \Gamma}\]</span> <span class="math">\[\Gamma \vdash x:\sigma\]</span></p>
-<p>This translates to: If “<span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>” is a statement in our collection of statements <span class="math">\(\Gamma\)</span>, then from <span class="math">\(\Gamma\)</span> you can infer that <span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>. Here <span class="math">\(x\)</span> is a variable (hence the name of this rule of inference). Yes, it should sound that painfully obvious. The terse, cryptic way that [Var] is expressed isn’t that way because it contains some deep, difficult fact. It’s terse and succinct so that a machine can understand it and type inference can be automated.</p>
+<p>This translates to: If “<span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>” is a statement in our collection of statements <span class="math">\(\Gamma\)</span>, then from <span class="math">\(\Gamma\)</span> you can infer that <span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>. Here <span class="math">\(x\)</span> is a variable (hence the name of this rule of inference). Yes, it should sound that painfully obvious. The terse, cryptic way that [Var] is expressed isn’t that way because it contains some deep, difficult fact. It’s terse and succinct so that a machine can understand it and type inference can be automated.<br /><!--more--></p>
 <p>[App]</p>
 <p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
 <p>This translates to: If we can infer that <span class="math">\(e_0\)</span> is an expression whose type is <span class="math">\(\tau \rightarrow \tau &#39;\)</span> (e.g. <span class="math">\(e_0\)</span> might be an anonymous function which, according to <span class="math">\(\Gamma\)</span>, takes input of type <span class="math">\(\tau\)</span> and returns output of type <span class="math">\(\tau &#39;\)</span>), and we can infer that <span class="math">\(e_1\)</span> has type <span class="math">\(\tau\)</span>, then we may deduce that we can infer that <span class="math">\(e_0(e_1)\)</span>, the expression obtained by applying <span class="math">\(e_0\)</span> to <span class="math">\(e_1\)</span>, has type <span class="math">\(\tau &#39;\)</span>. The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function. Nothing bewildering here. By the way, this is the formalization of our <code>speak(duck)</code> example.</p>
@@ -218,6 +218,14 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
     
       <li class="post">
         <a href="/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/">Is It Possible to Be 15% Swedish?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don't Understand Hindley-Milner? Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/">Setting Up PostgreSQL With MacPorts for Ruby on Rails Development</a>
       </li>
     
   </ul>

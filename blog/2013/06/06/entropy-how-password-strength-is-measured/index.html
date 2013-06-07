@@ -102,7 +102,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <li><p>How hard would it be for someone to guess your password if they knew the process used to generate it? This is of course assuming that there <strong>is</strong> a process, for example some script that does some <code>Math.rand</code>-ing and produces a password string.</p></li>
 </ol>
 <p>The term “entropy” has been used to refer to both kinds of calculations, but they’re clearly entirely different things: the former essentially takes a string as input, the latter takes a random process as input. Hence, “entropy is not entropy.”</p>
-<p>Alright, well if entropy isn’t entropy, let’s see what entropies are. We’ll look at the standard mathematical formulation of the random-process-entropy which comes from information theory. And we’ll look at the function used to calculate particular-string-entropy in one of the most popular <a href="http://rumkin.com/tools/password/passchk.php">password strength testers</a>. And that’s all we’re going to do, we’ll look at how the calculations are done, without dwelling too much on the differences between the two approaches or what their use cases are.</p>
+<p>Alright, well if entropy isn’t entropy, let’s see what entropies are. We’ll look at the standard mathematical formulation of the random-process-entropy which comes from information theory. And we’ll look at the function used to calculate particular-string-entropy in one of the most popular <a href="http://rumkin.com/tools/password/passchk.php">password strength testers</a>. And that’s all we’re going to do, we’ll look at how the calculations are done, without dwelling too much on the differences between the two approaches or what their use cases are. <!--more--></p>
 <h2 id="what-is-a-random-process">What is a random process?</h2>
 <p>For our purposes, a random process will be determined by the set of all the possible outputs it can produce, and the probability associated with each output. If you roll a fair die, the possible outputs are 1, 2, 3, 4, 5, and 6, and each output happens to have the same probability associated with them, 1/6. If you have a process that rolls a die and then yells “fizz” if the output is divisible by 3, “buzz” if its divisible by 5, and just repeats the number otherwise, then the possible outputs are:</p>
 <p>1, 2, “fizz”, 4, and “buzz”</p>
@@ -260,6 +260,14 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
     
       <li class="post">
         <a href="/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/">Is It Possible to Be 15% Swedish?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don't Understand Hindley-Milner? Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/">Setting Up PostgreSQL With MacPorts for Ruby on Rails Development</a>
       </li>
     
   </ul>

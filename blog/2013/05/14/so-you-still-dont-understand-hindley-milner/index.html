@@ -9,7 +9,7 @@
   <meta name="author" content="Amit Kumar Gupta">
 
   
-  <meta name="description" content="I was out for drinks with some friends from work, and one of them found out I “speak math.” He had come across this StackOverflow question and asked &hellip;">
+  <meta name="description" content="I was out for drinks with Josh Long and some other friends from work, when found out I “speak math.” He had come across this StackOverflow question &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -95,13 +95,13 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
   </header>
 
 
-<div class="entry-content"><p>I was out for drinks with some friends from work, and one of them found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
+<div class="entry-content"><p>I was out for drinks with <a href="https://twitter.com/starbuxman">Josh Long</a> and some other friends from work, when found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
 <p><img src="http://i.stack.imgur.com/hZhjl.png" /><br /><br></p>
 <p>Before we figure out what it means, let’s get an idea for why we care in the first place. <a href="http://www.codecommit.com/blog/scala/what-is-hindley-milner-and-why-is-it-cool">Daniel Spiewak’s blog post</a> gives a really nice explanation of the purpose of the HM algorithm, in addition to an in-depth example of its application:</p>
 <blockquote>
 <p>Functionally speaking, Hindley-Milner (or “Damas-Milner”) is an algorithm for inferring value types based on use.  It literally formalizes the intuition that a type can be deduced by the functionality it supports.</p>
 </blockquote>
-<p>Okay, so we want to formalize an algorithm for inferring types of any given expression. In this post, I’m going to touch on what it means to formalize something, then describe the building blocks of the HM formalization. In Part 2, I’ll flesh out the building blocks of the formalization. Finally in Part 3, I’ll translate that StackOverflow question.</p>
+<p>Okay, so we want to formalize an algorithm for inferring types of any given expression. In this post, I’m going to touch on what it means to formalize something, then describe the building blocks of the HM formalization. In Part 2, I’ll flesh out the building blocks of the formalization. Finally in Part 3, I’ll translate that StackOverflow question.<br /><!--more--></p>
 <h2 id="what-it-means-to-formalize">What it means to formalize</h2>
 <p>Okay, so we want to talk about expressions. Arbitrary expressions. In an arbitrary language. And we want to talk about inferring types of these expressions. And we want to figure out rules for how we can infer types. And then we’re going to want to make an algorithm that uses these rules to infer types. So we’re going to need a meta-language. A language to talk about expressions in an arbitrary programming language. This meta-language should:</p>
 <ul>
@@ -208,6 +208,14 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
     
       <li class="post">
         <a href="/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/">Is It Possible to Be 15% Swedish?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don't Understand Hindley-Milner? Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/">Setting Up PostgreSQL With MacPorts for Ruby on Rails Development</a>
       </li>
     
   </ul>

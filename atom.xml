@@ -4,7 +4,7 @@
   <title><![CDATA[Amit's Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2013-06-07T00:29:32-07:00</updated>
+  <updated>2013-06-07T13:39:45-07:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -22,7 +22,7 @@
 <h2 id="the-rules-for-deducing-statements-about-type-inference">The rules for deducing statements about type inference</h2>
 <p>[Var]</p>
 <p><span class="math">\[\underline{x:\sigma \in \Gamma}\]</span> <span class="math">\[\Gamma \vdash x:\sigma\]</span></p>
-<p>This translates to: If “<span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>” is a statement in our collection of statements <span class="math">\(\Gamma\)</span>, then from <span class="math">\(\Gamma\)</span> you can infer that <span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>. Here <span class="math">\(x\)</span> is a variable (hence the name of this rule of inference). Yes, it should sound that painfully obvious. The terse, cryptic way that [Var] is expressed isn’t that way because it contains some deep, difficult fact. It’s terse and succinct so that a machine can understand it and type inference can be automated.</p>
+<p>This translates to: If “<span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>” is a statement in our collection of statements <span class="math">\(\Gamma\)</span>, then from <span class="math">\(\Gamma\)</span> you can infer that <span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>. Here <span class="math">\(x\)</span> is a variable (hence the name of this rule of inference). Yes, it should sound that painfully obvious. The terse, cryptic way that [Var] is expressed isn’t that way because it contains some deep, difficult fact. It’s terse and succinct so that a machine can understand it and type inference can be automated.<br /><!--more--></p>
 <p>[App]</p>
 <p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
 <p>This translates to: If we can infer that <span class="math">\(e_0\)</span> is an expression whose type is <span class="math">\(\tau \rightarrow \tau &#39;\)</span> (e.g. <span class="math">\(e_0\)</span> might be an anonymous function which, according to <span class="math">\(\Gamma\)</span>, takes input of type <span class="math">\(\tau\)</span> and returns output of type <span class="math">\(\tau &#39;\)</span>), and we can infer that <span class="math">\(e_1\)</span> has type <span class="math">\(\tau\)</span>, then we may deduce that we can infer that <span class="math">\(e_0(e_1)\)</span>, the expression obtained by applying <span class="math">\(e_0\)</span> to <span class="math">\(e_1\)</span>, has type <span class="math">\(\tau &#39;\)</span>. The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function. Nothing bewildering here. By the way, this is the formalization of our <code>speak(duck)</code> example.</p>
@@ -73,7 +73,7 @@
     <id>http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2</id>
     <content type="html"><![CDATA[<p>In Part 1, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually formulate the formalization:</p>
 <h2 id="formalizing-the-concept-of-an-expression">Formalizing the concept of an expression</h2>
-<p>We’ll give a <a href="http://en.wikipedia.org/wiki/Recursive_definition">recursive definition</a> of what an expression is; in other words, we’ll state what the most basic kind of expression is, we’ll say how to create new, more complex expressions out of existing expressions, and we’ll say that only things made in this way are valid expressions.</p>
+<p>We’ll give a <a href="http://en.wikipedia.org/wiki/Recursive_definition">recursive definition</a> of what an expression is; in other words, we’ll state what the most basic kind of expression is, we’ll say how to create new, more complex expressions out of existing expressions, and we’ll say that only things made in this way are valid expressions.<br /><!--more--></p>
 <ol type="1">
 <li>Variables are valid expressions.<br /></li>
 <li>If <span class="math">\(e\)</span> is any expression, and <span class="math">\(x\)</span> is any variable, then <span class="math">\(\lambda x.e\)</span> is an expression. Here it helps to think of e as typically (thought not necessarily) a more complex expression involving <span class="math">\(x\)</span>, e.g. <span class="math">\(x^2+2\)</span>, and then <span class="math">\(\lambda x.e\)</span> as the anonymous function that takes an input <span class="math">\(x\)</span> and returns the result of evaluating the expression <span class="math">\(e\)</span> with the given value of <span class="math">\(x\)</span>. In other words, think of it like this:<br />
@@ -158,7 +158,7 @@
 <li><p>How hard would it be for someone to guess your password if they knew the process used to generate it? This is of course assuming that there <strong>is</strong> a process, for example some script that does some <code>Math.rand</code>-ing and produces a password string.</p></li>
 </ol>
 <p>The term “entropy” has been used to refer to both kinds of calculations, but they’re clearly entirely different things: the former essentially takes a string as input, the latter takes a random process as input. Hence, “entropy is not entropy.”</p>
-<p>Alright, well if entropy isn’t entropy, let’s see what entropies are. We’ll look at the standard mathematical formulation of the random-process-entropy which comes from information theory. And we’ll look at the function used to calculate particular-string-entropy in one of the most popular <a href="http://rumkin.com/tools/password/passchk.php">password strength testers</a>. And that’s all we’re going to do, we’ll look at how the calculations are done, without dwelling too much on the differences between the two approaches or what their use cases are.</p>
+<p>Alright, well if entropy isn’t entropy, let’s see what entropies are. We’ll look at the standard mathematical formulation of the random-process-entropy which comes from information theory. And we’ll look at the function used to calculate particular-string-entropy in one of the most popular <a href="http://rumkin.com/tools/password/passchk.php">password strength testers</a>. And that’s all we’re going to do, we’ll look at how the calculations are done, without dwelling too much on the differences between the two approaches or what their use cases are. <!--more--></p>
 <h2 id="what-is-a-random-process">What is a random process?</h2>
 <p>For our purposes, a random process will be determined by the set of all the possible outputs it can produce, and the probability associated with each output. If you roll a fair die, the possible outputs are 1, 2, 3, 4, 5, and 6, and each output happens to have the same probability associated with them, 1/6. If you have a process that rolls a die and then yells “fizz” if the output is divisible by 3, “buzz” if its divisible by 5, and just repeats the number otherwise, then the possible outputs are:</p>
 <p>1, 2, “fizz”, 4, and “buzz”</p>
@@ -244,12 +244,13 @@
     <link href="http://akgupta.ca/blog/2013/06/02/yo-dawg/"/>
     <updated>2013-06-02T12:23:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/06/02/yo-dawg</id>
-    <content type="html"><![CDATA[<p>I’ve been playing around with R lately, and recently learned about <a href="http://yihui.name/knitr/">knitr</a>. It’s an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. I’ve got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
+    <content type="html"><![CDATA[<p>I’ve been learning a bit of statistical computing with R lately on the side from <a href="http://www.stat.berkeley.edu/~paciorek/teaching/teaching.html">Chris Paciorek’s Berkeley course</a>. I just got introduced to <a href="http://yihui.name/knitr/">knitr</a> and it’s damned sweet! It’s an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. It let’s you put math in your math, so you can math while you math.</p>
+<p>I’ve got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
 <ol type="1">
 <li>Runs a Python script which will use Selenium to scrape a web page for 2012 NFL passing statistics.</li>
 <li>“Knits” a TeX file with embedded R that cleans the raw scraped data, produces a histogram of touchown passes for teams, and displays the teams with the least and greatest number of touchdowns.</li>
 <li>Compiles the resulting TeX file and opens the resulting PDF.</li>
-<li>Cleans up any temporary work files.</li>
+<li>Cleans up any temporary work files. <!--more--></li>
 </ol>
 <p>Here’s what the pre-“knitted” LaTeX looks like with the embedded R:</p>
 <div class='bogus-wrapper'>
@@ -321,7 +322,7 @@
     <id>http://akgupta.ca/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish</id>
     <content type="html"><![CDATA[<p>This question came up as a joke during a team standup a few months ago. Although the obvious answer is “no,” if you’re willing to play fast and loose with your metaphysics for a bit, the answer can be “yes” and there’s a cute solution that ties together binary numbers and binary trees. This post itself is a bit of a joke in that it’s just for fun, but it might be nice to see the familiar concepts of binary numbers and binary trees in a new light.</p>
 <h2 id="the-obvious-answer-is-no">The obvious answer is “no”</h2>
-<p>Let’s quickly see why the real life answer is “no.” But first we should lay out the assumptions implicit in the problem. We’re going to assume that at some point in time, everyone was either entirely Swedish or entirely non-Swedish. There’s a chicken-and-egg problem that we’re sweeping under the rug here, but that’s what rugs are for. Next we’re assuming that every person after that point in time has their Swedishness wholly and equally determined by their parents Swedishness. So if mom is 17% Swedish and dad is 66% Swedish, then baby is ½ x 17% + ½ x 66% = 41.5% Swedish.</p>
+<p>Let’s quickly see why the real life answer is “no.” But first we should lay out the assumptions implicit in the problem. We’re going to assume that at some point in time, everyone was either entirely Swedish or entirely non-Swedish. There’s a chicken-and-egg problem that we’re sweeping under the rug here, but that’s what rugs are for. Next we’re assuming that every person after that point in time has their Swedishness wholly and equally determined by their parents Swedishness. So if mom is 17% Swedish and dad is 66% Swedish, then baby is ½ x 17% + ½ x 66% = 41.5% Swedish. <!--more--></p>
 <p>So why is 15% impossible? Or, for that matter, all the numbers in the previous example: 17%, 66%, 41.5%? The reason is that any person’s Swedishness must be a fraction which, in lowest terms, must have a denominator that is a power of 2. There’s an easy proof by induction. Initially everyone is either entirely Swedish or entirely non-Swedish. In lowest terms these fractions can be expressed as 1/1 and 0/1, respectively. The denominator, 1, is a power of 2 (fyi <span class="math">\(2^0 = 1\)</span>). Now, assuming a mom and dad are Swedish in proportions <span class="math">\(m/2^M\)</span> and <span class="math">\(d/2^D\)</span> respectively, their offspring will be this Swedish:</p>
 <p><span class="math">\[\frac{2^Dm + 2^Md}{2^{D+M+2}}\]</span></p>
 <p>The denominator is a power of 2, and reducing this fraction to lower terms will not change that fact. Numbers like 15%, a.k.a. 15/100, or 3/20 in lowest terms, have denominators which aren’t powers of 2, and that’s why no one can ever really be 15% Swedish.</p>
@@ -367,13 +368,13 @@
     <link href="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/"/>
     <updated>2013-05-14T01:12:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner</id>
-    <content type="html"><![CDATA[<p>I was out for drinks with some friends from work, and one of them found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
+    <content type="html"><![CDATA[<p>I was out for drinks with <a href="https://twitter.com/starbuxman">Josh Long</a> and some other friends from work, when found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
 <p><img src="http://i.stack.imgur.com/hZhjl.png" /><br /><br></p>
 <p>Before we figure out what it means, let’s get an idea for why we care in the first place. <a href="http://www.codecommit.com/blog/scala/what-is-hindley-milner-and-why-is-it-cool">Daniel Spiewak’s blog post</a> gives a really nice explanation of the purpose of the HM algorithm, in addition to an in-depth example of its application:</p>
 <blockquote>
 <p>Functionally speaking, Hindley-Milner (or “Damas-Milner”) is an algorithm for inferring value types based on use.  It literally formalizes the intuition that a type can be deduced by the functionality it supports.</p>
 </blockquote>
-<p>Okay, so we want to formalize an algorithm for inferring types of any given expression. In this post, I’m going to touch on what it means to formalize something, then describe the building blocks of the HM formalization. In Part 2, I’ll flesh out the building blocks of the formalization. Finally in Part 3, I’ll translate that StackOverflow question.</p>
+<p>Okay, so we want to formalize an algorithm for inferring types of any given expression. In this post, I’m going to touch on what it means to formalize something, then describe the building blocks of the HM formalization. In Part 2, I’ll flesh out the building blocks of the formalization. Finally in Part 3, I’ll translate that StackOverflow question.<br /><!--more--></p>
 <h2 id="what-it-means-to-formalize">What it means to formalize</h2>
 <p>Okay, so we want to talk about expressions. Arbitrary expressions. In an arbitrary language. And we want to talk about inferring types of these expressions. And we want to figure out rules for how we can infer types. And then we’re going to want to make an algorithm that uses these rules to infer types. So we’re going to need a meta-language. A language to talk about expressions in an arbitrary programming language. This meta-language should:</p>
 <ul>
@@ -442,7 +443,7 @@
 </span></code></pre></td></tr></table></div></figure>
 </notextile>
 </div>
-
+<!--more-->
 <p>In order to use a PostgreSQL database for development, you’ll need, in addition to the PostgreSQL package itself, a PostgreSQL server for your application to talk to. The PostgreSQL server package has the basic PostgreSQL package as a dependency, so we’ll just run the command to install the server and we’ll get both. The <strong>server</strong> package will allow you to run a process that serves your database, and the basic package provides a <strong>client</strong> that your Rails app will use to connect to and interact with (read, write, etc.) the database being served.</p>
 <p>Pick the version of PostgreSQL you want to install. At the time I wrote this, the latest was 9.2.x so we’ll go with that:</p>
 <div class='bogus-wrapper'>

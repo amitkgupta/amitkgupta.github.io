@@ -9,7 +9,7 @@
   <meta name="author" content="Amit Kumar Gupta">
 
   
-  <meta name="description" content="I’ve been playing around with R lately, and recently learned about knitr. It’s an R package which takes a LaTeX file with embedded R, and produces a &hellip;">
+  <meta name="description" content="I’ve been learning a bit of statistical computing with R lately on the side from Chris Paciorek’s Berkeley course. I just got introduced to knitr and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -95,12 +95,13 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
   </header>
 
 
-<div class="entry-content"><p>I’ve been playing around with R lately, and recently learned about <a href="http://yihui.name/knitr/">knitr</a>. It’s an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. I’ve got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
+<div class="entry-content"><p>I’ve been learning a bit of statistical computing with R lately on the side from <a href="http://www.stat.berkeley.edu/~paciorek/teaching/teaching.html">Chris Paciorek’s Berkeley course</a>. I just got introduced to <a href="http://yihui.name/knitr/">knitr</a> and it’s damned sweet! It’s an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. It let’s you put math in your math, so you can math while you math.</p>
+<p>I’ve got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
 <ol type="1">
 <li>Runs a Python script which will use Selenium to scrape a web page for 2012 NFL passing statistics.</li>
 <li>“Knits” a TeX file with embedded R that cleans the raw scraped data, produces a histogram of touchown passes for teams, and displays the teams with the least and greatest number of touchdowns.</li>
 <li>Compiles the resulting TeX file and opens the resulting PDF.</li>
-<li>Cleans up any temporary work files.</li>
+<li>Cleans up any temporary work files. <!--more--></li>
 </ol>
 <p>Here’s what the pre-“knitted” LaTeX looks like with the embedded R:</p>
 <div class='bogus-wrapper'>
@@ -242,6 +243,14 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
     
       <li class="post">
         <a href="/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/">Is It Possible to Be 15% Swedish?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don't Understand Hindley-Milner? Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/">Setting Up PostgreSQL With MacPorts for Ruby on Rails Development</a>
       </li>
     
   </ul>
