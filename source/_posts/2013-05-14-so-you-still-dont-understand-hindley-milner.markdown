@@ -15,7 +15,7 @@ Before we figure out what it means, let's get an idea for why we care in the fir
 
 > Functionally speaking, Hindley-Milner (or “Damas-Milner”) is an algorithm for inferring value types based on use.  It literally formalizes the intuition that a type can be deduced by the functionality it supports.
 
-Okay, so we want to formalize an algorithm for inferring types of any given expression.  In this post, I'm going to touch on what it means to formalize something, then describe the building blocks of the HM formalization.  In Part 2, I'll flesh out the building blocks of the formalization.  Finally in Part 3, I'll translate that StackOverflow question.  
+Okay, so we want to formalize an algorithm for inferring types of any given expression.  In this post, I'm going to touch on what it means to formalize something, then describe the building blocks of the HM formalization.  In [Part 2](/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/), I'll flesh out the building blocks of the formalization.  Finally in [Part 3](/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/), I'll translate that StackOverflow question.  
 <!--more-->
 
 ##What it means to formalize
@@ -53,5 +53,5 @@ We will need:
 1. A formal way to talk about expressions.  This formalization should meet the criteria enumerated above; for this purpose we use the **Lambda Calculus**.  I'll be explaining that in a minute, but there's nothing crazy going on here.
 1. A formal way to talk about types, and a formal way to talk about expressions and types together.  After all, the purpose of the HM algorithm is to be able to deduce statements of the form "expression $e$ has type $t$".
 1. A formal set of rules for deriving statements about expression types from other such statements. Rules along the lines of: "if I can already demonstrate that some expression has this type, and another expression has that type, then this third expression has this other type".  *Such a set of rules is exactly what you're seeing in that SO question*.  I'll be translating this in full detail.
-1. An algorithm that intelligently uses the deduction rules to get from a starting point to deducing/inferring a desired conclusion statement: "the expression $e$ that I'm interested in has type $t$".  This is the "algorithm" part for the "HM algorithm", and that's not something I'll be going into in this post.
+1. An algorithm that intelligently uses the deduction rules to get from a starting point to deducing/inferring a desired conclusion statement: "the expression $e$ that I'm interested in has type $t$".  This is the "algorithm" part for the "HM algorithm", and that's not something I'll be going into in these posts.
 

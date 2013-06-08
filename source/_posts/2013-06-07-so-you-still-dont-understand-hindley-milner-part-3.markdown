@@ -5,7 +5,7 @@ date: 2013-06-07 00:22
 comments: true
 categories: 
 ---
-In Part 2, we finished defining all the formal terms and symbols you see in the StackOverflow question on the Hindley-Milner algorithm, so now we're ready to translate what that question was asking about, namely the rules for deducing statements about type inference.  Let's get down to it!
+In [Part 2](/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/), we finished defining all the formal terms and symbols you see in the [StackOverflow question](http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand) on the Hindley-Milner algorithm, so now we're ready to translate what that question was asking about, namely the rules for deducing statements about type inference.  Let's get down to it!
 
 ##The rules for deducing statements about type inference
 
@@ -22,7 +22,7 @@ This translates to: If "$x$ has type $\sigma$" is a statement in our collection 
 $$\underline{\Gamma\vdash e_0:\tau\rightarrow\tau '\ \ \ \Gamma\vdash e_1:\tau}$$
 $$\Gamma\vdash e_0(e_1):\tau \rightarrow \tau '$$
   
-This translates to: If we can infer that $e_0$ is an expression whose type is $\tau \rightarrow \tau '$ (e.g. $e_0$ might be an anonymous function which, according to $\Gamma$, takes input of type $\tau$ and returns output of type $\tau '$), and we can infer that $e_1$ has type $\tau$, then we may deduce that we can infer that $e_0(e_1)$, the expression obtained by applying $e_0$ to $e_1$, has type $\tau '$.  The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function.  Nothing bewildering here.  By the way, this is the formalization of our `speak(duck)` example.  
+This translates to: If we can infer that $e_0$ is an expression whose type is $\tau \rightarrow \tau '$ (e.g. $e_0$ might be an anonymous function which, according to $\Gamma$, takes input of type $\tau$ and returns output of type $\tau '$), and we can infer that $e_1$ has type $\tau$, then we may deduce that we can infer that $e_0(e_1)$, the expression obtained by applying $e_0$ to $e_1$, has type $\tau '$.  The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function.  Nothing bewildering here.
   
 [Abs]  
 

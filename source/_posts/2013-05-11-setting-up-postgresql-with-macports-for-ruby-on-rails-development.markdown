@@ -92,7 +92,7 @@ rails new my_app --database=postgresql
 
 The standard `rails new my_app` does a whole bunch of initial setup and file creation for your Rails app.  Adding the `--database=postgresql` flag ensures that your Rails setup includes some PostgreSQL-specific things, such as adding the `pg` gem to your Gemfile, and pre-populating some of the database configuration properties in the `my_app/config/database.yml` file.  We'll need to edit that file a little.  Go to `my_app/config/database.yml` and change the username for the development and test databases to 'postgres'.  What this does is ensure that when your Rails app uses the PostgreSQL client to try to access the database cluster served by your PostgreSQL server, it does so with the credentials of the user who owns that cluster, namely the 'postgres' user.
 
-While you're in that file, you can get rid of the section for the production database altogether if you're deploying to CloudFoundry or Heroku, since they will overwrite whatever you have there anyways.
+While you're in that file, you can get rid of the section for the production database altogether if you're deploying to Cloud Foundry or Heroku, since they will overwrite whatever you have there anyways.
 
 Finally, create the development and test databases that your Rails app will use.  (These databases will be created within your default cluster). 
 

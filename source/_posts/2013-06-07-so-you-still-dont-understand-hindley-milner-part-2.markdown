@@ -5,7 +5,7 @@ date: 2013-06-07 00:19
 comments: true
 categories: 
 ---
-In Part 1, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we'll thoroughly define them, and actually formulate the formalization:
+In [Part 1](/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/), we said what the building blocks of the Hindley-Milner formalization would be, and in this post we'll thoroughly define them, and actually formulate the formalization:
 
 ##Formalizing the concept of an expression
 
@@ -68,7 +68,7 @@ We'll formalize that as follows:
 $$\underline{\Gamma\vdash e_0:\tau\rightarrow\tau '\ \ \ \Gamma\vdash e_1:\tau}$$
 $$\Gamma\vdash e_0(e_1):\tau \rightarrow \tau '$$
 
-Let's first get a handle on all the symbols you see above:  
+That rule has the name [App] (for application), and it's one of the ones pictured in [that StackOverflow question](http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand).  We'll talk about it and the rest of the rules in the next post.  For now, let's first get a handle on all the symbols you see above:  
 
 * $\Gamma$, this will stand for the collection of statements we already know, or perhaps, the statements we're assuming.  More generally, $\Gamma$ should just be thought of as some collection of statements (about expressions and their types).  And of course, there's nothing special about the letter $\Gamma$; capital greek letters are commonly used for sets of statements however.  
 * $\vdash$, the "turnstile", denotes that something can be inferred.  For instance, $\Gamma \vdash x:t$ says that if we take the statements in $\Gamma$ as our assumptions/axioms/current knowledge, then we can infer that $x$ has type $t$.  
