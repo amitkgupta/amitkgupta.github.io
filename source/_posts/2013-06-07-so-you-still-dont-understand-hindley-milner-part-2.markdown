@@ -66,7 +66,7 @@ Now we're going to want to formalize a bunch of rules for how we can go from som
 We'll formalize that as follows:
 
 $$\underline{\Gamma\vdash e_0:\tau\rightarrow\tau '\ \ \ \Gamma\vdash e_1:\tau}$$
-$$\Gamma\vdash e_0(e_1):\tau \rightarrow \tau '$$
+$$\Gamma\vdash e_0(e_1):\tau '$$
 
 That rule has the name [App] (for application), and it's one of the ones pictured in [that StackOverflow question](http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand).  We'll talk about it and the rest of the rules in the next post.  For now, let's first get a handle on all the symbols you see above:  
 

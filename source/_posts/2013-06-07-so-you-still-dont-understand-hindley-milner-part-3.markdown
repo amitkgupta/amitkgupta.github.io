@@ -20,7 +20,7 @@ This translates to: If "$x$ has type $\sigma$" is a statement in our collection 
 [App]  
 
 $$\underline{\Gamma\vdash e_0:\tau\rightarrow\tau '\ \ \ \Gamma\vdash e_1:\tau}$$
-$$\Gamma\vdash e_0(e_1):\tau \rightarrow \tau '$$
+$$\Gamma\vdash e_0(e_1):\tau '$$
   
 This translates to: If we can infer that $e_0$ is an expression whose type is $\tau \rightarrow \tau '$ (e.g. $e_0$ might be an anonymous function which, according to $\Gamma$, takes input of type $\tau$ and returns output of type $\tau '$), and we can infer that $e_1$ has type $\tau$, then we may deduce that we can infer that $e_0(e_1)$, the expression obtained by applying $e_0$ to $e_1$, has type $\tau '$.  The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function.  Nothing bewildering here.
   
