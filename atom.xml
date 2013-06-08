@@ -4,7 +4,7 @@
   <title><![CDATA[Amit's Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2013-06-07T23:33:36-07:00</updated>
+  <updated>2013-06-07T23:35:50-07:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -368,7 +368,7 @@
     <link href="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/"/>
     <updated>2013-05-14T01:12:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner</id>
-    <content type="html"><![CDATA[<p>I was out for drinks with <a href="https://twitter.com/starbuxman">Josh Long</a> and some other friends from work, when found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
+    <content type="html"><![CDATA[<p>I was out for drinks with <a href="https://twitter.com/starbuxman">Josh Long</a> and some other friends from work, when he found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
 <p><img src="http://i.stack.imgur.com/hZhjl.png" /><br /><br></p>
 <p>Before we figure out what it means, let’s get an idea for why we care in the first place. <a href="http://www.codecommit.com/blog/scala/what-is-hindley-milner-and-why-is-it-cool">Daniel Spiewak’s blog post</a> gives a really nice explanation of the purpose of the HM algorithm, in addition to an in-depth example of its application:</p>
 <blockquote>
