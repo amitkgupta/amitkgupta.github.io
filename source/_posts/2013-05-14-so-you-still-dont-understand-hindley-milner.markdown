@@ -6,7 +6,7 @@ comments: true
 categories: 
 ---
 
-I was out for drinks with [Josh Long](https://twitter.com/starbuxman) and some other friends from work, when found out I "speak math."  He had come across [this StackOverflow question](http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand) and asked me what it meant:
+I was out for drinks with [Josh Long](https://twitter.com/starbuxman) and some other friends from work, when he found out I "speak math."  He had come across [this StackOverflow question](http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand) and asked me what it meant:
 
 ![](http://i.stack.imgur.com/hZhjl.png)  
 <br>
