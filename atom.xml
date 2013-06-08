@@ -4,7 +4,7 @@
   <title><![CDATA[Amit's Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2013-06-08T10:07:41-07:00</updated>
+  <updated>2013-06-08T12:54:42-07:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -143,7 +143,11 @@
 <li>That long horizontal bar; this line tells us that we can make the conclusion below the line if the things above the line are taken as premises in the argument. It lets us express things like, “if we can infer such and such, then we can infer such and such”, e.g.</li>
 </ul>
 <p><span class="math">\[\underline{\Gamma \vdash y:\sigma}\]</span> <span class="math">\[\Gamma \vdash x:\tau\]</span></p>
-<p>If we can infer that <span class="math">\(y\)</span> has type <span class="math">\(\sigma\)</span> from <span class="math">\(\Gamma\)</span>, then we can infer <span class="math">\(x\)</span> has type <span class="math">\(\tau\)</span> from <span class="math">\(\Gamma\)</span>.</p>]]></content>
+<p>If we can infer that <span class="math">\(y\)</span> has type <span class="math">\(\sigma\)</span> from <span class="math">\(\Gamma\)</span>, then we can infer <span class="math">\(x\)</span> has type <span class="math">\(\tau\)</span> from <span class="math">\(\Gamma\)</span>.</p>
+<p>Next up:</p>
+<ul>
+<li><a href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/">Part 3</a>, where we put this all together and make sense of the inference rules used by the HM algorithm.</li>
+</ul>]]></content>
   </entry>
   
   <entry>
@@ -401,7 +405,12 @@
 <li>A formal way to talk about types, and a formal way to talk about expressions and types together. After all, the purpose of the HM algorithm is to be able to deduce statements of the form “expression <span class="math">\(e\)</span> has type <span class="math">\(t\)</span>”.</li>
 <li>A formal set of rules for deriving statements about expression types from other such statements. Rules along the lines of: “if I can already demonstrate that some expression has this type, and another expression has that type, then this third expression has this other type”. <em>Such a set of rules is exactly what you’re seeing in that SO question</em>. I’ll be translating this in full detail.</li>
 <li>An algorithm that intelligently uses the deduction rules to get from a starting point to deducing/inferring a desired conclusion statement: “the expression <span class="math">\(e\)</span> that I’m interested in has type <span class="math">\(t\)</span>”. This is the “algorithm” part for the “HM algorithm”, and that’s not something I’ll be going into in these posts.</li>
-</ol>]]></content>
+</ol>
+<p>Onward, ho!</p>
+<ul>
+<li><a href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/">Part 2</a>, wherein we thoroughly define points 1 and 2 above, and demystify the mathematical syntax.</li>
+<li><a href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/">Part 3</a>, wherein we translate the type inference rules in point 3 above.</li>
+</ul>]]></content>
   </entry>
   
   <entry>
