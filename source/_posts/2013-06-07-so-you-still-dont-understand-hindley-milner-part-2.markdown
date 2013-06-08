@@ -17,8 +17,9 @@ We'll give a [recursive definition](http://en.wikipedia.org/wiki/Recursive_defin
 ```javascript
 function(x) { return x^2 + 2; }
 ```
-1. If $f$ and $e$ are valid expressions, and $f$ can take arguments (e.g. if it's an abstraction like explained in point 2), then $f(e)$ is a valid expression.  This is called Application, for obvious reasons.
-1. If $x$ is a variable, and $e_1$ and $e_0$ are valid expressions, then substituting every occurrence of $x$ in $e_0$ for $e_1$ yields a valid expression.  So, for example, if $e_0$ is the expression $x^2 + 2$, and $e_0$ is the expression $y/3$, then if we let $x = e_0$ in $e_1$, we get the expression $(y/3)^2 + 2$.
+1. If $f$ and $e$ are valid expressions, then $f(e)$ is a valid expression.  This is called Application, for obvious reasons.
+1. If $x$ is a variable, and $e_1$ and $e_0$ are valid expressions, then substituting every occurrence of $x$ in $e_0$ for $e_1$ yields a valid expression.  So, for example, if $e_0$ is the expression $x^2 + 2$, and $e_0$ is the expression $y/3$, then if we let $x = e_0$ in $e_1$, we get the expression $(y/3)^2 + 2$.  
+[NB: This last clause is redundant and not officially a part of the Lambda Calculus definition of an expression, as substituting $e_0$ for $x$ in $e_1$ is equivalent to applying the abstraction $\lambda x.e_1$ to $e_0$.  It's added to support something called [let-polymorphism](https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner#Let-polymorphism).]
 
 And nothing else is a valid expression.
 
