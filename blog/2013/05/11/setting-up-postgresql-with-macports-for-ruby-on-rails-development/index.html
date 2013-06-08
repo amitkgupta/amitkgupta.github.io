@@ -241,7 +241,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </div>
 
 <p>The standard <code>rails new my_app</code> does a whole bunch of initial setup and file creation for your Rails app. Adding the <code>--database=postgresql</code> flag ensures that your Rails setup includes some PostgreSQL-specific things, such as adding the <code>pg</code> gem to your Gemfile, and pre-populating some of the database configuration properties in the <code>my_app/config/database.yml</code> file. We’ll need to edit that file a little. Go to <code>my_app/config/database.yml</code> and change the username for the development and test databases to ‘postgres’. What this does is ensure that when your Rails app uses the PostgreSQL client to try to access the database cluster served by your PostgreSQL server, it does so with the credentials of the user who owns that cluster, namely the ‘postgres’ user.</p>
-<p>While you’re in that file, you can get rid of the section for the production database altogether if you’re deploying to CloudFoundry or Heroku, since they will overwrite whatever you have there anyways.</p>
+<p>While you’re in that file, you can get rid of the section for the production database altogether if you’re deploying to Cloud Foundry or Heroku, since they will overwrite whatever you have there anyways.</p>
 <p>Finally, create the development and test databases that your Rails app will use. (These databases will be created within your default cluster).</p>
 <div class='bogus-wrapper'>
 <notextile>

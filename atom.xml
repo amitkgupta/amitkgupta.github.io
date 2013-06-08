@@ -4,7 +4,7 @@
   <title><![CDATA[Amit's Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2013-06-07T13:39:45-07:00</updated>
+  <updated>2013-06-07T23:33:36-07:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -18,14 +18,14 @@
     <link href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/"/>
     <updated>2013-06-07T00:22:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3</id>
-    <content type="html"><![CDATA[<p>In Part 2, we finished defining all the formal terms and symbols you see in the StackOverflow question on the Hindley-Milner algorithm, so now we’re ready to translate what that question was asking about, namely the rules for deducing statements about type inference. Let’s get down to it!</p>
+    <content type="html"><![CDATA[<p>In <a href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/">Part 2</a>, we finished defining all the formal terms and symbols you see in the <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">StackOverflow question</a> on the Hindley-Milner algorithm, so now we’re ready to translate what that question was asking about, namely the rules for deducing statements about type inference. Let’s get down to it!</p>
 <h2 id="the-rules-for-deducing-statements-about-type-inference">The rules for deducing statements about type inference</h2>
 <p>[Var]</p>
 <p><span class="math">\[\underline{x:\sigma \in \Gamma}\]</span> <span class="math">\[\Gamma \vdash x:\sigma\]</span></p>
 <p>This translates to: If “<span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>” is a statement in our collection of statements <span class="math">\(\Gamma\)</span>, then from <span class="math">\(\Gamma\)</span> you can infer that <span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>. Here <span class="math">\(x\)</span> is a variable (hence the name of this rule of inference). Yes, it should sound that painfully obvious. The terse, cryptic way that [Var] is expressed isn’t that way because it contains some deep, difficult fact. It’s terse and succinct so that a machine can understand it and type inference can be automated.<br /><!--more--></p>
 <p>[App]</p>
 <p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
-<p>This translates to: If we can infer that <span class="math">\(e_0\)</span> is an expression whose type is <span class="math">\(\tau \rightarrow \tau &#39;\)</span> (e.g. <span class="math">\(e_0\)</span> might be an anonymous function which, according to <span class="math">\(\Gamma\)</span>, takes input of type <span class="math">\(\tau\)</span> and returns output of type <span class="math">\(\tau &#39;\)</span>), and we can infer that <span class="math">\(e_1\)</span> has type <span class="math">\(\tau\)</span>, then we may deduce that we can infer that <span class="math">\(e_0(e_1)\)</span>, the expression obtained by applying <span class="math">\(e_0\)</span> to <span class="math">\(e_1\)</span>, has type <span class="math">\(\tau &#39;\)</span>. The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function. Nothing bewildering here. By the way, this is the formalization of our <code>speak(duck)</code> example.</p>
+<p>This translates to: If we can infer that <span class="math">\(e_0\)</span> is an expression whose type is <span class="math">\(\tau \rightarrow \tau &#39;\)</span> (e.g. <span class="math">\(e_0\)</span> might be an anonymous function which, according to <span class="math">\(\Gamma\)</span>, takes input of type <span class="math">\(\tau\)</span> and returns output of type <span class="math">\(\tau &#39;\)</span>), and we can infer that <span class="math">\(e_1\)</span> has type <span class="math">\(\tau\)</span>, then we may deduce that we can infer that <span class="math">\(e_0(e_1)\)</span>, the expression obtained by applying <span class="math">\(e_0\)</span> to <span class="math">\(e_1\)</span>, has type <span class="math">\(\tau &#39;\)</span>. The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function. Nothing bewildering here.</p>
 <p>[Abs]</p>
 <p><span class="math">\[\underline{\ \ \Gamma, x:\tau \vdash e:\tau &#39;\ \ }\]</span> <span class="math">\[\Gamma \vdash \lambda x.e:\tau \rightarrow \tau &#39;\]</span></p>
 <p>This translates to: If allowing us to assume that <span class="math">\(x\)</span> has type <span class="math">\(\tau\)</span> we were able to infer that <span class="math">\(e\)</span> has type <span class="math">\(\tau &#39;\)</span>, then we may deduce that we can infer that the abstraction/anonymization of <span class="math">\(e\)</span> with respect to the variable <span class="math">\(x\)</span>, <span class="math">\(\lambda x.e\)</span>, has type <span class="math">\(\tau \rightarrow \tau &#39;\)</span>. So, for example, we know that if <span class="math">\(x\)</span> has type <span class="math">\(\mathrm{String}\)</span>, then the expression <span class="math">\(x[0]\)</span> has type <span class="math">\(\mathrm{Char}\)</span>. Now [Abs] allows us to deduce that</p>
@@ -71,7 +71,7 @@
     <link href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/"/>
     <updated>2013-06-07T00:19:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2</id>
-    <content type="html"><![CDATA[<p>In Part 1, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually formulate the formalization:</p>
+    <content type="html"><![CDATA[<p>In <a href="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">Part 1</a>, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually formulate the formalization:</p>
 <h2 id="formalizing-the-concept-of-an-expression">Formalizing the concept of an expression</h2>
 <p>We’ll give a <a href="http://en.wikipedia.org/wiki/Recursive_definition">recursive definition</a> of what an expression is; in other words, we’ll state what the most basic kind of expression is, we’ll say how to create new, more complex expressions out of existing expressions, and we’ll say that only things made in this way are valid expressions.<br /><!--more--></p>
 <ol type="1">
@@ -135,7 +135,7 @@
 </blockquote>
 <p>We’ll formalize that as follows:</p>
 <p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
-<p>Let’s first get a handle on all the symbols you see above:</p>
+<p>That rule has the name [App] (for application), and it’s one of the ones pictured in <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">that StackOverflow question</a>. We’ll talk about it and the rest of the rules in the next post. For now, let’s first get a handle on all the symbols you see above:</p>
 <ul>
 <li><span class="math">\(\Gamma\)</span>, this will stand for the collection of statements we already know, or perhaps, the statements we’re assuming. More generally, <span class="math">\(\Gamma\)</span> should just be thought of as some collection of statements (about expressions and their types). And of course, there’s nothing special about the letter <span class="math">\(\Gamma\)</span>; capital greek letters are commonly used for sets of statements however.<br /></li>
 <li><span class="math">\(\vdash\)</span>, the “turnstile”, denotes that something can be inferred. For instance, <span class="math">\(\Gamma \vdash x:t\)</span> says that if we take the statements in <span class="math">\(\Gamma\)</span> as our assumptions/axioms/current knowledge, then we can infer that <span class="math">\(x\)</span> has type <span class="math">\(t\)</span>.<br /></li>
@@ -374,7 +374,7 @@
 <blockquote>
 <p>Functionally speaking, Hindley-Milner (or “Damas-Milner”) is an algorithm for inferring value types based on use.  It literally formalizes the intuition that a type can be deduced by the functionality it supports.</p>
 </blockquote>
-<p>Okay, so we want to formalize an algorithm for inferring types of any given expression. In this post, I’m going to touch on what it means to formalize something, then describe the building blocks of the HM formalization. In Part 2, I’ll flesh out the building blocks of the formalization. Finally in Part 3, I’ll translate that StackOverflow question.<br /><!--more--></p>
+<p>Okay, so we want to formalize an algorithm for inferring types of any given expression. In this post, I’m going to touch on what it means to formalize something, then describe the building blocks of the HM formalization. In <a href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/">Part 2</a>, I’ll flesh out the building blocks of the formalization. Finally in <a href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/">Part 3</a>, I’ll translate that StackOverflow question.<br /><!--more--></p>
 <h2 id="what-it-means-to-formalize">What it means to formalize</h2>
 <p>Okay, so we want to talk about expressions. Arbitrary expressions. In an arbitrary language. And we want to talk about inferring types of these expressions. And we want to figure out rules for how we can infer types. And then we’re going to want to make an algorithm that uses these rules to infer types. So we’re going to need a meta-language. A language to talk about expressions in an arbitrary programming language. This meta-language should:</p>
 <ul>
@@ -400,7 +400,7 @@
 <li>A formal way to talk about expressions. This formalization should meet the criteria enumerated above; for this purpose we use the <strong>Lambda Calculus</strong>. I’ll be explaining that in a minute, but there’s nothing crazy going on here.</li>
 <li>A formal way to talk about types, and a formal way to talk about expressions and types together. After all, the purpose of the HM algorithm is to be able to deduce statements of the form “expression <span class="math">\(e\)</span> has type <span class="math">\(t\)</span>”.</li>
 <li>A formal set of rules for deriving statements about expression types from other such statements. Rules along the lines of: “if I can already demonstrate that some expression has this type, and another expression has that type, then this third expression has this other type”. <em>Such a set of rules is exactly what you’re seeing in that SO question</em>. I’ll be translating this in full detail.</li>
-<li>An algorithm that intelligently uses the deduction rules to get from a starting point to deducing/inferring a desired conclusion statement: “the expression <span class="math">\(e\)</span> that I’m interested in has type <span class="math">\(t\)</span>”. This is the “algorithm” part for the “HM algorithm”, and that’s not something I’ll be going into in this post.</li>
+<li>An algorithm that intelligently uses the deduction rules to get from a starting point to deducing/inferring a desired conclusion statement: “the expression <span class="math">\(e\)</span> that I’m interested in has type <span class="math">\(t\)</span>”. This is the “algorithm” part for the “HM algorithm”, and that’s not something I’ll be going into in these posts.</li>
 </ol>]]></content>
   </entry>
   
@@ -555,7 +555,7 @@
 </div>
 
 <p>The standard <code>rails new my_app</code> does a whole bunch of initial setup and file creation for your Rails app. Adding the <code>--database=postgresql</code> flag ensures that your Rails setup includes some PostgreSQL-specific things, such as adding the <code>pg</code> gem to your Gemfile, and pre-populating some of the database configuration properties in the <code>my_app/config/database.yml</code> file. We’ll need to edit that file a little. Go to <code>my_app/config/database.yml</code> and change the username for the development and test databases to ‘postgres’. What this does is ensure that when your Rails app uses the PostgreSQL client to try to access the database cluster served by your PostgreSQL server, it does so with the credentials of the user who owns that cluster, namely the ‘postgres’ user.</p>
-<p>While you’re in that file, you can get rid of the section for the production database altogether if you’re deploying to CloudFoundry or Heroku, since they will overwrite whatever you have there anyways.</p>
+<p>While you’re in that file, you can get rid of the section for the production database altogether if you’re deploying to Cloud Foundry or Heroku, since they will overwrite whatever you have there anyways.</p>
 <p>Finally, create the development and test databases that your Rails app will use. (These databases will be created within your default cluster).</p>
 <div class='bogus-wrapper'>
 <notextile>

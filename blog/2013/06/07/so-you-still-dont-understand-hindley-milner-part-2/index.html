@@ -95,7 +95,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
   </header>
 
 
-<div class="entry-content"><p>In Part 1, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually formulate the formalization:</p>
+<div class="entry-content"><p>In <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">Part 1</a>, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually formulate the formalization:</p>
 <h2 id="formalizing-the-concept-of-an-expression">Formalizing the concept of an expression</h2>
 <p>We’ll give a <a href="http://en.wikipedia.org/wiki/Recursive_definition">recursive definition</a> of what an expression is; in other words, we’ll state what the most basic kind of expression is, we’ll say how to create new, more complex expressions out of existing expressions, and we’ll say that only things made in this way are valid expressions.<br /><!--more--></p>
 <ol type="1">
@@ -159,7 +159,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </blockquote>
 <p>We’ll formalize that as follows:</p>
 <p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
-<p>Let’s first get a handle on all the symbols you see above:</p>
+<p>That rule has the name [App] (for application), and it’s one of the ones pictured in <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">that StackOverflow question</a>. We’ll talk about it and the rest of the rules in the next post. For now, let’s first get a handle on all the symbols you see above:</p>
 <ul>
 <li><span class="math">\(\Gamma\)</span>, this will stand for the collection of statements we already know, or perhaps, the statements we’re assuming. More generally, <span class="math">\(\Gamma\)</span> should just be thought of as some collection of statements (about expressions and their types). And of course, there’s nothing special about the letter <span class="math">\(\Gamma\)</span>; capital greek letters are commonly used for sets of statements however.<br /></li>
 <li><span class="math">\(\vdash\)</span>, the “turnstile”, denotes that something can be inferred. For instance, <span class="math">\(\Gamma \vdash x:t\)</span> says that if we take the statements in <span class="math">\(\Gamma\)</span> as our assumptions/axioms/current knowledge, then we can infer that <span class="math">\(x\)</span> has type <span class="math">\(t\)</span>.<br /></li>
