@@ -4,7 +4,7 @@
   <title><![CDATA[Amit's Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2013-06-07T23:35:50-07:00</updated>
+  <updated>2013-06-08T09:46:14-07:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -24,7 +24,7 @@
 <p><span class="math">\[\underline{x:\sigma \in \Gamma}\]</span> <span class="math">\[\Gamma \vdash x:\sigma\]</span></p>
 <p>This translates to: If “<span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>” is a statement in our collection of statements <span class="math">\(\Gamma\)</span>, then from <span class="math">\(\Gamma\)</span> you can infer that <span class="math">\(x\)</span> has type <span class="math">\(\sigma\)</span>. Here <span class="math">\(x\)</span> is a variable (hence the name of this rule of inference). Yes, it should sound that painfully obvious. The terse, cryptic way that [Var] is expressed isn’t that way because it contains some deep, difficult fact. It’s terse and succinct so that a machine can understand it and type inference can be automated.<br /><!--more--></p>
 <p>[App]</p>
-<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
+<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau &#39;\]</span></p>
 <p>This translates to: If we can infer that <span class="math">\(e_0\)</span> is an expression whose type is <span class="math">\(\tau \rightarrow \tau &#39;\)</span> (e.g. <span class="math">\(e_0\)</span> might be an anonymous function which, according to <span class="math">\(\Gamma\)</span>, takes input of type <span class="math">\(\tau\)</span> and returns output of type <span class="math">\(\tau &#39;\)</span>), and we can infer that <span class="math">\(e_1\)</span> has type <span class="math">\(\tau\)</span>, then we may deduce that we can infer that <span class="math">\(e_0(e_1)\)</span>, the expression obtained by applying <span class="math">\(e_0\)</span> to <span class="math">\(e_1\)</span>, has type <span class="math">\(\tau &#39;\)</span>. The intuitive gist is if we can infer the types of the input and output of a function, and we can infer some expression has the same type as the input of the function, then when we apply the function to that expression, we can infer the result expression has the type of the output of the function. Nothing bewildering here.</p>
 <p>[Abs]</p>
 <p><span class="math">\[\underline{\ \ \Gamma, x:\tau \vdash e:\tau &#39;\ \ }\]</span> <span class="math">\[\Gamma \vdash \lambda x.e:\tau \rightarrow \tau &#39;\]</span></p>
@@ -134,7 +134,7 @@
 <p>And any reasoning of this form is valid type inference.</p>
 </blockquote>
 <p>We’ll formalize that as follows:</p>
-<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
+<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau &#39;\]</span></p>
 <p>That rule has the name [App] (for application), and it’s one of the ones pictured in <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">that StackOverflow question</a>. We’ll talk about it and the rest of the rules in the next post. For now, let’s first get a handle on all the symbols you see above:</p>
 <ul>
 <li><span class="math">\(\Gamma\)</span>, this will stand for the collection of statements we already know, or perhaps, the statements we’re assuming. More generally, <span class="math">\(\Gamma\)</span> should just be thought of as some collection of statements (about expressions and their types). And of course, there’s nothing special about the letter <span class="math">\(\Gamma\)</span>; capital greek letters are commonly used for sets of statements however.<br /></li>

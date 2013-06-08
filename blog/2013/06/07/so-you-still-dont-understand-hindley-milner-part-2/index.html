@@ -158,7 +158,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <p>And any reasoning of this form is valid type inference.</p>
 </blockquote>
 <p>We’ll formalize that as follows:</p>
-<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau \rightarrow \tau &#39;\]</span></p>
+<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau &#39;\]</span></p>
 <p>That rule has the name [App] (for application), and it’s one of the ones pictured in <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">that StackOverflow question</a>. We’ll talk about it and the rest of the rules in the next post. For now, let’s first get a handle on all the symbols you see above:</p>
 <ul>
 <li><span class="math">\(\Gamma\)</span>, this will stand for the collection of statements we already know, or perhaps, the statements we’re assuming. More generally, <span class="math">\(\Gamma\)</span> should just be thought of as some collection of statements (about expressions and their types). And of course, there’s nothing special about the letter <span class="math">\(\Gamma\)</span>; capital greek letters are commonly used for sets of statements however.<br /></li>
