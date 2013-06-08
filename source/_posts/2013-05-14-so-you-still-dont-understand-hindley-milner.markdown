@@ -55,3 +55,7 @@ We will need:
 1. A formal set of rules for deriving statements about expression types from other such statements. Rules along the lines of: "if I can already demonstrate that some expression has this type, and another expression has that type, then this third expression has this other type".  *Such a set of rules is exactly what you're seeing in that SO question*.  I'll be translating this in full detail.
 1. An algorithm that intelligently uses the deduction rules to get from a starting point to deducing/inferring a desired conclusion statement: "the expression $e$ that I'm interested in has type $t$".  This is the "algorithm" part for the "HM algorithm", and that's not something I'll be going into in these posts.
 
+Onward, ho!
+
+* [Part 2](/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/), wherein we thoroughly define points 1 and 2 above, and demystify the mathematical syntax.
+* [Part 3](/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/), wherein we translate the type inference rules in point 3 above.

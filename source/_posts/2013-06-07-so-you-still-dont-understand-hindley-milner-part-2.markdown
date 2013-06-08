@@ -80,3 +80,7 @@ $$\underline{\Gamma \vdash y:\sigma}$$
 $$\Gamma \vdash x:\tau$$  
 
 If we can infer that $y$ has type $\sigma$ from $\Gamma$, then we can infer $x$ has type $\tau$ from $\Gamma$.  
+
+Next up:
+
+* [Part 3](/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/), where we put this all together and make sense of the inference rules used by the HM algorithm.
