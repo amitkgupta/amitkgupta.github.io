@@ -141,14 +141,13 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </ol>
 <h3 id="results">Results</h3>
 <ol type="1">
-<li>Golang: 3.467s</li>
+<li>Golang: 4.701s</li>
 <li>Factor: 6.358s</li>
 <li>OCaml: 12.757s</li>
 <li>F#: 23.507s</li>
 <li>Rust: 78.138s</li>
 <li>Haskell: 91.581s</li>
 </ol>
-<p>The naive implementations are all essentially the same algorithm, but the Golang implementation does a bit better in terms of how accurately it classifies memebers of the validation sample (95% vs. 94.4% for all the others).</p>
 <h4 id="golang">Golang</h4>
 <div class='bogus-wrapper'>
 <notextile>
@@ -161,11 +160,11 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ time go run golang-k-nn.go
 </span><span class='line'>
-</span><span class='line'>0.95
+</span><span class='line'>0.944
 </span><span class='line'>
-</span><span class='line'>real  0m3.467s
-</span><span class='line'>user  0m3.367s
-</span><span class='line'>sys       0m0.111s</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>real  0m4.701s
+</span><span class='line'>user  0m4.582s
+</span><span class='line'>sys   0m0.136s</span></code></pre></td></tr></table></div></figure>
 </notextile>
 </div>
 
@@ -300,11 +299,11 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <span class='line-number'>7</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ time go run golang-k-nn-speedup.go
 </span><span class='line'>
-</span><span class='line'>0.95
+</span><span class='line'>0.944
 </span><span class='line'>
-</span><span class='line'>real  0m1.247s
-</span><span class='line'>user  0m2.789s
-</span><span class='line'>sys       0m0.116s</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>real  0m1.375s
+</span><span class='line'>user  0m3.314s
+</span><span class='line'>sys   0m0.117s</span></code></pre></td></tr></table></div></figure>
 </notextile>
 </div>
 
@@ -409,8 +408,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <span class='line-number'>93</span>
 <span class='line-number'>94</span>
 <span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
 </pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
 </span><span class='line'>
 </span><span class='line'><span class="kn">import</span> <span class="p">(</span>
@@ -422,12 +419,12 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>
 </span><span class='line'><span class="kd">type</span> <span class="nx">LabelWithFeatures</span> <span class="kd">struct</span> <span class="p">{</span>
 </span><span class='line'>  <span class="nx">Label</span>    <span class="p">[]</span><span class="kt">byte</span>
-</span><span class='line'>  <span class="nx">Features</span> <span class="p">[]</span><span class="kt">uint32</span>
+</span><span class='line'>  <span class="nx">Features</span> <span class="p">[]</span><span class="kt">float64</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kd">func</span> <span class="nx">NewLabelWithFeatures</span><span class="p">(</span><span class="nx">parsedLine</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">)</span> <span class="nx">LabelWithFeatures</span> <span class="p">{</span>
 </span><span class='line'>  <span class="nx">label</span> <span class="o">:=</span> <span class="nx">parsedLine</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>  <span class="nx">features</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">uint32</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">parsedLine</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">features</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">float64</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">parsedLine</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">feature</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">parsedLine</span> <span class="p">{</span>
 </span><span class='line'>      <span class="c1">// skip label</span>
@@ -435,7 +432,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>          <span class="k">continue</span>
 </span><span class='line'>      <span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>      <span class="nx">features</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">byteSliceToUInt32</span><span class="p">(</span><span class="nx">feature</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">features</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">byteSliceTofloat64</span><span class="p">(</span><span class="nx">feature</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">return</span> <span class="nx">LabelWithFeatures</span><span class="p">{</span><span class="nx">label</span><span class="p">,</span> <span class="nx">features</span><span class="p">}</span>
@@ -444,9 +441,9 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'><span class="kd">var</span> <span class="nx">newline</span> <span class="p">=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 </span><span class='line'><span class="kd">var</span> <span class="nx">comma</span> <span class="p">=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">byteSliceToUInt32</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">uint32</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">x</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">ParseInt</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">b</span><span class="p">),</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nb">uint32</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+</span><span class='line'><span class="kd">func</span> <span class="nx">byteSliceTofloat64</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">x</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">ParseFloat</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">b</span><span class="p">),</span> <span class="mi">32</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">x</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kd">func</span> <span class="nx">parseCSVFile</span><span class="p">(</span><span class="nx">filePath</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[]</span><span class="nx">LabelWithFeatures</span> <span class="p">{</span>
@@ -468,10 +465,9 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>  <span class="k">return</span> <span class="nx">labelsWithFeatures</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">squareDistance</span><span class="p">(</span><span class="nx">features1</span><span class="p">,</span> <span class="nx">features2</span> <span class="p">[]</span><span class="kt">uint32</span><span class="p">)</span> <span class="p">(</span><span class="nx">d</span> <span class="kt">uint32</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="kd">func</span> <span class="nx">squareDistance</span><span class="p">(</span><span class="nx">features1</span><span class="p">,</span> <span class="nx">features2</span> <span class="p">[]</span><span class="kt">float64</span><span class="p">)</span> <span class="p">(</span><span class="nx">d</span> <span class="kt">float64</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">features1</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">x</span> <span class="o">:=</span> <span class="nx">features1</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">-</span> <span class="nx">features2</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span><span class='line'>      <span class="nx">d</span> <span class="p">=</span> <span class="nx">d</span> <span class="o">+</span> <span class="nx">x</span><span class="o">*</span><span class="nx">x</span>
+</span><span class='line'>    <span class="nx">d</span> <span class="o">+=</span> <span class="p">(</span><span class="nx">features1</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">-</span> <span class="nx">features2</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="nx">features1</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">-</span> <span class="nx">features2</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">return</span>
@@ -479,13 +475,12 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>
 </span><span class='line'><span class="kd">var</span> <span class="nx">trainingSample</span> <span class="p">=</span> <span class="nx">parseCSVFile</span><span class="p">(</span><span class="s">&quot;trainingsample.csv&quot;</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">classify</span><span class="p">(</span><span class="nx">features</span> <span class="p">[]</span><span class="kt">uint32</span><span class="p">)</span> <span class="p">(</span><span class="nx">label</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="kd">func</span> <span class="nx">classify</span><span class="p">(</span><span class="nx">features</span> <span class="p">[]</span><span class="kt">float64</span><span class="p">)</span> <span class="p">(</span><span class="nx">label</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="nx">label</span> <span class="p">=</span> <span class="nx">trainingSample</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Label</span>
 </span><span class='line'>  <span class="nx">d</span> <span class="o">:=</span> <span class="nx">squareDistance</span><span class="p">(</span><span class="nx">features</span><span class="p">,</span> <span class="nx">trainingSample</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Features</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">row</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">trainingSample</span> <span class="p">{</span>
 </span><span class='line'>      <span class="nx">dNew</span> <span class="o">:=</span> <span class="nx">squareDistance</span><span class="p">(</span><span class="nx">features</span><span class="p">,</span> <span class="nx">row</span><span class="p">.</span><span class="nx">Features</span><span class="p">)</span>
-</span><span class='line'>
 </span><span class='line'>      <span class="k">if</span> <span class="nx">dNew</span> <span class="p">&lt;</span> <span class="nx">d</span> <span class="p">{</span>
 </span><span class='line'>          <span class="nx">label</span> <span class="p">=</span> <span class="nx">row</span><span class="p">.</span><span class="nx">Label</span>
 </span><span class='line'>          <span class="nx">d</span> <span class="p">=</span> <span class="nx">dNew</span>
@@ -644,12 +639,12 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>
 </span><span class='line'><span class="kd">type</span> <span class="nx">LabelWithFeatures</span> <span class="kd">struct</span> <span class="p">{</span>
 </span><span class='line'>  <span class="nx">Label</span>    <span class="p">[]</span><span class="kt">byte</span>
-</span><span class='line'>  <span class="nx">Features</span> <span class="p">[]</span><span class="kt">uint32</span>
+</span><span class='line'>  <span class="nx">Features</span> <span class="p">[]</span><span class="kt">float32</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kd">func</span> <span class="nx">NewLabelWithFeatures</span><span class="p">(</span><span class="nx">parsedLine</span> <span class="p">[][]</span><span class="kt">byte</span><span class="p">)</span> <span class="nx">LabelWithFeatures</span> <span class="p">{</span>
 </span><span class='line'>  <span class="nx">label</span> <span class="o">:=</span> <span class="nx">parsedLine</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>  <span class="nx">features</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">uint32</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">parsedLine</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">features</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">float32</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">parsedLine</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">feature</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">parsedLine</span> <span class="p">{</span>
 </span><span class='line'>      <span class="c1">// skip label</span>
@@ -657,7 +652,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>          <span class="k">continue</span>
 </span><span class='line'>      <span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>      <span class="nx">features</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">byteSliceToUInt32</span><span class="p">(</span><span class="nx">feature</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">features</span><span class="p">[</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="p">=</span> <span class="nx">byteSliceTofloat32</span><span class="p">(</span><span class="nx">feature</span><span class="p">)</span>
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">return</span> <span class="nx">LabelWithFeatures</span><span class="p">{</span><span class="nx">label</span><span class="p">,</span> <span class="nx">features</span><span class="p">}</span>
@@ -666,9 +661,9 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'><span class="kd">var</span> <span class="nx">newline</span> <span class="p">=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;\n&quot;</span><span class="p">)</span>
 </span><span class='line'><span class="kd">var</span> <span class="nx">comma</span> <span class="p">=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">byteSliceToUInt32</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">uint32</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">x</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">ParseInt</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">b</span><span class="p">),</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nb">uint32</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
+</span><span class='line'><span class="kd">func</span> <span class="nx">byteSliceTofloat32</span><span class="p">(</span><span class="nx">b</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="kt">float32</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">x</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">strconv</span><span class="p">.</span><span class="nx">ParseFloat</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">b</span><span class="p">),</span> <span class="mi">32</span><span class="p">)</span> <span class="c1">//10, 8)</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nb">float32</span><span class="p">(</span><span class="nx">x</span><span class="p">)</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kd">func</span> <span class="nx">parseCSVFile</span><span class="p">(</span><span class="nx">filePath</span> <span class="kt">string</span><span class="p">)</span> <span class="p">[]</span><span class="nx">LabelWithFeatures</span> <span class="p">{</span>
@@ -690,7 +685,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>  <span class="k">return</span> <span class="nx">labelsWithFeatures</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">squareDistanceWithBailout</span><span class="p">(</span><span class="nx">features1</span><span class="p">,</span> <span class="nx">features2</span> <span class="p">[]</span><span class="kt">uint32</span><span class="p">,</span> <span class="nx">bailout</span> <span class="kt">uint32</span><span class="p">)</span> <span class="p">(</span><span class="nx">d</span> <span class="kt">uint32</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="kd">func</span> <span class="nx">squareDistanceWithBailout</span><span class="p">(</span><span class="nx">features1</span><span class="p">,</span> <span class="nx">features2</span> <span class="p">[]</span><span class="kt">float32</span><span class="p">,</span> <span class="nx">bailout</span> <span class="kt">float32</span><span class="p">)</span> <span class="p">(</span><span class="nx">d</span> <span class="kt">float32</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">features1</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
 </span><span class='line'>      <span class="nx">x</span> <span class="o">:=</span> <span class="nx">features1</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">-</span> <span class="nx">features2</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
 </span><span class='line'>      <span class="nx">d</span> <span class="o">+=</span> <span class="nx">x</span> <span class="o">*</span> <span class="nx">x</span>
@@ -705,9 +700,9 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>
 </span><span class='line'><span class="kd">var</span> <span class="nx">trainingSample</span> <span class="p">=</span> <span class="nx">parseCSVFile</span><span class="p">(</span><span class="s">&quot;trainingsample.csv&quot;</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">classify</span><span class="p">(</span><span class="nx">features</span> <span class="p">[]</span><span class="kt">uint32</span><span class="p">)</span> <span class="p">(</span><span class="nx">label</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'><span class="kd">func</span> <span class="nx">classify</span><span class="p">(</span><span class="nx">features</span> <span class="p">[]</span><span class="kt">float32</span><span class="p">)</span> <span class="p">(</span><span class="nx">label</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="nx">label</span> <span class="p">=</span> <span class="nx">trainingSample</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Label</span>
-</span><span class='line'>  <span class="nx">d</span> <span class="o">:=</span> <span class="nx">squareDistanceWithBailout</span><span class="p">(</span><span class="nx">features</span><span class="p">,</span> <span class="nx">trainingSample</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Features</span><span class="p">,</span> <span class="nx">math</span><span class="p">.</span><span class="nx">MaxUint32</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">d</span> <span class="o">:=</span> <span class="nx">squareDistanceWithBailout</span><span class="p">(</span><span class="nx">features</span><span class="p">,</span> <span class="nx">trainingSample</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">Features</span><span class="p">,</span> <span class="nx">math</span><span class="p">.</span><span class="nx">MaxFloat32</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">row</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">trainingSample</span> <span class="p">{</span>
 </span><span class='line'>      <span class="nx">dNew</span> <span class="o">:=</span> <span class="nx">squareDistanceWithBailout</span><span class="p">(</span><span class="nx">features</span><span class="p">,</span> <span class="nx">row</span><span class="p">.</span><span class="nx">Features</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span>
@@ -726,8 +721,8 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>
 </span><span class='line'>  <span class="nx">validationSample</span> <span class="o">:=</span> <span class="nx">parseCSVFile</span><span class="p">(</span><span class="s">&quot;validationsample.csv&quot;</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">totalCorrect</span> <span class="kt">uint32</span> <span class="p">=</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="nx">successChannel</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">uint32</span><span class="p">)</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">totalCorrect</span> <span class="kt">float32</span> <span class="p">=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="nx">successChannel</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">float32</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">test</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">validationSample</span> <span class="p">{</span>
 </span><span class='line'>      <span class="k">go</span> <span class="kd">func</span><span class="p">(</span><span class="nx">t</span> <span class="nx">LabelWithFeatures</span><span class="p">)</span> <span class="p">{</span>
@@ -743,7 +738,7 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </span><span class='line'>      <span class="nx">totalCorrect</span> <span class="o">+=</span> <span class="o">&lt;-</span><span class="nx">successChannel</span>
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">float64</span><span class="p">(</span><span class="nx">totalCorrect</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float64</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">validationSample</span><span class="p">)))</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">float32</span><span class="p">(</span><span class="nx">totalCorrect</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float32</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">validationSample</span><span class="p">)))</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 </notextile>
