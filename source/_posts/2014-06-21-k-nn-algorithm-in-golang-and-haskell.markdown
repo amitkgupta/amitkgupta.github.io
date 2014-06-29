@@ -55,25 +55,22 @@ Performance comparisons between the naive implementations in each language were 
 4. Run and time the executables with `time ./<executable-name>`.  Run the Golang code with `time go run golang-k-nn.go`.  Run the Factor code in the `scratchpad` REPL with `[k-nn] time`.
 
 ### Results
-
-1. Golang: 3.467s
+1. Golang: 4.701s
 1. Factor: 6.358s
 1. OCaml: 12.757s
 1. F#: 23.507s
 1. Rust: 78.138s
 1. Haskell: 91.581s
 
-The naive implementations are all essentially the same algorithm, but the Golang implementation does a bit better in terms of how accurately it classifies memebers of the validation sample (95% vs. 94.4% for all the others).
-
 #### Golang
 ```
 $ time go run golang-k-nn.go
 
-0.95
+0.944
 
-real	0m3.467s
-user	0m3.367s
-sys	    0m0.111s
+real	0m4.701s
+user	0m4.582s
+sys	0m0.136s
 ```
 
 #### Haskell
@@ -148,11 +145,11 @@ The Golang implementation gets a major performance boost involves two optimizati
 ```
 $ time go run golang-k-nn-speedup.go
 
-0.95
+0.944
 
-real	0m1.247s
-user	0m2.789s
-sys	    0m0.116s
+real	0m1.375s
+user	0m3.314s
+sys	0m0.117s
 ```
 
 ## Code
@@ -171,12 +168,12 @@ import (
 
 type LabelWithFeatures struct {
 	Label    []byte
-	Features []uint32
+	Features []float64
 }
 
 func NewLabelWithFeatures(parsedLine [][]byte) LabelWithFeatures {
 	label := parsedLine[0]
-	features := make([]uint32, len(parsedLine)-1)
+	features := make([]float64, len(parsedLine)-1)
 
 	for i, feature := range parsedLine {
 		// skip label
@@ -184,7 +181,7 @@ func NewLabelWithFeatures(parsedLine [][]byte) LabelWithFeatures {
 			continue
 		}
 
-		features[i-1] = byteSliceToUInt32(feature)
+		features[i-1] = byteSliceTofloat64(feature)
 	}
 
 	return LabelWithFeatures{label, features}
@@ -193,9 +190,9 @@ func NewLabelWithFeatures(parsedLine [][]byte) LabelWithFeatures {
 var newline = []byte("\n")
 var comma = []byte(",")
 
-func byteSliceToUInt32(b []byte) uint32 {
-	x, _ := strconv.ParseInt(string(b), 10, 8)
-	return uint32(x)
+func byteSliceTofloat64(b []byte) float64 {
+	x, _ := strconv.ParseFloat(string(b), 32)
+	return x
 }
 
 func parseCSVFile(filePath string) []LabelWithFeatures {
@@ -217,24 +214,22 @@ func parseCSVFile(filePath string) []LabelWithFeatures {
 	return labelsWithFeatures
 }
 
-func squareDistance(features1, features2 []uint32) (d uint32) {
+func squareDistance(features1, features2 []float64) (d float64) {  
 	for i := 0; i < len(features1); i++ {
-		x := features1[i] - features2[i]
-		d = d + x*x
-	}
+    d += (features1[i] - features2[i]) * (features1[i] - features2[i])
+  }
 
-	return
+  return
 }
 
 var trainingSample = parseCSVFile("trainingsample.csv")
 
-func classify(features []uint32) (label []byte) {
+func classify(features []float64) (label []byte) {
 	label = trainingSample[0].Label
 	d := squareDistance(features, trainingSample[0].Features)
 
 	for _, row := range trainingSample {
 		dNew := squareDistance(features, row.Features)
-
 		if dNew < d {
 			label = row.Label
 			d = dNew
@@ -274,12 +269,12 @@ import (
 
 type LabelWithFeatures struct {
 	Label    []byte
-	Features []uint32
+	Features []float32
 }
 
 func NewLabelWithFeatures(parsedLine [][]byte) LabelWithFeatures {
 	label := parsedLine[0]
-	features := make([]uint32, len(parsedLine)-1)
+	features := make([]float32, len(parsedLine)-1)
 
 	for i, feature := range parsedLine {
 		// skip label
@@ -287,7 +282,7 @@ func NewLabelWithFeatures(parsedLine [][]byte) LabelWithFeatures {
 			continue
 		}
 
-		features[i-1] = byteSliceToUInt32(feature)
+		features[i-1] = byteSliceTofloat32(feature)
 	}
 
 	return LabelWithFeatures{label, features}
@@ -296,9 +291,9 @@ func NewLabelWithFeatures(parsedLine [][]byte) LabelWithFeatures {
 var newline = []byte("\n")
 var comma = []byte(",")
 
-func byteSliceToUInt32(b []byte) uint32 {
-	x, _ := strconv.ParseInt(string(b), 10, 8)
-	return uint32(x)
+func byteSliceTofloat32(b []byte) float32 {
+	x, _ := strconv.ParseFloat(string(b), 32) //10, 8)
+	return float32(x)
 }
 
 func parseCSVFile(filePath string) []LabelWithFeatures {
@@ -320,7 +315,7 @@ func parseCSVFile(filePath string) []LabelWithFeatures {
 	return labelsWithFeatures
 }
 
-func squareDistanceWithBailout(features1, features2 []uint32, bailout uint32) (d uint32) {
+func squareDistanceWithBailout(features1, features2 []float32, bailout float32) (d float32) {
 	for i := 0; i < len(features1); i++ {
 		x := features1[i] - features2[i]
 		d += x * x
@@ -335,9 +330,9 @@ func squareDistanceWithBailout(features1, features2 []uint32, bailout uint32) (d
 
 var trainingSample = parseCSVFile("trainingsample.csv")
 
-func classify(features []uint32) (label []byte) {
+func classify(features []float32) (label []byte) {
 	label = trainingSample[0].Label
-	d := squareDistanceWithBailout(features, trainingSample[0].Features, math.MaxUint32)
+	d := squareDistanceWithBailout(features, trainingSample[0].Features, math.MaxFloat32)
 
 	for _, row := range trainingSample {
 		dNew := squareDistanceWithBailout(features, row.Features, d)
@@ -356,8 +351,8 @@ func main() {
 
 	validationSample := parseCSVFile("validationsample.csv")
 
-	var totalCorrect uint32 = 0
-	successChannel := make(chan uint32)
+	var totalCorrect float32 = 0
+	successChannel := make(chan float32)
 
 	for _, test := range validationSample {
 		go func(t LabelWithFeatures) {
@@ -373,7 +368,7 @@ func main() {
 		totalCorrect += <-successChannel
 	}
 
-	fmt.Println(float64(totalCorrect) / float64(len(validationSample)))
+	fmt.Println(float32(totalCorrect) / float32(len(validationSample)))
 }
 ```
 
