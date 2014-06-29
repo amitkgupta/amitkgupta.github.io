@@ -14,6 +14,8 @@ All the code and datasets can be found on [Github](https://github.com/amitkgupta
 
 **TL;DR**: Golang wins, or, in honor of the World Cup: ***GOOOOOOOOOOLLLLLLLang!!!***
 
+<!--more-->
+
 ## The problem
 
 In this particular example, we've got 5000 pixelated (28x28) greyscale (0-255) "drawings" of the digits 0 through 9.  Some of them might look like this:
