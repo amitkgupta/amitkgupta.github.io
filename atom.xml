@@ -4,7 +4,7 @@
   <title><![CDATA[Amit's Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2014-06-29T13:53:36-07:00</updated>
+  <updated>2014-06-29T17:16:27-07:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -22,6 +22,8 @@
 <p>We’re gonna take a look at a concrete application of the k-NN algorithm, compare the performance of the implementations from those aforementioned blog posts with new implementations in <a href="http://golang.org">Golang</a> and <a href="http://www.haskell.org/">Haskell</a>, and take a look at an optimized version which takes a logical shortcut and also leverages Golang’s built-in support for <a href="http://www.golang-book.com/10/index.htm">concurrency</a>.</p>
 <p>All the code and datasets can be found on <a href="https://github.com/amitkgupta/nearest_neighbour">Github</a>. The Golang and Haskell code is also at the bottom of this post.</p>
 <p><strong>TL;DR</strong>: Golang wins, or, in honor of the World Cup: <strong><em>GOOOOOOOOOOLLLLLLLang!!!</em></strong></p>
+<!--more-->
+
 <h2 id="the-problem">The problem</h2>
 <p>In this particular example, we’ve got 5000 pixelated (28x28) greyscale (0-255) “drawings” of the digits 0 through 9. Some of them might look like this:</p>
 <figure>

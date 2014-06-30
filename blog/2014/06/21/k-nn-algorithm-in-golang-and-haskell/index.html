@@ -19,7 +19,7 @@
 
   
   <link rel="canonical" href="http://akgupta.ca/blog/2014/06/21/k-nn-algorithm-in-golang-and-haskell">
-  <link href="/favicon.png" rel="icon">
+  <link href="/images/aleph.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Amit's Blog" type="application/atom+xml">
   <script src="/javascripts/modernizr-2.0.js"></script>
@@ -59,24 +59,6 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 </hgroup>
 
 </header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:akgupta.ca" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
-</ul>
-
-</nav>
   <div id="main">
     <div id="content">
       <div>
@@ -111,6 +93,8 @@ src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorM
 <p>We’re gonna take a look at a concrete application of the k-NN algorithm, compare the performance of the implementations from those aforementioned blog posts with new implementations in <a href="http://golang.org">Golang</a> and <a href="http://www.haskell.org/">Haskell</a>, and take a look at an optimized version which takes a logical shortcut and also leverages Golang’s built-in support for <a href="http://www.golang-book.com/10/index.htm">concurrency</a>.</p>
 <p>All the code and datasets can be found on <a href="https://github.com/amitkgupta/nearest_neighbour">Github</a>. The Golang and Haskell code is also at the bottom of this post.</p>
 <p><strong>TL;DR</strong>: Golang wins, or, in honor of the World Cup: <strong><em>GOOOOOOOOOOLLLLLLLang!!!</em></strong></p>
+<!--more-->
+
 <h2 id="the-problem">The problem</h2>
 <p>In this particular example, we’ve got 5000 pixelated (28x28) greyscale (0-255) “drawings” of the digits 0 through 9. Some of them might look like this:</p>
 <figure>
