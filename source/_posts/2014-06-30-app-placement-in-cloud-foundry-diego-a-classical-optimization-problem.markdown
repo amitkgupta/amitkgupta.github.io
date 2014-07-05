@@ -11,23 +11,27 @@ Onsi talks about the problems associated with having the Cloud Controller respon
 
 <!--more-->
 
-Caveat: In what follows, I actually describe a slightly idealized version of Diego.  For instance, I take in account the desire to balance apps across multiple Availability Zones (if it were deployed on AWS) or Clusters (if it were vSphere), which Diego doesn't currently do.  These are just my own musings, but I hope this provides an enjoyable little glimpse at how parts of Diego and Cloud Foundry work, along with links to some of our code repositories, documentation, and simulation tools so you can learn more if you're so inclined.
+In what follows, I actually describe a slightly idealized version of Diego.  For instance, I take in account the desire to balance apps across multiple clusters of hosts (which are usually physically isolated from one another in some way) to ensure higher availability, which Diego doesn't currently do.  I'll refer to these clusters as Availability Zones (AZs) to borrow a term from AWS, but everything that follows is IaaS-agnostic.
+
+Caveat: These are just my own musings, but I hope this provides an enjoyable little glimpse at how parts of Diego and Cloud Foundry work, along with links to some of our code repositories, documentation, and simulation tools so you can learn more if you're so inclined.
 
 
 ## Cast of Characters
 
-An interesting dimension to the complexity of this decision problem is that it's a distributed problem.  Beyond just finding the input which optimizes some objective function subject to some constraints, we have to take into account that the inputs, objective function, and constraints may be coming from different sources, and that these data need to be communicated between sources in a machine-readable way over network and messaging protocols such as HTTP and NATS.  Instead of the old model where CC had the state of the world in its head, we want to gather state from the appropriate sources of truth at decision-time.  Before diving into modeling the optimization problem, let's look at the players involved and their responsibilities.
+An interesting dimension to the complexity of this decision problem is that it's a distributed problem.  Beyond just finding the input which optimizes some objective function subject to some constraints, we have to take into account that the inputs, objective function, and constraints may be coming from different sources, and that these data need to be communicated between sources in a machine-readable way over network and messaging protocols such as HTTP and [NATS](https://github.com/apcera/gnatsd).  Instead of the old model where the Cloud Controller tries to maintain its own copy of the state of the world, we want to gather state from the appropriate sources of truth at decision-time.  Before diving into modeling the optimization problem, let's look at the players involved and their responsibilities.
 
 * [**The App Manager**](https://github.com/cloudfoundry-incubator/app-manager): sits behind the user-facing API, and handles requests to start apps.  It knows things about desired apps, such as how many instances of the app are desired to start, where the source code for the app lives (in some blobstore), what the compute requirements are for an instance of the app in terms of memory, disk, and so on.  It (eventually) causes app instances to be run by requesting an "auction" to be held where machines bid to run the app.
 * [**The Auctioneer**](https://github.com/cloudfoundry-incubator/auctioneer): watches for "start-auction" requests for desired app instances, and then holds the auctions.  It gathers "bids" and then chooses a "winner", and the winner is then responsible for running the app.
-* [**The Executors**](https://github.com/cloudfoundry-incubator/executor): form a pool of process, each running on a separate VM, with each one capable of running multiple apps in isolated containers within its VM.
+* [**The Executors**](https://github.com/cloudfoundry-incubator/executor): form a pool of processes, each running on a separate VM, with each one capable of running multiple apps in isolated containers within its VM.
 * [**The Reps**](https://github.com/cloudfoundry-incubator/rep): represent the Executors, one Rep for one Executor.  They participate in the auctions, providing bids requested by the Auctioneer on behalf of their Executors.  A bid encapsulates relevant information about an Executor, such as what apps its currently running, and how much more free memory it can allocate to new containers.
+
+TODO: picture
 
 (For more, check out the [Diego Design Notes](https://github.com/cloudfoundry-incubator/diego-design-notes))
 
 ## Setting
 
-Say a user pushes an app, and wants to have 3 instances of it running, so that it's highly available.  The Executors are running on different VMs spread out across different AZs (substitue Clusters or whatever the correct term is on your IaaS of choice).  These instances should ideally be balanced across Executors so that they land in different AZs; if they all end up in the same AZ, or worse, on the same Executor, then the high availability you'd expect to achieve by running 3 instances is a lot more brittle.  Moreover, the balancing of app instances across AZs can't be as simple as saying, "put instance 0 in the first AZ, instance 1 in the next AZ, etc." since that'll clearly skew app placement towards the first AZs and away from the last AZs (in whatever ordering you have for your AZs).
+Say a user pushes an app, and wants to have 3 instances of it running, so that it's highly available.  The Executors are running on different VMs spread out across different AZs.  These instances should ideally be balanced across Executors so that they land in different AZs; if they all end up in the same AZ, or worse, on the same Executor, then the high availability you'd expect to achieve by running 3 instances is a lot more brittle.  Moreover, the balancing of app instances across AZs can't be as simple as saying, "put instance 0 in the first AZ, instance 1 in the next AZ, etc." since that'll clearly skew app placement towards the first AZs and away from the last AZs (in whatever ordering you have for your AZs).
 
 In addition to having their app instances balanced across AZs, the user wants to ensure a certain amount of memory and disk are allocated to each running instance.  So when placing an app instance, in addition to choosing an Executor in an AZ that's ideally not already running too many instances of the app, we want to choose one that has enough free compute resources.  Furthermore, if there are several candidate Executors, it's better to go with the one with the most free resources so as to better balance the load across Executors.  Whether it's AZs or Executors, balancing the load hedges against the risk associated with any one of the AZs or Executors going down.
 
@@ -81,7 +85,7 @@ $$r.Stack = ai.Stack $$
 
 ### Actual Problem
 
-The **actual** problem is to express an objective function that captures the business requirements, and then find a near-optimal solution efficiently.  Furthermore, any solution must take into account that the data in a Rep's bid can change in the course of an auction it's participating in, since it maybe participating in multiple simultaneous auctions.  For instance, a Rep might report having 4096MB free memory simultaneously in many different auctions.  If it wins one of the auctions and agrees to start a 512MB app instance, then its original bid in any of the auctions that haven't been decided yet is somewhat invalid, since it now only has 3584MB free.
+The **actual** problem is to express an objective function that captures the business requirements, and then find a near-optimal solution efficiently.  Furthermore, any solution must take into account that the data in a Rep's bid can change in the course of an auction it's participating in, since it may be participating in multiple simultaneous auctions.  For instance, a Rep might report having 4096MB free memory simultaneously in many different auctions.  If it wins one of the auctions and agrees to start a 512MB app instance, then its original bid in any of the auctions that haven't been decided yet is based on old information, since it now only has 3584MB free.
 
 ### Meta-Constraints
 
@@ -132,3 +136,8 @@ Diego has a [Simulator](https://github.com/cloudfoundry-incubator/auction/tree/m
 
 <div style="margin:auto"><a href="/images/simulation_browser.png" rel="shadowbox"><img src="/images/simulation_browser.png" width="40%" height="40%" style="vertical-align: middle"></a>
 <a href="/images/simulation_terminal.png" rel="shadowbox"><img src="/images/simulation_terminal.png" width="40%" height="40%" style="vertical-align: middle"></a></div>
+
+## What Diego Will Do
+
+TODO: fix this heading
+TODO: fill this section
