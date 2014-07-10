@@ -35,8 +35,8 @@ An interesting dimension to the complexity of this decision problem is that it's
 * [**The Executors**](https://github.com/cloudfoundry-incubator/executor): form a pool of processes, each running on a separate VM, with each one capable of running multiple apps in isolated containers within its VM.
 * [**The Reps**](https://github.com/cloudfoundry-incubator/rep): represent the Executors, one Rep for one Executor.  They participate in the auctions, providing bids requested by the Auctioneer on behalf of their Executors.  A bid encapsulates relevant information about an Executor, such as what apps its currently running, and how much more free memory it can allocate to new containers.
 
-TODO: maybe add picture of "The Auction", per Bayer's suggestion.
-
+<!--TODO: maybe add picture of "The Auction", per Bayer's suggestion.
+-->
 (For more, check out the [Diego Design Notes](https://github.com/cloudfoundry-incubator/diego-design-notes))
 
 ## Setting
@@ -147,7 +147,8 @@ Diego has a [Simulator](https://github.com/cloudfoundry-incubator/auction/tree/m
 <div style="margin:auto"><a href="/images/simulation_browser.png" rel="shadowbox"><img src="/images/simulation_browser.png" width="40%" height="40%" style="vertical-align: middle"></a>
 <a href="/images/simulation_terminal.png" rel="shadowbox"><img src="/images/simulation_terminal.png" width="40%" height="40%" style="vertical-align: middle"></a></div>
 
-## What Diego Will Do
+<!--## What Diego Will Do
 
 TODO: fill this section, as per Bayer's suggestion  
 TODO: think of a better heading than "What Diego Will Do"  
+-->
