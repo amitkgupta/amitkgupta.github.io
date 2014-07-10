@@ -5,13 +5,23 @@ date: 2014-06-30 22:48
 comments: true
 categories: 
 ---
-I work on the Cloud Foundry [Diego](https://github.com/cloudfoundry-incubator/diego-release) team.  Diego started as a rewrite of the DEA in Go, but by the time I joined it had evolved into a ground-up rearchitecture of the core service. Our team's fearless leader [Onsi Fakhouri](https://twitter.com/onsijoe) recently [gave a talk](https://www.youtube.com/watch?v=1OkmVTFhfLY) explaining the Diego rewrite.  Seriously, watch that talk, it might literally be *the* best engineering talk you'll ever see.
 
-Onsi talks about the problems associated with having the Cloud Controller responsible for knowing about all the apps on all the DEAs and orchestrating the placement of newly started apps.  I thought it'd be fun to introduce some of the key players in the Diego architecture and explain how Diego solves the app placement problem by modelling it as a sort of classical **constrained optimization problem**.
+I work on [Cloud Foundry](http://docs.cloudfoundry.org/). It's a large collection of separate yet related projects, tools, and services, but at the heart of it, it's a [Platform-as-a-Service](http://en.wikipedia.org/wiki/Platform_as_a_service).  It gives application developers the ability to write their code using whatever languages or frameworks they want, and then easily:
+
+- **deploy** it,
+- **run** it,
+- **scale** it horizontally and vertically,
+- **bind external services** to it (e.g. a database),
+- **expose** it to a private newtork or the wider web, and
+- **map DNS routing** to it dynamically.
+
+I work specifically on [Diego](https://github.com/cloudfoundry-incubator/diego-release), a project that started as a rewrite of one of the existing Cloud Foundry components, namely the DEA, in Go (hence "Diego"), but evolved into a ground-up rearchitecture of the core service. Our team's fearless leader [Onsi Fakhouri](https://twitter.com/onsijoe) recently [gave a talk](https://www.youtube.com/watch?v=1OkmVTFhfLY) explaining the Diego rewrite.  Seriously, watch that talk, it might literally be *the* best engineering talk you'll ever see.
+
+Onsi talks about the problems associated with having a single component, namely the [Cloud Controller](https://github.com/cloudfoundry/cloud_controller_ng), responsible for knowing about all the apps currently running on all the application executors, known as [Droplet Executation Agents](https://github.com/cloudfoundry/dea_ng) or DEAs for short, and orchestrating the placement of newly started apps on a DEA.  I want to introduce some of the key players in the Diego architecture and explain the new approach that Diego takes to solve the app placement problem, and to illustrate all this I thought it'd be fun to model the app placement problem as a sort of classical **constrained optimization problem**.
 
 <!--more-->
 
-In what follows, I actually describe a slightly idealized version of Diego.  For instance, I take in account the desire to balance apps across multiple clusters of hosts (which are usually physically isolated from one another in some way) to ensure higher availability, which Diego doesn't currently do.  I'll refer to these clusters as Availability Zones (AZs) to borrow a term from AWS, but everything that follows is IaaS-agnostic.
+In what follows, I actually describe a slightly idealized version of Diego.  For instance, I take into account the desire to balance apps across multiple clusters of hosts (which are usually physically isolated from one another in some way) to ensure higher availability, which Diego doesn't currently do.  I'll refer to these clusters as Availability Zones (AZs) to borrow a term from AWS, but everything that follows is IaaS-agnostic.
 
 Caveat: These are just my own musings, but I hope this provides an enjoyable little glimpse at how parts of Diego and Cloud Foundry work, along with links to some of our code repositories, documentation, and simulation tools so you can learn more if you're so inclined.
 
@@ -25,7 +35,7 @@ An interesting dimension to the complexity of this decision problem is that it's
 * [**The Executors**](https://github.com/cloudfoundry-incubator/executor): form a pool of processes, each running on a separate VM, with each one capable of running multiple apps in isolated containers within its VM.
 * [**The Reps**](https://github.com/cloudfoundry-incubator/rep): represent the Executors, one Rep for one Executor.  They participate in the auctions, providing bids requested by the Auctioneer on behalf of their Executors.  A bid encapsulates relevant information about an Executor, such as what apps its currently running, and how much more free memory it can allocate to new containers.
 
-TODO: picture
+TODO: maybe add picture of "The Auction", per Bayer's suggestion.
 
 (For more, check out the [Diego Design Notes](https://github.com/cloudfoundry-incubator/diego-design-notes))
 
@@ -95,7 +105,7 @@ The objective function $f_{\mathrm{AM},ai}$ itself must be expressible in terms 
 * **Arithmetic:** $+, \times, \div, \mathrm{mod}$ where the modulus for $\mathrm{mod}$ must be a constant, not a computed value.
 * **Counting:** `count(x, xs)` which counts how many times `x` occurs in the slice `xs`.
 
-It's not terribly important what these constraints are, just that they ensure that a very simple, strict DSL will suffice to express the objective function.  Nobody wants to be sending arbitrary expressions involving $ai$ and $r$ from the App Manager to be `eval`ed on the Auctioneer.
+It's not terribly important what the exact constraints are, they just need to be strict enough to ensure that a very simple DSL will suffice to express the objective function.  Nobody wants to be sending arbitrary expressions involving $ai$ and $r$ from the App Manager to be `eval`ed on the Auctioneer.
 
 ### A Proposal for the Objective Function
 
@@ -139,5 +149,5 @@ Diego has a [Simulator](https://github.com/cloudfoundry-incubator/auction/tree/m
 
 ## What Diego Will Do
 
-TODO: fix this heading
-TODO: fill this section
+TODO: fill this section, as per Bayer's suggestion  
+TODO: think of a better heading than "What Diego Will Do"  
