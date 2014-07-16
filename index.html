@@ -9,7 +9,7 @@
   <meta name="author" content="Amit Kumar Gupta">
 
   
-  <meta name="description" content="I work on the Cloud Foundry Diego team, a project that started as a rewrite of one of the existing Cloud Foundry components, namely the DEA, in Go ( &hellip;">
+  <meta name="description" content="There’s been a recent string of blog posts featuring implementations of the k-Nearest Neighbour algorithm in several languages (for k = 1), and it’s &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -69,47 +69,6 @@ Shadowbox.init();
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/30/app-placement-in-cloud-foundry-diego-a-classical-optimization-problem/">App Placement in Cloud Foundry Diego: A Classical Optimization Problem</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-30T22:48:00-07:00" pubdate data-updated="true">Jun 30<span>th</span>, 2014</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I work on the Cloud Foundry <a href="https://github.com/cloudfoundry-incubator/diego-release">Diego</a> team, a project that started as a rewrite of one of the existing Cloud Foundry components, namely the DEA, in Go (hence “Diego”), but evolved into a ground-up rearchitecture of the core service. Our team’s fearless leader <a href="https://twitter.com/onsijoe">Onsi Fakhouri</a> recently <a href="https://www.youtube.com/watch?v=1OkmVTFhfLY">gave a talk</a> explaining the Diego rewrite. Seriously, watch that talk, it might literally be <em>the</em> best engineering talk you’ll ever see.</p>
-<p>Onsi talks about the problems associated with having a single component, namely the <a href="https://github.com/cloudfoundry/cloud_controller_ng">Cloud Controller</a>, responsible for knowing about all the apps currently running on all the application executors, known as <a href="https://github.com/cloudfoundry/dea_ng">Droplet Executation Agents</a> or DEAs for short, and orchestrating the placement of newly started apps on a DEA. I want to introduce some of the key players in the Diego architecture and explain the new approach that Diego takes to solve the app placement problem, and to illustrate all this I thought it’d be fun to model the app placement problem as a sort of classical <strong>constrained optimization problem</strong>.</p>
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/30/app-placement-in-cloud-foundry-diego-a-classical-optimization-problem/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
   
   
     <article>
@@ -504,10 +463,6 @@ Shadowbox.init();
 <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2014/06/30/app-placement-in-cloud-foundry-diego-a-classical-optimization-problem/">App Placement in Cloud Foundry Diego: A Classical Optimization Problem</a>
-      </li>
     
       <li class="post">
         <a href="/blog/2014/06/21/k-nn-algorithm-in-golang-and-haskell/">k-NN Algorithm in Golang and Haskell</a>
