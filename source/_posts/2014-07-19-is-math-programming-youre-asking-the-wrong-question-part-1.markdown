@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Is math programming? You're asking the wrong question. Part 1"
+title: "Is programming math? You're asking the wrong question. Part 1"
 date: 2014-07-19 15:33
 comments: true
 categories: 
@@ -11,7 +11,7 @@ A couple days ago, my former colleague [Sarah Mei](https://twitter.com/sarahmei)
 2. Understanding math-flavoured concepts from computer science, such as big O analysis, has little correlation with a solid understanding of the problems most developers need to solve.
 3. While programmers do require abstract thinking and problem solving skills, there is nothing special about math as a way to develop these skills.
 
-So the question that's truly of interest here is not whether math *is* programming, but
+So the question that's truly of interest here is not whether programming *is* math, but
 
 > In what ways, and to what extent, does learning and knowing math and computer science help programmers solve problems?
 <!--more-->

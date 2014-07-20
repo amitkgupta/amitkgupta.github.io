@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Is math programming? You're asking the wrong question. Part 2"
+title: "Is programming math? You're asking the wrong question. Part 2"
 date: 2014-07-19 23:21
 comments: true
 categories: 
