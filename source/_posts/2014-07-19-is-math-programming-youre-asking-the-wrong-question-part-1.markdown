@@ -111,9 +111,9 @@ I work on Cloud Foundry.  It's a Platform-as-a-Service, so it let's SaaS develop
 
 Now if the load balancer is doing its job and randomly but uniformly distributing load to all three servers, then there's some chance, albeit small, that even if you `curl` the endpoint 100 times, you'll never hit one of the app instances.  In other words, even if the parts responsible for starting up 3 instances are working, and even if the parts responsible for keeping instances up and running (or restarting them quickly if they crash) are working, and even if the load balancer is being fair and balanced, there's some chance that you'll just happen to never hit one (or two) of those instances.  A case like that would be a *false negative*.
 
-So the question is, if I'm going to write a test that hits the app's endpoint in a `for` loop, how many times do I have to iterate to have 99.95% that I won't encounter a false negative.  We want to be pretty sure that if this test ever fails in the future, it should be catching a real failure within the system.
+So the question is, if I'm going to write a test that hits the app's endpoint in a `for` loop, how many times do I have to iterate to have 99.9% that I won't encounter a false negative.  We want to be pretty sure that if this test ever fails in the future, it should be catching a real failure within the system.
 
-The solution: let's solve for $N$, where $N$ is the smallest integer where the probability of a false negative when hitting the endpoint $N$ times at most 0.05%, or 0.0005.  Before reading further, take a guess as to what $N$ might be.  5, 10, 100, 1000?
+The solution: let's solve for $N$, where $N$ is the smallest integer where the probability of a false negative when hitting the endpoint $N$ times at most 0.1%, or 0.001.  Before reading further, take a guess as to what $N$ might be.  5, 10, 100, 1000?
 
 The probability of a false negative is equal to the number of ways a false negative can occur, divided by the total number of possible outcomes.  Here, an "outcome" is a sequence of the $N$ instance numbers hit when repeating the `curl`, e.g. if $N=14$, one possible outcome is `[1, 2, 2, 1, 1, 3, 3, 2, 1, 3, 2, 2, 1, 3]`.  Clearly, there are $3^N$ total possible occurrences?
 
@@ -128,9 +128,8 @@ Now here's something neat.  We're almost looking at $\sum_{k=0}^{N}{N \choose k}
 
 An alternative argument uses the [Binomial Theorem](http://en.wikipedia.org/wiki/Binomial_theorem) and the observation that $(1+1)^N = 2^N$.  At any rate, we get:
 
-$$\frac{3 + 3\cdot(2^N - {N \choose 0} - {N \choose N})}{3^N} \leq 0.0005$$
-$$(2/3)^{N-1} \leq 0.0005$$
-$$N \geq \log(0.0005)/\log(2/3)$$
+$$\frac{3 + 3\cdot(2^N - {N \choose 0} - {N \choose N})}{3^N} \leq 0.001$$
+$$\frac{2^N - 1}{3^{N-1}} \leq 0.001$$
 $$N = 20$$
 
 And that's indeed what we do.  We [poll 20 times](https://github.com/cloudfoundry-incubator/inigo/blob/7ddcdbfbc259e79538a23deea73ded8eecfe5a00/helpers/route_helpers.go#L59-L86), and then [assert that we see all 3 instances](https://github.com/cloudfoundry-incubator/inigo/blob/7ddcdbfbc259e79538a23deea73ded8eecfe5a00/lrp_consistency_test.go#L112-L126).  By the way, did you guess 20?
