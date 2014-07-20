@@ -4,7 +4,7 @@
   <title><![CDATA[Amit's Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2014-07-16T12:13:15-07:00</updated>
+  <updated>2014-07-20T02:47:16-04:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -14,9 +14,255 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Is math programming? You're asking the wrong question. Part 2]]></title>
+    <link href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/"/>
+    <updated>2014-07-19T23:21:00-04:00</updated>
+    <id>http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2</id>
+    <content type="html"><![CDATA[<p>In <a href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/">Part 1</a> I started to address <a href="https://twitter.com/sarahmei">Sarah Mei</a>’s recent blog post about how <a href="http://www.sarahmei.com/blog/2014/07/15/programming-is-not-math/">programming is not math</a>. In this post, I’ll continue my critique of her article and highlight the ways in which math can be valuable to a programmer.</p>
+<h2 id="understanding-math-to-understand-programming-problems">Understanding math to understand programming problems</h2>
+<p>In her article, Sarah attacks the claim that “without a mathematical foundation, you’ll have only a surface understanding of programming” by first reducing it to an alleged “common variation” of the same sentiment: “without a CS degree, you can’t build anything substantial.” But wait, those aren’t the same thing at all. <!--more--></p>
+<h4 id="moving-the-goalposts">Moving the Goalposts</h4>
+<p>I can argue that a mathematical foundation can help give you a deep, valuable understanding of certain programming problems. No one can argue that you need math to build anything of substance. Especially if “substance” is correlated with VC funding. <del>Yes, you can build “Yo!” without a deep understanding of anything.</del> Worthwhile endeavours and opportunities for gainful employment abound, which don’t require understanding much math, or any deep understanding of the programming problems at hand.</p>
+<p>She has a point when she says “computer science is not programming”. Yes. But understanding some math, and mathy computer science concepts, can certainly be valuable when it comes to reasoning about a programming problem, and communicating that reasoning with your collaborators.</p>
+<p>Here’s an example from something I was working on recently. We were building an appliance for our enterprise clients, to streamline the process of deploying <a href="https://www.gopivotal.com/platform-as-a-service/cloud-foundry">Cloud Foundry</a> to their on-premise datacenters. Users would enter configuration, including an IP subnet in CIDR notation and a set of blacklisted IP ranges in a format like <code>10.10.0.0-10.10.0.15, 10.10.0.129-10.10.0.255</code>. They would then select and configure any number of distributed services to be deployed, such as the Cloud Foundry PaaS, an add-on MySQL DBaaS cluster, and let’s say a <a href="http://www.gopivotal.com/big-data/pivotal-hd">Pivotal HD</a> Hadoop cluster. Our appliance would spin up VMs on which to run these services, assigning IPs to these VMs within the given subnet, but outside the blacklist.</p>
+<p>Everything was fine and dandy, until a field rep told us that one of his customers was experiencing some really slow performance. We noticed that they were using a <code>/16</code> subnet. First off, tell me that a solid confidence and facility with numbers doesn’t make understanding <a href="http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_blocks">CIDR blocks</a> a walk in the park. Anyways, after some debugging we traced the problem to some code that looked like this:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">IpPool</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">subnet</span><span class="p">,</span> <span class="n">blacklist</span><span class="p">)</span>
+</span><span class='line'>      <span class="vi">@subnet</span> <span class="o">=</span> <span class="n">subnet</span>           <span class="c1"># eg. NetAddr::CIDR.create(&#39;192.168.1.1/24&#39;)</span>
+</span><span class='line'>      <span class="vi">@ips</span> <span class="o">=</span> <span class="n">subnet</span><span class="o">.</span><span class="n">enumerate</span>    <span class="c1"># an Array of strings representing IPs in the subnet</span>
+</span><span class='line'>      <span class="vi">@blacklist</span> <span class="o">=</span> <span class="n">blacklist</span>     <span class="c1"># an Array of strings representing IPs to avoid using</span>
+</span><span class='line'>      <span class="vi">@taken_ips</span> <span class="o">=</span> <span class="p">{}</span>               <span class="c1"># a Hash of ip:String =&gt; purpose:String pairs</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="c1">### snip ###</span>
+</span><span class='line'>  
+</span><span class='line'>  <span class="k">def</span> <span class="nf">find_or_take_ips_for_job</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">num_ips</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">already_taken_ips</span> <span class="o">=</span> <span class="vi">@taken_ips</span><span class="o">.</span><span class="n">select</span> <span class="p">{</span> <span class="o">|</span><span class="n">_ip</span><span class="p">,</span><span class="n">purpose</span><span class="o">|</span> <span class="n">purpose</span> <span class="o">==</span> <span class="n">job</span> <span class="p">}</span><span class="o">.</span><span class="n">keys</span>
+</span><span class='line'>      <span class="n">result</span> <span class="o">=</span> <span class="n">already_taken_ips</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="p">(</span><span class="n">num_ips</span> <span class="o">-</span> <span class="n">already_taken_ips</span><span class="o">.</span><span class="n">size</span><span class="p">)</span><span class="o">.</span><span class="n">times</span> <span class="k">do</span>
+</span><span class='line'>          <span class="k">if</span> <span class="n">next_ip</span> <span class="o">=</span> <span class="n">next_available_ip</span>
+</span><span class='line'>              <span class="vi">@taken_ips</span><span class="o">[</span><span class="n">next_ip</span><span class="o">]</span> <span class="o">=</span> <span class="n">job</span>
+</span><span class='line'>              <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="n">next_ip</span>
+</span><span class='line'>          <span class="k">else</span>
+</span><span class='line'>              <span class="k">raise</span> <span class="no">AvailableIpNotFoundError</span>
+</span><span class='line'>          <span class="k">end</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>      
+</span><span class='line'>      <span class="n">result</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">num_ips</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">next_available_ip</span>
+</span><span class='line'>      <span class="vi">@ips</span><span class="o">.</span><span class="n">find</span> <span class="p">{</span> <span class="o">|</span><span class="n">ip</span><span class="o">|</span> <span class="o">!</span><span class="vi">@blacklist</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="vi">@taken_ips</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>Actually, it was a fair bit more complicated than that. Because this code was being called by something that was first looping over all already-installed products and hydrating the IP pool, then then looping over all the yet-to-be-installed products to determine what IPs to assign for each of its jobs. For each product, it had to loop over each job that comprises that product and find-or-take IPs from the pool depending on how many VMs it would be running.</p>
+<p>My pair and I were able to reason through this problem and communicate with each other by breaking down the runtime complexity of the problem in terms of big O. Having the training of thinking about problems in that way helped. Having a common language within which to frame the problem, a language that’s precise and unambiguous, really helped. I’m not saying the problem in any way <em>requires</em> familiarity with runtime analysis and big O notation. But just imagine what two people with no exposure to these things would go through when reasoning about this problem and communicating with each other. Then appreciate <strong>how much friction just disappears</strong> if those two collaborators knew this stuff.</p>
+<p>The fix?</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><figcaption>
+<span></span>
+</figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">next_available_ip</span>
+</span><span class='line'>  <span class="p">(</span><span class="vi">@ips</span> <span class="o">-</span> <span class="vi">@blacklist</span><span class="p">)</span><span class="o">.</span><span class="n">find</span> <span class="p">{</span> <span class="o">|</span><span class="n">ip</span><span class="o">|</span> <span class="o">!</span><span class="vi">@taken_ips</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>When <span class="math">\(n = 2^{16}\)</span>, an <span class="math">\(O(n^2) \to O(n)\)</span> improvement is significant. Calculations that were taking many hours (or rather, hitting the nginx timeout and never finishing) in the worst case were now being done in a couple of seconds at most!</p>
+<p>As evidence for the claim that understanding math doesn’t help much with understanding programming, Sarah cites her experience: “I have found little connection between a person’s formal qualifications and the depth of their understanding.”</p>
+<h4 id="stawman-argument">Stawman Argument</h4>
+<p>Formal qualifications and understanding math are <em>not</em> the same thing! She talks specifically about big O in this context. So here’s a challenge: amongst all your colleagues, think about the ones who have limited formal education (e.g. early college dropout) but whom you admire for their skills and passion for solving hard and interesting problems. Now amongst those folks, find one who doesn’t get big O notation or who doesn’t care to think about runtime analysis. Can you even find one?</p>
+<p>I think the example above and the two examples in Part 1 all show how a mathematical approach can certainly help you better understand and tackle certain problems that come up, even in your day-to-day, non-mathy work. Here’s yet another example: <a href="http://blog.gopivotal.com/cloud-foundry-pivotal/products/app-placement-in-cloud-foundry-diego-a-classical-optimization-problem">Using the framework of classical optimization theory to understand the problem of designing a PaaS to schedule resources for running user applications in a highly available manner</a>.</p>
+<h2 id="learning-math-to-improve-how-you-approach-programming-problems">Learning math to improve how you approach programming problems</h2>
+<p>You’ll often hear that even if you don’t use math as a programmer, math teaches you abstract thinking and problem solving, and you need that for programming. Sarah retorts: “learning to program is more like learning a new language than it is like doing math problems.”</p>
+<h4 id="another-strawman-argument">Another Strawman Argument</h4>
+<p>Doing math problems is not the same as learning math. And there’s <em>so much more</em> to learning math than learning calculus, matrix arithmetic, a bit of graph theory and some combinatorics. Especially in America, the state of modern math education in college is quite poor for the vast majority of students. What they’re exposed to is excessively computational (doing problems vs. learning), centuries old, and severely limited in both breadth and depth.</p>
+<p>So, what about <em>learning</em> math? Is there something special about it that helps someone learn programming later on? Absolutely. First off:</p>
+<blockquote>
+<p>Doing math is about taking abstract and unfamiliar concepts and bodies of knowledge, and internalizing them by building mental models so that they feel concrete and familiar, often by building upon existing mental models, so that you can pose conjectures and prove assertions about these concepts.</p>
+</blockquote>
+<p>You can try to say that this description could apply to other fields, but there’s no field for which this is as fitting a description as it is for math. This habit of building mental models to understand the unfamiliar and make it concrete is something I use every time I’m introduced to a new problem domain. And I use the word “habit” deliberately, because it’s not that you need math to be able to do this, it’s that learning math necessitates making this a habitual part of your thinking process.</p>
+<p>Furthermore, because so much of math is so abstract:</p>
+<blockquote>
+<p>Doing math develops tenacity – the confidence that things which seem entirely opaque to you know can eventually be learned and understood in a way that seems clear through patience and effort.</p>
+</blockquote>
+<p>I came to programming knowing nothing. I didn’t know the difference between Java and JavaScript. I didn’t know about GET, POST, PUT, DELETE. I had hardly used Unix. I’d never heard of “client-server”. Didn’t know a thing about networks, IaaS, virtualization, databases, etc. My head would be throbbing after work every day for my first few weeks as I was being flooded with knowledge. And I would come in to work the next day and notice that a lot of the stuff from the previous day had leaked out overnight.</p>
+<p>But that was okay. I could tell myself, there’s no way this stuff is more abstract than combinatorial characterizations of compactness and incompactness of the second uncountable cardinal, the stuff I never wrote my thesis about. It took several months, but I was eventually able to penetrate those concepts in set-theory enough to start (but not finish, obviously) being productive. These programming concepts? Just give me a few weeks and I can be productive there too.</p>
+<p>The ability to feel comfortable while having absolutely no clue what you’re doing is something I take out of my time devoted to learning math. Again, math is not the only path to this goal. I feel that any artistic practice where the creations take a long time to take shape, be it drawing, sculpture, literature, etc. all develop the same sort of confidence. But math is at least one way to achieve it. And when it comes to programming, it certainly helps that math, much more so than art, requires a fairly similar “type” of thinking to programming.</p>
+<h2 id="summary">Summary</h2>
+<p>No matter where you are in your career as a programmer or what problem domain or business vertical you work on, there is value to knowing math, thinking mathematically, and experiencing the process of learning math. Knowing math adds a powerful set of tools to your toolbelt. It won’t be the right tool for <em>every</em> task, but that’s true of any tool. You know the old chestnut about hammers and nails. That said, there will undoubtedly be times that an application of math will be the best tool for the job, where that “job” could mean optimizing, designing, debugging, experimenting, or anything else.</p>
+<p>Thinking in terms of mathematics, and in terms of those mathy concepts from computer science, can sometimes provide an incredibly productive way to reason about a particular programming problem. Furthmore, the precise nature of mathematics often makes it an ideal way to communicate about a particular programming problem, especially when all your collaborators are familiar with the language.</p>
+<p>Finally, the process of learning math (real math, not multiplying matrices) is a great way to build habits and attitudes towards problem solving that transfer readily to programming.</p>]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Is math programming? You're asking the wrong question. Part 1]]></title>
+    <link href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/"/>
+    <updated>2014-07-19T15:33:00-04:00</updated>
+    <id>http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1</id>
+    <content type="html"><![CDATA[<p>A couple days ago, my former colleague <a href="https://twitter.com/sarahmei">Sarah Mei</a> trolled nerds everywhere, claiming <a href="http://www.sarahmei.com/blog/2014/07/15/programming-is-not-math/">programming is not math</a>. In her post, she argues that the value proffered to a programmer by learning/knowing/doing math is greatly diminished compared to what widely held beliefs about math and programming would suggest. In particular, she claims that:</p>
+<ol type="1">
+<li>Most developers don’t require any applications of math in nearly all of the problems they need to solve.</li>
+<li>Understanding math-flavoured concepts from computer science, such as big O analysis, has little correlation with a solid understanding of the problems most developers need to solve.</li>
+<li>While programmers do require abstract thinking and problem solving skills, there is nothing special about math as a way to develop these skills.</li>
+</ol>
+<p>So the question that’s truly of interest here is not whether math <em>is</em> programming, but</p>
+<blockquote>
+<p>In what ways, and to what extent, does learning and knowing math and computer science help programmers solve problems? <!--more--></p>
+</blockquote>
+<p>In fairness to Sarah, her post is indeed about this more interesting question, the title of her post is just clickbait. In fairness, so is the title of this post.</p>
+<p>While I agree with some of Sarah’s points, there are flaws in her arguments. I plan to critique some of those arguments, and then shed some light on the question of interest from my perspective as an almost-mathematician-turned-software-engineer. In this post, I’ll address claim 1, and in <a href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/">Part 2</a> I’ll address 2 and 3.</p>
+<h2 id="applying-math-to-solve-programming-problems">Applying math to solve programming problems</h2>
+<p>Sarah asserts that “the vast majority of developer jobs only required middle-school math at the most.” There’s a couple problems I see with this:</p>
+<h4 id="biased-sample">Biased Sample</h4>
+<p>Sarah does acknowledge the possibility she simply wasn’t seeing the jobs that required more math than that, but doesn’t take that possibility to its logical conclusion. And it’s perfectly understandable. Sarah spent many years as a consultant, working predominantly with Rails and JavaScript, and teaching clients the Agile Way. Now she teaches Rails and JavaScript to newcomers.</p>
+<p>If you have Rails, JavaScript, and Agile on your resume, and you’re a relative novice to these things, you will be inundated with messages from recruiters<sup><a href="#lpt">+</a></sup> at various companies who all need you to solve roughly the same class of problems, a class of problems that usually requires very little math. If you’re as talented and experienced as Sarah, I can only imagine. What you will undoubtedly see is that there <strong>a ton</strong> of job openings like this that don’t require much math. What that evidence does not bear out is the conclusion that the <em>vast majority</em> of jobs are like this. In his <a href="http://j2kun.svbtle.com/programming-is-not-math-huh">response</a> to Sarah’s post, <a href="https://twitter.com/jeremyjkun">Jeremy Kun</a> enumerates several major areas of the tech industry that are quite math-heavy.</p>
+<p><span style="font-size:60%"><a name="lpt">+</a>Pro Tip: If you need a job, and don’t mind working on the next Facebook/Pinterest/Instagram for dogs/seniors/snowboarders, then 1. Learn Rails and JS, 2. Profit.</span></p>
+<h4 id="red-herring">Red Herring</h4>
+<p>Sarah talks about the math that is <em>required</em> for those jobs. Math may not be <em>required</em> for many jobs, but are there applications of math that allow you to solve problems in a better way than simply what’s required? That’s the real question. I’m going to get to a couple examples in just a second, but the gist is:</p>
+<ul>
+<li>The more math you know, the better.</li>
+<li>There will be occasions where you can get by without it, but where an application of math is the absolute best tool for the job at hand.</li>
+<li>Having math skills in your toolbelt gives you more options and approaches to solve whatever problem you might be faced with, be it design, debugging, experimentation, optimization, understanding someone else’s code, etc.</li>
+<li>Whereas some areas of the tech industry need very little math, there’s no dearth of tech jobs where strong math skills are a major asset.</li>
+</ul>
+<p>I would liken it to knowing the power of raw SQL and how to roll your own queries vis-à-vis relying on an ORM for everything. Replace “math skills” with “roll your own SQL” in the statements above. The analogy is clear, with math simply being a bigger and more powerful set of skills than SQL.</p>
+<h3 id="examples">Examples</h3>
+<p>WARNING: There is actual math below, with equations and this thing: <span class="math">\(\sum_{k=1}^{N-1}\)</span>, and bipartite graphs and Pascal’s Triangle. If you wish to continue reading about the merits of math but don’t want to look at any math just now, do not pass this link, <a href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/">go directly to Part 2: <span style="font-size:150%">☞</span></a></p>
+<p>Otherwise, here’s just a couple recent examples where I was working on implementing or testing a feature that had nothing to do with math, but was able to apply math to great effect.</p>
+<h4 id="graph-theory-and-bdd-testing">Graph Theory and BDD Testing</h4>
+<p>This first example is about using <a href="https://github.com/amitkgupta/goraph">pure graph theory</a> to improve a BDD testing framework for Golang. <a href="http://onsi.github.io/gomega/">Gomega</a> is a matcher library which often used along with the <a href="http://onsi.github.io/ginkgo/">Ginkgo</a> testing framework. Gomega allows you to make assertions like:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Expect(someCalculatedValue).Should(Equal(42))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>The <code>ConsistOf</code> matcher was recently added, allowing one to make assertions such as:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>someCalculatedValue := someFunction() // returns []int{1,1,2,3}
+</span><span class='line'>Expect(someCalculatedValue).Should(ConsistOf(1,1,2,3))
+</span><span class='line'>Expect(someCalculatedValue).Should(ConsistOf(2,1,3,1))
+</span><span class='line'>Expect(someCalculatedValue).ShouldNot(ConsistOf(1,1,3,3))
+</span><span class='line'>Expect(someCalculatedValue).ShouldNot(ConsistOf(1,2,3))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>It’s useful when you want to say that some actual slice or array should look like some expected sequence of values, but the order doesn’t matter. One of the features of this matcher is that it allows composition with other matchers. For instance, there’s a <code>ContainElement</code> matcher which you can use like this:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Expect([]int{1,2,3}).Should(ContainElement(2))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>Now you can compose this with <code>ConsistOf</code> to make assertions like:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x := []int{1, 2}
+</span><span class='line'>y := []int{2, 3}
+</span><span class='line'>
+</span><span class='line'>Expect([][]int{x,y}).Should(ConsistOf(ContainElement(1), ContainElement(3)))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>The order of the sub-matchers shouldn’t matter, so the following assertion should also pass:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Expect([][]int{x,y}).Should(ConsistOf(ContainElement(3), ContainElement(1)))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>and indeed it did. The problem arose when you had an assertion like this:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Expect([][]int{x,y}).Should(ConsistOf(ContainElement(2), ContainElement(1)))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>It should pass: <code>x</code> satisfies both sub-matchers, and <code>y</code> satisfies the first one. But it didn’t. The problem is that the implementation of this matcher would look at the first sub-matcher, <code>ContainElement(2)</code>, and find the first element in the given slice that satisfied it, <code>x</code> in this case. At that point, <code>x</code> is no-longer available. Then it tries to find a match for the next sub-matcher, <code>ContainElement(1)</code>, and it only has one element to choose from, namely <code>y</code>. But <code>y</code> doesn’t satisfy this, so it falsely reports a failure for the assertion.</p>
+<p>What’s the fix? Well, naively, you might consider going through every permutation of the input slice, and seeing if the <span class="math">\(i^{\mathrm{th}}\)</span> element of the (permuted) slice satisfies the <span class="math">\(i^{\mathrm{th}}\)</span> matcher. If, for some permutation, every element satisfies its corresponding matcher, then the assertion is marked as passing; else, it’s a failure.</p>
+<p>How bad is this approach? <span class="math">\(O(n!)\)</span> – really bad. Graph theory to the rescue! Thanks to this <a href="http://cs.stackexchange.com/a/28429/20134">answer on cs.stackexchange.com</a>, I was able to find the <a href="https://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm">Hopkroft-Karp algorithm</a> and apply it to this problem. It’s runtime? <span class="math">\(O(n^{2.5})\)</span>, not bad at all compared to the original <span class="math">\(O(n^2)\)</span> implementation, and, more importantly, no false negatives!</p>
+<p><img src="http://akgupta.ca/images/bipartitegraph.jpeg"></img><br /><em><sub><sup>Source: http://www.mathworks.com/matlabcentral/fileexchange/screenshots/1307/original.jpg</sup></sub></em></p>
+<p>Here’s the idea. Model the problem as a bipartite graph, with the <span class="math">\(n\)</span> elements of the actual array or slice on the left, and the <span class="math">\(n\)</span> sub-matchers on the right. Do a pre-processing step of going through each pair of an element and a matcher (there’s <span class="math">\(n^2\)</span> such pairs), and connect the two vertices with an edge if that element satisfies that matcher. Then, use Hopkroft-Karp to do the hard work of determining if there is a way to choose exactly <span class="math">\(n\)</span> edges so that each element on the left is paired with a unique matcher on the right, i.e. no two edges in this selection share a vertex. In the picture above, the bold edges represent an attempt to do this, except it was only able to find 3 edges. You can convince yourself that in that picture, there’s no way to choose 4 edges so that no two share a vertex.</p>
+<h4 id="probability-theory-and-load-balancers">Probability Theory and Load Balancers</h4>
+<p>I work on Cloud Foundry. It’s a Platform-as-a-Service, so it let’s SaaS developers push their source code, ask for <span class="math">\(n\)</span> instances of the application to be run (in parallel, on separate servers), and then expose their app to their users on the web via a URL like <code>my-app.my-domain.com</code>, with the expectation that all traffic to that URL will be load-balanced across the <span class="math">\(n\)</span> servers. I’m working on a team that’s <a href="http://www.youtube.com/watch?v=1OkmVTFhfLY">rewriting much of Cloud Foundry in Go</a>. To test that our new code is working, we wanted to write a high-level system test which pushed an app, asked for 3 instances, and then make some requests to the app’s URL and somehow assert that it eventually hit all 3 instances.</p>
+<p>Now if the load balancer is doing its job and randomly but uniformly distributing load to all three servers, then there’s some chance, albeit small, that even if you <code>curl</code> the endpoint 100 times, you’ll never hit one of the app instances. In other words, even if the parts responsible for starting up 3 instances are working, and even if the parts responsible for keeping instances up and running (or restarting them quickly if they crash) are working, and even if the load balancer is being fair and balanced, there’s some chance that you’ll just happen to never hit one (or two) of those instances. A case like that would be a <em>false negative</em>.</p>
+<p>So the question is, if I’m going to write a test that hits the app’s endpoint in a <code>for</code> loop, how many times do I have to iterate to have 99.95% that I won’t encounter a false negative. We want to be pretty sure that if this test ever fails in the future, it should be catching a real failure within the system.</p>
+<p>The solution: let’s solve for <span class="math">\(N\)</span>, where <span class="math">\(N\)</span> is the smallest integer where the probability of a false negative when hitting the endpoint <span class="math">\(N\)</span> times at most 0.05%, or 0.0005. Before reading further, take a guess as to what <span class="math">\(N\)</span> might be. 5, 10, 100, 1000?</p>
+<p>The probability of a false negative is equal to the number of ways a false negative can occur, divided by the total number of possible outcomes. Here, an “outcome” is a sequence of the <span class="math">\(N\)</span> instance numbers hit when repeating the <code>curl</code>, e.g. if <span class="math">\(N=14\)</span>, one possible outcome is <code>[1, 2, 2, 1, 1, 3, 3, 2, 1, 3, 2, 2, 1, 3]</code>. Clearly, there are <span class="math">\(3^N\)</span> total possible occurrences?</p>
+<p>How many outcomes are false negatives? There’s two kinds. The kind where you only ever hit one of the instances, so <code>[1, 1, ...]</code>, <code>[2, 2, ...]</code>, and <code>[3, 3, ...]</code>. There’s just 3 of those. The other kind is where you only hit two of the three instances. So you either only hit 1 and 2, or only 2 and 3, or only 1 and 3. By symmetry, you can see that the number of outcomes for each of those three cases is the same, so let’s just count one case and multiply by 3. How many ways to only hit 1 and 2? This means that you hit instance 1 somewhere between 1 and <span class="math">\(N - 1\)</span> times, and instance 2 the rest. Breaking it down further, for some <span class="math">\(k\)</span> between 1 and <span class="math">\(N - 1\)</span>, how many outcomes involve hitting 1 <span class="math">\(k\)</span> times, and hitting instance 2 <span class="math">\(N-k\)</span> times? It’s easy to see that it’s just <span class="math">\({N \choose k}\)</span>. So the inequality we want to solve is:</p>
+<p><span class="math">\[\frac{3 + 3\sum_{k=1}^{N-1}{N \choose k}}{3^N} \leq 0.0001\]</span></p>
+<p>Now here’s something neat. We’re almost looking at <span class="math">\(\sum_{k=0}^{N}{N \choose k}\)</span>, which you might recognize is the sum of the <span class="math">\(N^{\mathrm{th}}\)</span> row in <a href="http://en.wikipedia.org/wiki/Pascal&#39;s_triangle">Pascal’s Triangle</a>. And that sum reduces to <span class="math">\(2^N\)</span> because given a set of size <span class="math">\(N\)</span>, the number of ways to choose a subset of size <span class="math">\(0\)</span>, plus the number of ways to choose a subset of size <span class="math">\(1\)</span>, …, plus the number of ways to choose a subset of size <span class="math">\(N\)</span>, is simply the total number of ways to choose a subset. And an equivalent way to choose a subset is to look at each element and make the binary choice “yes, you’re in the subset” or “no, you’re out”, and there’s <span class="math">\(2^N\)</span> ways to do that. This kind of argument is called a <a href="http://en.wikipedia.org/wiki/Combinatorial_proof">combinatorial argument</a>, where you prove two things are equal by showing that they represent two ways to count the same thing.</p>
+<p><img src="http://akgupta.ca/images/pascals-triangle.gif"></img><br /><em><sub><sup>Source: http://www.mathsisfun.com/images/pascals-triangle-4.gif</sup></sub></em></p>
+<p>An alternative argument uses the <a href="http://en.wikipedia.org/wiki/Binomial_theorem">Binomial Theorem</a> and the observation that <span class="math">\((1+1)^N = 2^N\)</span>. At any rate, we get:</p>
+<p><span class="math">\[\frac{3 + 3\cdot(2^N - {N \choose 0} - {N \choose N})}{3^N} \leq 0.0005\]</span> <span class="math">\[(2/3)^{N-1} \leq 0.0005\]</span> <span class="math">\[N \geq \log(0.0005)/\log(2/3)\]</span> <span class="math">\[N = 20\]</span></p>
+<p>And that’s indeed what we do. We <a href="https://github.com/cloudfoundry-incubator/inigo/blob/7ddcdbfbc259e79538a23deea73ded8eecfe5a00/helpers/route_helpers.go#L59-L86">poll 20 times</a>, and then <a href="https://github.com/cloudfoundry-incubator/inigo/blob/7ddcdbfbc259e79538a23deea73ded8eecfe5a00/lrp_consistency_test.go#L112-L126">assert that we see all 3 instances</a>. By the way, did you guess 20?</p>
+<p>Before we move on, here’s a question: what if we have more than 3 instances? Let’s just say 4. The problem already gets <em>way</em> harder. The Pascal’s Triangle trick no longer applies. How do you model the problem now? Well, <a href="https://github.com/amitkgupta/sampling_with_replacement">here’s</a> one approach, and the pretty results:</p>
+<p><img src="http://akgupta.ca/images/sampling.png"></img></p>
+<p>Now let’s move on to <a href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/">Part 2</a>.</p>]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[k-NN Algorithm in Golang and Haskell]]></title>
     <link href="http://akgupta.ca/blog/2014/06/21/k-nn-algorithm-in-golang-and-haskell/"/>
-    <updated>2014-06-21T17:46:00-07:00</updated>
+    <updated>2014-06-21T17:46:00-04:00</updated>
     <id>http://akgupta.ca/blog/2014/06/21/k-nn-algorithm-in-golang-and-haskell</id>
     <content type="html"><![CDATA[<p>There’s been a recent string of blog posts featuring implementations of the <a href="http://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">k-Nearest Neighbour algorithm</a> in several languages (for k = 1), and it’s been cool to see how the solutions are expressed differently in different languages, as well as the vast differences in performance. The k-Nearest Neighbour algorithm is cool in itself, it’s a dead simple technique for classifying (or labelling) a collection of observed data by searching the previously observed collections of data whose classifications/labels are already known, and finding the one which most nearly resembles our not-yet-classified collection (for some definition of “nearly resembles”). It’s an example of a <a href="http://en.wikipedia.org/wiki/Machine_learning">machine learning</a> classification algorithm, one of those things that lives in the fun intersection of math and programming.</p>
 <p>We’re gonna take a look at a concrete application of the k-NN algorithm, compare the performance of the implementations from those aforementioned blog posts with new implementations in <a href="http://golang.org">Golang</a> and <a href="http://www.haskell.org/">Haskell</a>, and take a look at an optimized version which takes a logical shortcut and also leverages Golang’s built-in support for <a href="http://www.golang-book.com/10/index.htm">concurrency</a>.</p>
@@ -760,7 +1006,7 @@
   <entry>
     <title type="html"><![CDATA[So You Still Don't Understand Hindley-Milner?  Part 3]]></title>
     <link href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/"/>
-    <updated>2013-06-07T00:22:00-07:00</updated>
+    <updated>2013-06-07T00:22:00-04:00</updated>
     <id>http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3</id>
     <content type="html"><![CDATA[<p>In <a href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/">Part 2</a>, we finished defining all the formal terms and symbols you see in the <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">StackOverflow question</a> on the Hindley-Milner algorithm, so now we’re ready to translate what that question was asking about, namely the rules for deducing statements about type inference. Let’s get down to it!</p>
 <h2 id="the-rules-for-deducing-statements-about-type-inference">The rules for deducing statements about type inference</h2>
@@ -813,7 +1059,7 @@
   <entry>
     <title type="html"><![CDATA[So You Still Don't Understand Hindley-Milner?  Part 2]]></title>
     <link href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/"/>
-    <updated>2013-06-07T00:19:00-07:00</updated>
+    <updated>2013-06-07T00:19:00-04:00</updated>
     <id>http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2</id>
     <content type="html"><![CDATA[<p>In <a href="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">Part 1</a>, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually formulate the formalization:</p>
 <h2 id="formalizing-the-concept-of-an-expression">Formalizing the concept of an expression</h2>
@@ -897,7 +1143,7 @@
   <entry>
     <title type="html"><![CDATA[Entropy: How Password Strength is Measured]]></title>
     <link href="http://akgupta.ca/blog/2013/06/06/entropy-how-password-strength-is-measured/"/>
-    <updated>2013-06-06T23:35:00-07:00</updated>
+    <updated>2013-06-06T23:35:00-04:00</updated>
     <id>http://akgupta.ca/blog/2013/06/06/entropy-how-password-strength-is-measured</id>
     <content type="html"><![CDATA[<p>My colleague <a href="http://pivotallabs.com/author/msierchio/">Mike Sierchio</a> wrote a <a href="http://pivotallabs.com/entropy-is-not-entropy/">cool post</a> on password strength, and the concept of entropy. As he points out, entropy isn’t always entropy. That confusion is apparently not uncommon, as it’s been asked about <a href="http://security.stackexchange.com/questions/21143/confused-about-password-entropy">on IT Security Stack Exchange</a> as well. So what’s really going on?</p>
 <p>Let’s step back for a sec and fill in some context. What are we trying to do? We’d like some way to measure how hard it is to guess our passwords, a number that serves as a heuristic standard of password strength. But there are two fundamentally different things we might want to measure:</p>
@@ -990,7 +1236,7 @@
   <entry>
     <title type="html"><![CDATA[Yo Dawg, I Herd You Like Math]]></title>
     <link href="http://akgupta.ca/blog/2013/06/02/yo-dawg/"/>
-    <updated>2013-06-02T12:23:00-07:00</updated>
+    <updated>2013-06-02T12:23:00-04:00</updated>
     <id>http://akgupta.ca/blog/2013/06/02/yo-dawg</id>
     <content type="html"><![CDATA[<p>I’ve been learning a bit of statistical computing with R lately on the side from <a href="http://www.stat.berkeley.edu/~paciorek/teaching/teaching.html">Chris Paciorek’s Berkeley course</a>. I just got introduced to <a href="http://yihui.name/knitr/">knitr</a> and it’s damned sweet! It’s an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. It let’s you put math in your math, so you can math while you math.</p>
 <p>I’ve got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
@@ -1066,7 +1312,7 @@
   <entry>
     <title type="html"><![CDATA[Is it possible to be 15% Swedish?]]></title>
     <link href="http://akgupta.ca/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/"/>
-    <updated>2013-05-19T13:32:00-07:00</updated>
+    <updated>2013-05-19T13:32:00-04:00</updated>
     <id>http://akgupta.ca/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish</id>
     <content type="html"><![CDATA[<p>This question came up as a joke during a team standup a few months ago. Although the obvious answer is “no,” if you’re willing to play fast and loose with your metaphysics for a bit, the answer can be “yes” and there’s a cute solution that ties together binary numbers and binary trees. This post itself is a bit of a joke in that it’s just for fun, but it might be nice to see the familiar concepts of binary numbers and binary trees in a new light.</p>
 <h2 id="the-obvious-answer-is-no">The obvious answer is “no”</h2>
@@ -1114,7 +1360,7 @@
   <entry>
     <title type="html"><![CDATA[So you still don't understand Hindley-Milner?  Part 1]]></title>
     <link href="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/"/>
-    <updated>2013-05-14T01:12:00-07:00</updated>
+    <updated>2013-05-14T01:12:00-04:00</updated>
     <id>http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner</id>
     <content type="html"><![CDATA[<p>I was out for drinks with <a href="https://twitter.com/starbuxman">Josh Long</a> and some other friends from work, when he found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
 <p><img src="http://i.stack.imgur.com/hZhjl.png" /><br /><br></p>
@@ -1160,7 +1406,7 @@
   <entry>
     <title type="html"><![CDATA[Setting up PostgreSQL with MacPorts for Ruby on Rails development]]></title>
     <link href="http://akgupta.ca/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/"/>
-    <updated>2013-05-11T13:39:00-07:00</updated>
+    <updated>2013-05-11T13:39:00-04:00</updated>
     <id>http://akgupta.ca/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development</id>
     <content type="html"><![CDATA[<p>This post is pretty much just what the title says. If you develop in Rails, on a Mac, using PostgreSQL as your database and MacPorts as your package management system of choice, it can be hard to get everything set up and going. This is especially true if you’re new to absolutely everything, which was my situation when I first tried to do this. Part of what was hard was that most of the advice on the Internet was just a bunch of commands to run with little explanation, so it was hard to know what you had to do to customize it for your environment. So this explanation is hopefully a little more thorough. However, if you’re impatient and just want the <strong>TL;DR</strong>, here it is (with several implicit assumptions):</p>
 <div class='bogus-wrapper'>

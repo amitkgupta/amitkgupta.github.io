@@ -1,0 +1,373 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Is math programming? You're asking the wrong question. Part 1 - Amit's Blog</title>
+  <meta name="author" content="Amit Kumar Gupta">
+
+  
+  <meta name="description" content="A couple days ago, my former colleague Sarah Mei trolled nerds everywhere, claiming programming is not math. In her post, she argues that the value &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1">
+  <link href="/images/aleph.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Amit's Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<!--- MathJax Configuration -->
+<script type="text/javascript"
+src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,http://drz.ac/javascripts/MathJaxLocal.js">
+</script>
+<!---Shadowbox Configuration -->
+<link rel="stylesheet" type="text/css" href="/stylesheets/shadowbox.css">
+<script type="text/javascript" src="/javascripts/shadowbox.js"></script>
+<script type="text/javascript">
+Shadowbox.init();
+</script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-41581367-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Amit's Blog</a></h1>
+  
+    <h2>Math, Code, etc.</h2>
+  
+</hgroup>
+
+</header>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Is Math Programming? You're Asking the Wrong Question. Part 1</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-19T15:33:00-04:00" pubdate data-updated="true">Jul 19<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>A couple days ago, my former colleague <a href="https://twitter.com/sarahmei">Sarah Mei</a> trolled nerds everywhere, claiming <a href="http://www.sarahmei.com/blog/2014/07/15/programming-is-not-math/">programming is not math</a>. In her post, she argues that the value proffered to a programmer by learning/knowing/doing math is greatly diminished compared to what widely held beliefs about math and programming would suggest. In particular, she claims that:</p>
+<ol type="1">
+<li>Most developers don’t require any applications of math in nearly all of the problems they need to solve.</li>
+<li>Understanding math-flavoured concepts from computer science, such as big O analysis, has little correlation with a solid understanding of the problems most developers need to solve.</li>
+<li>While programmers do require abstract thinking and problem solving skills, there is nothing special about math as a way to develop these skills.</li>
+</ol>
+<p>So the question that’s truly of interest here is not whether math <em>is</em> programming, but</p>
+<blockquote>
+<p>In what ways, and to what extent, does learning and knowing math and computer science help programmers solve problems? <!--more--></p>
+</blockquote>
+<p>In fairness to Sarah, her post is indeed about this more interesting question, the title of her post is just clickbait. In fairness, so is the title of this post.</p>
+<p>While I agree with some of Sarah’s points, there are flaws in her arguments. I plan to critique some of those arguments, and then shed some light on the question of interest from my perspective as an almost-mathematician-turned-software-engineer. In this post, I’ll address claim 1, and in <a href="/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/">Part 2</a> I’ll address 2 and 3.</p>
+<h2 id="applying-math-to-solve-programming-problems">Applying math to solve programming problems</h2>
+<p>Sarah asserts that “the vast majority of developer jobs only required middle-school math at the most.” There’s a couple problems I see with this:</p>
+<h4 id="biased-sample">Biased Sample</h4>
+<p>Sarah does acknowledge the possibility she simply wasn’t seeing the jobs that required more math than that, but doesn’t take that possibility to its logical conclusion. And it’s perfectly understandable. Sarah spent many years as a consultant, working predominantly with Rails and JavaScript, and teaching clients the Agile Way. Now she teaches Rails and JavaScript to newcomers.</p>
+<p>If you have Rails, JavaScript, and Agile on your resume, and you’re a relative novice to these things, you will be inundated with messages from recruiters<sup><a href="#lpt">+</a></sup> at various companies who all need you to solve roughly the same class of problems, a class of problems that usually requires very little math. If you’re as talented and experienced as Sarah, I can only imagine. What you will undoubtedly see is that there <strong>a ton</strong> of job openings like this that don’t require much math. What that evidence does not bear out is the conclusion that the <em>vast majority</em> of jobs are like this. In his <a href="http://j2kun.svbtle.com/programming-is-not-math-huh">response</a> to Sarah’s post, <a href="https://twitter.com/jeremyjkun">Jeremy Kun</a> enumerates several major areas of the tech industry that are quite math-heavy.</p>
+<p><span style="font-size:60%"><a name="lpt">+</a>Pro Tip: If you need a job, and don’t mind working on the next Facebook/Pinterest/Instagram for dogs/seniors/snowboarders, then 1. Learn Rails and JS, 2. Profit.</span></p>
+<h4 id="red-herring">Red Herring</h4>
+<p>Sarah talks about the math that is <em>required</em> for those jobs. Math may not be <em>required</em> for many jobs, but are there applications of math that allow you to solve problems in a better way than simply what’s required? That’s the real question. I’m going to get to a couple examples in just a second, but the gist is:</p>
+<ul>
+<li>The more math you know, the better.</li>
+<li>There will be occasions where you can get by without it, but where an application of math is the absolute best tool for the job at hand.</li>
+<li>Having math skills in your toolbelt gives you more options and approaches to solve whatever problem you might be faced with, be it design, debugging, experimentation, optimization, understanding someone else’s code, etc.</li>
+<li>Whereas some areas of the tech industry need very little math, there’s no dearth of tech jobs where strong math skills are a major asset.</li>
+</ul>
+<p>I would liken it to knowing the power of raw SQL and how to roll your own queries vis-à-vis relying on an ORM for everything. Replace “math skills” with “roll your own SQL” in the statements above. The analogy is clear, with math simply being a bigger and more powerful set of skills than SQL.</p>
+<h3 id="examples">Examples</h3>
+<p>WARNING: There is actual math below, with equations and this thing: <span class="math">\(\sum_{k=1}^{N-1}\)</span>, and bipartite graphs and Pascal’s Triangle. If you wish to continue reading about the merits of math but don’t want to look at any math just now, do not pass this link, <a href="/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/">go directly to Part 2: <span style="font-size:150%">☞</span></a></p>
+<p>Otherwise, here’s just a couple recent examples where I was working on implementing or testing a feature that had nothing to do with math, but was able to apply math to great effect.</p>
+<h4 id="graph-theory-and-bdd-testing">Graph Theory and BDD Testing</h4>
+<p>This first example is about using <a href="https://github.com/amitkgupta/goraph">pure graph theory</a> to improve a BDD testing framework for Golang. <a href="http://onsi.github.io/gomega/">Gomega</a> is a matcher library which often used along with the <a href="http://onsi.github.io/ginkgo/">Ginkgo</a> testing framework. Gomega allows you to make assertions like:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Expect(someCalculatedValue).Should(Equal(42))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>The <code>ConsistOf</code> matcher was recently added, allowing one to make assertions such as:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>someCalculatedValue := someFunction() // returns []int{1,1,2,3}
+</span><span class='line'>Expect(someCalculatedValue).Should(ConsistOf(1,1,2,3))
+</span><span class='line'>Expect(someCalculatedValue).Should(ConsistOf(2,1,3,1))
+</span><span class='line'>Expect(someCalculatedValue).ShouldNot(ConsistOf(1,1,3,3))
+</span><span class='line'>Expect(someCalculatedValue).ShouldNot(ConsistOf(1,2,3))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>It’s useful when you want to say that some actual slice or array should look like some expected sequence of values, but the order doesn’t matter. One of the features of this matcher is that it allows composition with other matchers. For instance, there’s a <code>ContainElement</code> matcher which you can use like this:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Expect([]int{1,2,3}).Should(ContainElement(2))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>Now you can compose this with <code>ConsistOf</code> to make assertions like:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x := []int{1, 2}
+</span><span class='line'>y := []int{2, 3}
+</span><span class='line'>
+</span><span class='line'>Expect([][]int{x,y}).Should(ConsistOf(ContainElement(1), ContainElement(3)))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>The order of the sub-matchers shouldn’t matter, so the following assertion should also pass:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Expect([][]int{x,y}).Should(ConsistOf(ContainElement(3), ContainElement(1)))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>and indeed it did. The problem arose when you had an assertion like this:</p>
+<div class='bogus-wrapper'>
+<notextile>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Expect([][]int{x,y}).Should(ConsistOf(ContainElement(2), ContainElement(1)))</span></code></pre></td></tr></table></div></figure>
+</notextile>
+</div>
+
+<p>It should pass: <code>x</code> satisfies both sub-matchers, and <code>y</code> satisfies the first one. But it didn’t. The problem is that the implementation of this matcher would look at the first sub-matcher, <code>ContainElement(2)</code>, and find the first element in the given slice that satisfied it, <code>x</code> in this case. At that point, <code>x</code> is no-longer available. Then it tries to find a match for the next sub-matcher, <code>ContainElement(1)</code>, and it only has one element to choose from, namely <code>y</code>. But <code>y</code> doesn’t satisfy this, so it falsely reports a failure for the assertion.</p>
+<p>What’s the fix? Well, naively, you might consider going through every permutation of the input slice, and seeing if the <span class="math">\(i^{\mathrm{th}}\)</span> element of the (permuted) slice satisfies the <span class="math">\(i^{\mathrm{th}}\)</span> matcher. If, for some permutation, every element satisfies its corresponding matcher, then the assertion is marked as passing; else, it’s a failure.</p>
+<p>How bad is this approach? <span class="math">\(O(n!)\)</span> – really bad. Graph theory to the rescue! Thanks to this <a href="http://cs.stackexchange.com/a/28429/20134">answer on cs.stackexchange.com</a>, I was able to find the <a href="https://en.wikipedia.org/wiki/Hopcroft%E2%80%93Karp_algorithm">Hopkroft-Karp algorithm</a> and apply it to this problem. It’s runtime? <span class="math">\(O(n^{2.5})\)</span>, not bad at all compared to the original <span class="math">\(O(n^2)\)</span> implementation, and, more importantly, no false negatives!</p>
+<p><img src="/images/bipartitegraph.jpeg"></img><br /><em><sub><sup>Source: http://www.mathworks.com/matlabcentral/fileexchange/screenshots/1307/original.jpg</sup></sub></em></p>
+<p>Here’s the idea. Model the problem as a bipartite graph, with the <span class="math">\(n\)</span> elements of the actual array or slice on the left, and the <span class="math">\(n\)</span> sub-matchers on the right. Do a pre-processing step of going through each pair of an element and a matcher (there’s <span class="math">\(n^2\)</span> such pairs), and connect the two vertices with an edge if that element satisfies that matcher. Then, use Hopkroft-Karp to do the hard work of determining if there is a way to choose exactly <span class="math">\(n\)</span> edges so that each element on the left is paired with a unique matcher on the right, i.e. no two edges in this selection share a vertex. In the picture above, the bold edges represent an attempt to do this, except it was only able to find 3 edges. You can convince yourself that in that picture, there’s no way to choose 4 edges so that no two share a vertex.</p>
+<h4 id="probability-theory-and-load-balancers">Probability Theory and Load Balancers</h4>
+<p>I work on Cloud Foundry. It’s a Platform-as-a-Service, so it let’s SaaS developers push their source code, ask for <span class="math">\(n\)</span> instances of the application to be run (in parallel, on separate servers), and then expose their app to their users on the web via a URL like <code>my-app.my-domain.com</code>, with the expectation that all traffic to that URL will be load-balanced across the <span class="math">\(n\)</span> servers. I’m working on a team that’s <a href="http://www.youtube.com/watch?v=1OkmVTFhfLY">rewriting much of Cloud Foundry in Go</a>. To test that our new code is working, we wanted to write a high-level system test which pushed an app, asked for 3 instances, and then make some requests to the app’s URL and somehow assert that it eventually hit all 3 instances.</p>
+<p>Now if the load balancer is doing its job and randomly but uniformly distributing load to all three servers, then there’s some chance, albeit small, that even if you <code>curl</code> the endpoint 100 times, you’ll never hit one of the app instances. In other words, even if the parts responsible for starting up 3 instances are working, and even if the parts responsible for keeping instances up and running (or restarting them quickly if they crash) are working, and even if the load balancer is being fair and balanced, there’s some chance that you’ll just happen to never hit one (or two) of those instances. A case like that would be a <em>false negative</em>.</p>
+<p>So the question is, if I’m going to write a test that hits the app’s endpoint in a <code>for</code> loop, how many times do I have to iterate to have 99.95% that I won’t encounter a false negative. We want to be pretty sure that if this test ever fails in the future, it should be catching a real failure within the system.</p>
+<p>The solution: let’s solve for <span class="math">\(N\)</span>, where <span class="math">\(N\)</span> is the smallest integer where the probability of a false negative when hitting the endpoint <span class="math">\(N\)</span> times at most 0.05%, or 0.0005. Before reading further, take a guess as to what <span class="math">\(N\)</span> might be. 5, 10, 100, 1000?</p>
+<p>The probability of a false negative is equal to the number of ways a false negative can occur, divided by the total number of possible outcomes. Here, an “outcome” is a sequence of the <span class="math">\(N\)</span> instance numbers hit when repeating the <code>curl</code>, e.g. if <span class="math">\(N=14\)</span>, one possible outcome is <code>[1, 2, 2, 1, 1, 3, 3, 2, 1, 3, 2, 2, 1, 3]</code>. Clearly, there are <span class="math">\(3^N\)</span> total possible occurrences?</p>
+<p>How many outcomes are false negatives? There’s two kinds. The kind where you only ever hit one of the instances, so <code>[1, 1, ...]</code>, <code>[2, 2, ...]</code>, and <code>[3, 3, ...]</code>. There’s just 3 of those. The other kind is where you only hit two of the three instances. So you either only hit 1 and 2, or only 2 and 3, or only 1 and 3. By symmetry, you can see that the number of outcomes for each of those three cases is the same, so let’s just count one case and multiply by 3. How many ways to only hit 1 and 2? This means that you hit instance 1 somewhere between 1 and <span class="math">\(N - 1\)</span> times, and instance 2 the rest. Breaking it down further, for some <span class="math">\(k\)</span> between 1 and <span class="math">\(N - 1\)</span>, how many outcomes involve hitting 1 <span class="math">\(k\)</span> times, and hitting instance 2 <span class="math">\(N-k\)</span> times? It’s easy to see that it’s just <span class="math">\({N \choose k}\)</span>. So the inequality we want to solve is:</p>
+<p><span class="math">\[\frac{3 + 3\sum_{k=1}^{N-1}{N \choose k}}{3^N} \leq 0.0001\]</span></p>
+<p>Now here’s something neat. We’re almost looking at <span class="math">\(\sum_{k=0}^{N}{N \choose k}\)</span>, which you might recognize is the sum of the <span class="math">\(N^{\mathrm{th}}\)</span> row in <a href="http://en.wikipedia.org/wiki/Pascal&#39;s_triangle">Pascal’s Triangle</a>. And that sum reduces to <span class="math">\(2^N\)</span> because given a set of size <span class="math">\(N\)</span>, the number of ways to choose a subset of size <span class="math">\(0\)</span>, plus the number of ways to choose a subset of size <span class="math">\(1\)</span>, …, plus the number of ways to choose a subset of size <span class="math">\(N\)</span>, is simply the total number of ways to choose a subset. And an equivalent way to choose a subset is to look at each element and make the binary choice “yes, you’re in the subset” or “no, you’re out”, and there’s <span class="math">\(2^N\)</span> ways to do that. This kind of argument is called a <a href="http://en.wikipedia.org/wiki/Combinatorial_proof">combinatorial argument</a>, where you prove two things are equal by showing that they represent two ways to count the same thing.</p>
+<p><img src="/images/pascals-triangle.gif"></img><br /><em><sub><sup>Source: http://www.mathsisfun.com/images/pascals-triangle-4.gif</sup></sub></em></p>
+<p>An alternative argument uses the <a href="http://en.wikipedia.org/wiki/Binomial_theorem">Binomial Theorem</a> and the observation that <span class="math">\((1+1)^N = 2^N\)</span>. At any rate, we get:</p>
+<p><span class="math">\[\frac{3 + 3\cdot(2^N - {N \choose 0} - {N \choose N})}{3^N} \leq 0.0005\]</span> <span class="math">\[(2/3)^{N-1} \leq 0.0005\]</span> <span class="math">\[N \geq \log(0.0005)/\log(2/3)\]</span> <span class="math">\[N = 20\]</span></p>
+<p>And that’s indeed what we do. We <a href="https://github.com/cloudfoundry-incubator/inigo/blob/7ddcdbfbc259e79538a23deea73ded8eecfe5a00/helpers/route_helpers.go#L59-L86">poll 20 times</a>, and then <a href="https://github.com/cloudfoundry-incubator/inigo/blob/7ddcdbfbc259e79538a23deea73ded8eecfe5a00/lrp_consistency_test.go#L112-L126">assert that we see all 3 instances</a>. By the way, did you guess 20?</p>
+<p>Before we move on, here’s a question: what if we have more than 3 instances? Let’s just say 4. The problem already gets <em>way</em> harder. The Pascal’s Triangle trick no longer applies. How do you model the problem now? Well, <a href="https://github.com/amitkgupta/sampling_with_replacement">here’s</a> one approach, and the pretty results:</p>
+<p><img src="/images/sampling.png"></img></p>
+<p>Now let’s move on to <a href="/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/">Part 2</a>.</p></div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Amit Kumar Gupta</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-19T15:33:00-04:00" pubdate data-updated="true">Jul 19<span>th</span>, 2014</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/" data-via="" data-counturl="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/06/21/k-nn-algorithm-in-golang-and-haskell/" title="Previous Post: k-NN Algorithm in Golang and Haskell">&laquo; k-NN Algorithm in Golang and Haskell</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/" title="Next Post: Is math programming? You're asking the wrong question. Part 2">Is math programming? You're asking the wrong question. Part 2 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Contact</h1>
+  <p>Twitter: <a href="https://twitter.com/amitkgupta84/">@amitkgupta84</a><br>
+     LinkedIn: <a href="http://www.linkedin.com/pub/amit-gupta/1a/527/936">Amit Kumar Gupta</a></p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/">Is Math Programming? You're Asking the Wrong Question. Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/">Is Math Programming? You're Asking the Wrong Question. Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/06/21/k-nn-algorithm-in-golang-and-haskell/">k-NN Algorithm in Golang and Haskell</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/">So You Still Don't Understand Hindley-Milner? Part 3</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/">So You Still Don't Understand Hindley-Milner? Part 2</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/06/entropy-how-password-strength-is-measured/">Entropy: How Password Strength Is Measured</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/06/02/yo-dawg/">Yo Dawg, I Herd You Like Math</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/">Is It Possible to Be 15% Swedish?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">So You Still Don't Understand Hindley-Milner? Part 1</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/">Setting Up PostgreSQL With MacPorts for Ruby on Rails Development</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Amit Kumar Gupta -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'amitsblog-math-code';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/';
+        var disqus_url = 'http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
