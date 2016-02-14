@@ -4,7 +4,7 @@
   <title><![CDATA[Amit's Blog]]></title>
   <link href="http://akgupta.ca/atom.xml" rel="self"/>
   <link href="http://akgupta.ca/"/>
-  <updated>2014-07-20T17:23:39-04:00</updated>
+  <updated>2016-02-14T15:34:39-08:00</updated>
   <id>http://akgupta.ca/</id>
   <author>
     <name><![CDATA[Amit Kumar Gupta]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Is programming math? You're asking the wrong question. Part 2]]></title>
     <link href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/"/>
-    <updated>2014-07-19T23:21:00-04:00</updated>
+    <updated>2014-07-19T23:21:00-07:00</updated>
     <id>http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2</id>
     <content type="html"><![CDATA[<p>In <a href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/">Part 1</a> I started to address <a href="https://twitter.com/sarahmei">Sarah Mei</a>’s recent blog post about how <a href="http://www.sarahmei.com/blog/2014/07/15/programming-is-not-math/">programming is not math</a>. In this post, I’ll continue my critique of her article and highlight the ways in which math can be valuable to a programmer.</p>
 <h2 id="understanding-math-to-understand-programming-problems">Understanding math to understand programming problems</h2>
@@ -142,7 +142,7 @@
   <entry>
     <title type="html"><![CDATA[Is programming math? You're asking the wrong question. Part 1]]></title>
     <link href="http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/"/>
-    <updated>2014-07-19T15:33:00-04:00</updated>
+    <updated>2014-07-19T15:33:00-07:00</updated>
     <id>http://akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1</id>
     <content type="html"><![CDATA[<p>A couple days ago, my former colleague <a href="https://twitter.com/sarahmei">Sarah Mei</a> trolled nerds everywhere, claiming <a href="http://www.sarahmei.com/blog/2014/07/15/programming-is-not-math/">programming is not math</a>. In her post, she argues that the value proffered to a programmer by learning/knowing/doing math is greatly diminished compared to what widely held beliefs about math and programming would suggest. In particular, she claims that:</p>
 <ol type="1">
@@ -264,7 +264,7 @@
   <entry>
     <title type="html"><![CDATA[k-NN Algorithm in Golang and Haskell]]></title>
     <link href="http://akgupta.ca/blog/2014/06/21/k-nn-algorithm-in-golang-and-haskell/"/>
-    <updated>2014-06-21T17:46:00-04:00</updated>
+    <updated>2014-06-21T17:46:00-07:00</updated>
     <id>http://akgupta.ca/blog/2014/06/21/k-nn-algorithm-in-golang-and-haskell</id>
     <content type="html"><![CDATA[<p>There’s been a recent string of blog posts featuring implementations of the <a href="http://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">k-Nearest Neighbour algorithm</a> in several languages (for k = 1), and it’s been cool to see how the solutions are expressed differently in different languages, as well as the vast differences in performance. The k-Nearest Neighbour algorithm is cool in itself, it’s a dead simple technique for classifying (or labelling) a collection of observed data by searching the previously observed collections of data whose classifications/labels are already known, and finding the one which most nearly resembles our not-yet-classified collection (for some definition of “nearly resembles”). It’s an example of a <a href="http://en.wikipedia.org/wiki/Machine_learning">machine learning</a> classification algorithm, one of those things that lives in the fun intersection of math and programming.</p>
 <p>We’re gonna take a look at a concrete application of the k-NN algorithm, compare the performance of the implementations from those aforementioned blog posts with new implementations in <a href="http://golang.org">Golang</a> and <a href="http://www.haskell.org/">Haskell</a>, and take a look at an optimized version which takes a logical shortcut and also leverages Golang’s built-in support for <a href="http://www.golang-book.com/10/index.htm">concurrency</a>.</p>
@@ -1008,7 +1008,7 @@
   <entry>
     <title type="html"><![CDATA[So You Still Don't Understand Hindley-Milner?  Part 3]]></title>
     <link href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/"/>
-    <updated>2013-06-07T00:22:00-04:00</updated>
+    <updated>2013-06-07T00:22:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3</id>
     <content type="html"><![CDATA[<p>In <a href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/">Part 2</a>, we finished defining all the formal terms and symbols you see in the <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">StackOverflow question</a> on the Hindley-Milner algorithm, so now we’re ready to translate what that question was asking about, namely the rules for deducing statements about type inference. Let’s get down to it!</p>
 <h2 id="the-rules-for-deducing-statements-about-type-inference">The rules for deducing statements about type inference</h2>
@@ -1040,7 +1040,7 @@
 <p>These last four rules do nothing more than formally capture our intuition about what type inferences we can make when we have variables and we do things like create anonymous functions, apply functions, and substitute expressions into other expressions. It’s something we as programmers can do intuitively, and here we’re just saying that this is something we can formally describe, what’s happening in our brains isn’t necessarily magical. It’s also worth noting that these last four rules correspond precisely with the four rules for defining what a valid expression is in the Lambda Calculus. This is not a coincidence.</p>
 <p>[Inst]</p>
 <p><span class="math">\[\underline{\Gamma \vdash e:\sigma &#39;\ \ \ \ \sigma &#39;\sqsubseteq \sigma}\]</span> <span class="math">\[\Gamma \vdash e:\sigma\]</span></p>
-<p>This is about instantiation. You can think of the monotype <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> as an instantiation of the polytype <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span>. Another word for this is “specialization”: <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> is more special than for <span class="math">\(\forall t.\mathrm{Array}[t] \rightarrow t\)</span>. We denote the “more special than” relation between types with <span class="math">\(\sqsubseteq\)</span>. So</p>
+<p>This is about instantiation. You can think of the monotype <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> as an instantiation of the polytype <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span>. Another word for this is “specialization”: <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> is more specialized/specific than for <span class="math">\(\forall t.\mathrm{Array}[t] \rightarrow t\)</span>. Flipping it around, we denote the “less specialized/specific than” relation between types with <span class="math">\(\sqsubseteq\)</span>. So</p>
 <p><span class="math">\[\forall t. \mathrm{Array}[t] \rightarrow t \ \ \sqsubseteq\ \  \mathrm{Array}[t] \rightarrow t\]</span></p>
 <p>So the direct translation of [Inst] is: If we can infer <span class="math">\(e\)</span> has type <span class="math">\(\sigma &#39;\)</span>, and <span class="math">\(\sigma\)</span> is a specialization/instantiation of <span class="math">\(\sigma &#39;\)</span>, then we can deduce that we can infer that <span class="math">\(e\)</span> has type <span class="math">\(\sigma\)</span>. And you can think of <span class="math">\(\sigma\)</span> and <span class="math">\(\sigma &#39;\)</span> as being types like <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span> and <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span> respectively.</p>
 <p>[Gen]</p>
@@ -1061,7 +1061,7 @@
   <entry>
     <title type="html"><![CDATA[So You Still Don't Understand Hindley-Milner?  Part 2]]></title>
     <link href="http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2/"/>
-    <updated>2013-06-07T00:19:00-04:00</updated>
+    <updated>2013-06-07T00:19:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-2</id>
     <content type="html"><![CDATA[<p>In <a href="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">Part 1</a>, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually formulate the formalization:</p>
 <h2 id="formalizing-the-concept-of-an-expression">Formalizing the concept of an expression</h2>
@@ -1145,7 +1145,7 @@
   <entry>
     <title type="html"><![CDATA[Entropy: How Password Strength is Measured]]></title>
     <link href="http://akgupta.ca/blog/2013/06/06/entropy-how-password-strength-is-measured/"/>
-    <updated>2013-06-06T23:35:00-04:00</updated>
+    <updated>2013-06-06T23:35:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/06/06/entropy-how-password-strength-is-measured</id>
     <content type="html"><![CDATA[<p>My colleague <a href="http://pivotallabs.com/author/msierchio/">Mike Sierchio</a> wrote a <a href="http://pivotallabs.com/entropy-is-not-entropy/">cool post</a> on password strength, and the concept of entropy. As he points out, entropy isn’t always entropy. That confusion is apparently not uncommon, as it’s been asked about <a href="http://security.stackexchange.com/questions/21143/confused-about-password-entropy">on IT Security Stack Exchange</a> as well. So what’s really going on?</p>
 <p>Let’s step back for a sec and fill in some context. What are we trying to do? We’d like some way to measure how hard it is to guess our passwords, a number that serves as a heuristic standard of password strength. But there are two fundamentally different things we might want to measure:</p>
@@ -1238,7 +1238,7 @@
   <entry>
     <title type="html"><![CDATA[Yo Dawg, I Herd You Like Math]]></title>
     <link href="http://akgupta.ca/blog/2013/06/02/yo-dawg/"/>
-    <updated>2013-06-02T12:23:00-04:00</updated>
+    <updated>2013-06-02T12:23:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/06/02/yo-dawg</id>
     <content type="html"><![CDATA[<p>I’ve been learning a bit of statistical computing with R lately on the side from <a href="http://www.stat.berkeley.edu/~paciorek/teaching/teaching.html">Chris Paciorek’s Berkeley course</a>. I just got introduced to <a href="http://yihui.name/knitr/">knitr</a> and it’s damned sweet! It’s an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. It let’s you put math in your math, so you can math while you math.</p>
 <p>I’ve got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
@@ -1314,7 +1314,7 @@
   <entry>
     <title type="html"><![CDATA[Is it possible to be 15% Swedish?]]></title>
     <link href="http://akgupta.ca/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish/"/>
-    <updated>2013-05-19T13:32:00-04:00</updated>
+    <updated>2013-05-19T13:32:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/05/19/is-it-possible-to-be-15-percent-swedish</id>
     <content type="html"><![CDATA[<p>This question came up as a joke during a team standup a few months ago. Although the obvious answer is “no,” if you’re willing to play fast and loose with your metaphysics for a bit, the answer can be “yes” and there’s a cute solution that ties together binary numbers and binary trees. This post itself is a bit of a joke in that it’s just for fun, but it might be nice to see the familiar concepts of binary numbers and binary trees in a new light.</p>
 <h2 id="the-obvious-answer-is-no">The obvious answer is “no”</h2>
@@ -1362,7 +1362,7 @@
   <entry>
     <title type="html"><![CDATA[So you still don't understand Hindley-Milner?  Part 1]]></title>
     <link href="http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/"/>
-    <updated>2013-05-14T01:12:00-04:00</updated>
+    <updated>2013-05-14T01:12:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/05/14/so-you-still-dont-understand-hindley-milner</id>
     <content type="html"><![CDATA[<p>I was out for drinks with <a href="https://twitter.com/starbuxman">Josh Long</a> and some other friends from work, when he found out I “speak math.” He had come across <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
 <p><img src="http://i.stack.imgur.com/hZhjl.png" /><br /><br></p>
@@ -1408,7 +1408,7 @@
   <entry>
     <title type="html"><![CDATA[Setting up PostgreSQL with MacPorts for Ruby on Rails development]]></title>
     <link href="http://akgupta.ca/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development/"/>
-    <updated>2013-05-11T13:39:00-04:00</updated>
+    <updated>2013-05-11T13:39:00-07:00</updated>
     <id>http://akgupta.ca/blog/2013/05/11/setting-up-postgresql-with-macports-for-ruby-on-rails-development</id>
     <content type="html"><![CDATA[<p>This post is pretty much just what the title says. If you develop in Rails, on a Mac, using PostgreSQL as your database and MacPorts as your package management system of choice, it can be hard to get everything set up and going. This is especially true if you’re new to absolutely everything, which was my situation when I first tried to do this. Part of what was hard was that most of the advice on the Internet was just a bunch of commands to run with little explanation, so it was hard to know what you had to do to customize it for your environment. So this explanation is hopefully a little more thorough. However, if you’re impatient and just want the <strong>TL;DR</strong>, here it is (with several implicit assumptions):</p>
 <div class='bogus-wrapper'>

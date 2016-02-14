@@ -94,7 +94,7 @@ Shadowbox.init();
   
 
 
-<time datetime="2013-06-07T00:22:00-04:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
+<time datetime="2013-06-07T00:22:00-07:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
         
       </p>
     
@@ -131,7 +131,7 @@ Shadowbox.init();
 <p>These last four rules do nothing more than formally capture our intuition about what type inferences we can make when we have variables and we do things like create anonymous functions, apply functions, and substitute expressions into other expressions. It’s something we as programmers can do intuitively, and here we’re just saying that this is something we can formally describe, what’s happening in our brains isn’t necessarily magical. It’s also worth noting that these last four rules correspond precisely with the four rules for defining what a valid expression is in the Lambda Calculus. This is not a coincidence.</p>
 <p>[Inst]</p>
 <p><span class="math">\[\underline{\Gamma \vdash e:\sigma &#39;\ \ \ \ \sigma &#39;\sqsubseteq \sigma}\]</span> <span class="math">\[\Gamma \vdash e:\sigma\]</span></p>
-<p>This is about instantiation. You can think of the monotype <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> as an instantiation of the polytype <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span>. Another word for this is “specialization”: <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> is more special than for <span class="math">\(\forall t.\mathrm{Array}[t] \rightarrow t\)</span>. We denote the “more special than” relation between types with <span class="math">\(\sqsubseteq\)</span>. So</p>
+<p>This is about instantiation. You can think of the monotype <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> as an instantiation of the polytype <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span>. Another word for this is “specialization”: <span class="math">\(\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}\)</span> is more specialized/specific than for <span class="math">\(\forall t.\mathrm{Array}[t] \rightarrow t\)</span>. Flipping it around, we denote the “less specialized/specific than” relation between types with <span class="math">\(\sqsubseteq\)</span>. So</p>
 <p><span class="math">\[\forall t. \mathrm{Array}[t] \rightarrow t \ \ \sqsubseteq\ \  \mathrm{Array}[t] \rightarrow t\]</span></p>
 <p>So the direct translation of [Inst] is: If we can infer <span class="math">\(e\)</span> has type <span class="math">\(\sigma &#39;\)</span>, and <span class="math">\(\sigma\)</span> is a specialization/instantiation of <span class="math">\(\sigma &#39;\)</span>, then we can deduce that we can infer that <span class="math">\(e\)</span> has type <span class="math">\(\sigma\)</span>. And you can think of <span class="math">\(\sigma\)</span> and <span class="math">\(\sigma &#39;\)</span> as being types like <span class="math">\(\mathrm{Array}[t] \rightarrow t\)</span> and <span class="math">\(\forall t. \mathrm{Array}[t] \rightarrow t\)</span> respectively.</p>
 <p>[Gen]</p>
@@ -168,7 +168,7 @@ Shadowbox.init();
   
 
 
-<time datetime="2013-06-07T00:22:00-04:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
+<time datetime="2013-06-07T00:22:00-07:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
       
 
 
@@ -264,7 +264,7 @@ Shadowbox.init();
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Amit Kumar Gupta -
+  Copyright &copy; 2016 - Amit Kumar Gupta -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
