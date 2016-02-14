@@ -57,7 +57,7 @@ These last four rules do nothing more than formally capture our intuition about 
 $$\underline{\Gamma \vdash e:\sigma '\ \ \ \ \sigma '\sqsubseteq \sigma}$$
 $$\Gamma \vdash e:\sigma$$
 
-This is about instantiation.  You can think of the monotype $\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}$ as an instantiation of the polytype $\forall t. \mathrm{Array}[t] \rightarrow t$.  Another word for this is "specialization": $\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}$ is more special than for $\forall t.\mathrm{Array}[t] \rightarrow t$. We denote the "more special than" relation between types with $\sqsubseteq$.  So  
+This is about instantiation.  You can think of the monotype $\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}$ as an instantiation of the polytype $\forall t. \mathrm{Array}[t] \rightarrow t$.  Another word for this is "specialization": $\mathrm{Array}[\mathrm{Int}] \rightarrow \mathrm{Int}$ is more specialized/specific than for $\forall t.\mathrm{Array}[t] \rightarrow t$. Flipping it around, we denote the "less specialized/specific than" relation between types with $\sqsubseteq$.  So
 
 $$\forall t. \mathrm{Array}[t] \rightarrow t \ \ \sqsubseteq\ \  \mathrm{Array}[t] \rightarrow t$$  
 
