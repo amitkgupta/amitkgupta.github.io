@@ -36,8 +36,8 @@
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <!--- MathJax Configuration -->
-<script type="text/javascript"
-src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,http://drz.ac/javascripts/MathJaxLocal.js">
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML,http://drz.ac/javascripts/MathJaxLocal.js">
 </script>
 <!---Shadowbox Configuration -->
 <link rel="stylesheet" type="text/css" href="/stylesheets/shadowbox.css">
@@ -94,14 +94,14 @@ Shadowbox.init();
   
 
 
-<time datetime="2013-05-11T13:39:00-07:00" pubdate data-updated="true">May 11<span>th</span>, 2013</time>
+<time datetime="2013-05-11T13:39:00-07:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>This post is pretty much just what the title says. If you develop in Rails, on a Mac, using PostgreSQL as your database and MacPorts as your package management system of choice, it can be hard to get everything set up and going. This is especially true if you’re new to absolutely everything, which was my situation when I first tried to do this. Part of what was hard was that most of the advice on the Internet was just a bunch of commands to run with little explanation, so it was hard to know what you had to do to customize it for your environment. So this explanation is hopefully a little more thorough. However, if you’re impatient and just want the <strong>TL;DR</strong>, here it is (with several implicit assumptions):</p>
+<div class="entry-content"><p>This post is pretty much just what the title says. If you develop in Rails, on a Mac, using PostgreSQL as your database and MacPorts as your package management system of choice, it can be hard to get everything set up and going. This is especially true if you're new to absolutely everything, which was my situation when I first tried to do this. Part of what was hard was that most of the advice on the Internet was just a bunch of commands to run with little explanation, so it was hard to know what you had to do to customize it for your environment. So this explanation is hopefully a little more thorough. However, if you're impatient and just want the <strong>TL;DR</strong>, here it is (with several implicit assumptions):</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -136,8 +136,8 @@ Shadowbox.init();
 </notextile>
 </div>
 <!--more-->
-<p>In order to use a PostgreSQL database for development, you’ll need, in addition to the PostgreSQL package itself, a PostgreSQL server for your application to talk to. The PostgreSQL server package has the basic PostgreSQL package as a dependency, so we’ll just run the command to install the server and we’ll get both. The <strong>server</strong> package will allow you to run a process that serves your database, and the basic package provides a <strong>client</strong> that your Rails app will use to connect to and interact with (read, write, etc.) the database being served.</p>
-<p>Pick the version of PostgreSQL you want to install. At the time I wrote this, the latest was 9.2.x so we’ll go with that:</p>
+<p>In order to use a PostgreSQL database for development, you'll need, in addition to the PostgreSQL package itself, a PostgreSQL server for your application to talk to. The PostgreSQL server package has the basic PostgreSQL package as a dependency, so we'll just run the command to install the server and we'll get both. The <strong>server</strong> package will allow you to run a process that serves your database, and the basic package provides a <strong>client</strong> that your Rails app will use to connect to and interact with (read, write, etc.) the database being served.</p>
+<p>Pick the version of PostgreSQL you want to install. At the time I wrote this, the latest was 9.2.x so we'll go with that:</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -148,7 +148,7 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>You’ll likely see the following instructions in the installation output</p>
+<p>You'll likely see the following instructions in the installation output</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -167,13 +167,13 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>Now in order to start a PostgreSQL server process, it needs an initial database cluster within which you will create your databases. To do this you need to create a directory for an initial database cluster and tell PostgreSQL to initialize that directory for use with a PostgreSQL database cluster. PostgreSQL doesn’t allow the superuser to initialize a database cluster. The user used to initialize the database cluster should be one that will exist on any machine that has PostgreSQL, allowing you to collaborate on your Rails app with people using different machines, thus it makes sense to use the ‘postgres’ user. The above commands will:</p>
+<p>Now in order to start a PostgreSQL server process, it needs an initial database cluster within which you will create your databases. To do this you need to create a directory for an initial database cluster and tell PostgreSQL to initialize that directory for use with a PostgreSQL database cluster. PostgreSQL doesn't allow the superuser to initialize a database cluster. The user used to initialize the database cluster should be one that will exist on any machine that has PostgreSQL, allowing you to collaborate on your Rails app with people using different machines, thus it makes sense to use the 'postgres' user. The above commands will:</p>
 <ol type="1">
 <li>Create the directory for an initial default database cluster</li>
-<li>Change ownership of the directory to the ‘postgres’ user</li>
-<li>Initializes the directory as a PostgreSQL database cluster on behalf of the ‘postgres’ user.</li>
+<li>Change ownership of the directory to the 'postgres' user</li>
+<li>Initializes the directory as a PostgreSQL database cluster on behalf of the 'postgres' user.</li>
 </ol>
-<p>After you do this, you’ll see the following instructions in the output:</p>
+<p>After you do this, you'll see the following instructions in the output:</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -192,11 +192,11 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>The first will start the server in the foreground, which you probably don’t want. The second will start it in the background, but dump a log file in whatever directory you execute the command, which you don’t want either. You’ll also need to start the server as the ‘postgres’ user, which the above command doesn’t do as is, so the solution is to:</p>
+<p>The first will start the server in the foreground, which you probably don't want. The second will start it in the background, but dump a log file in whatever directory you execute the command, which you don't want either. You'll also need to start the server as the 'postgres' user, which the above command doesn't do as is, so the solution is to:</p>
 <ol type="1">
-<li>Switch to the ‘postgres’ user</li>
+<li>Switch to the 'postgres' user</li>
 <li>Issue the above command (with a better path for the log file)</li>
-<li>Exit from being the ‘postgres’ user</li>
+<li>Exit from being the 'postgres' user</li>
 </ol>
 <div class='bogus-wrapper'>
 <notextile>
@@ -212,7 +212,7 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>Now when you go to create your Rails project, it will install the <code>pg</code> gem for working with PostgreSQL, and it’ll configure itself to use the first <code>psql</code> (PostgreSQL client) it finds in your <code>$PATH</code> environment variable. Your system comes with one, but you’ll want to use the one you just installed. Assuming you’re using a <code>.bashrc</code> (or <code>.bash_profile</code>) file for initial setup of your bash environment for shell sessions, add</p>
+<p>Now when you go to create your Rails project, it will install the <code>pg</code> gem for working with PostgreSQL, and it'll configure itself to use the first <code>psql</code> (PostgreSQL client) it finds in your <code>$PATH</code> environment variable. Your system comes with one, but you'll want to use the one you just installed. Assuming you're using a <code>.bashrc</code> (or <code>.bash_profile</code>) file for initial setup of your bash environment for shell sessions, add</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -223,7 +223,7 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>to the bottom of the <code>.bashrc</code> (or <code>.bash_profile</code>) file. Don’t forget to</p>
+<p>to the bottom of the <code>.bashrc</code> (or <code>.bash_profile</code>) file. Don't forget to</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -235,7 +235,7 @@ Shadowbox.init();
 </div>
 
 <p>for the change to take effect.</p>
-<p>Now that you’re done setting up your system for PostgreSQL, you are ready to create and setup a Rails app that uses PostgreSQL. Start with:</p>
+<p>Now that you're done setting up your system for PostgreSQL, you are ready to create and setup a Rails app that uses PostgreSQL. Start with:</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -246,8 +246,8 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>The standard <code>rails new my_app</code> does a whole bunch of initial setup and file creation for your Rails app. Adding the <code>--database=postgresql</code> flag ensures that your Rails setup includes some PostgreSQL-specific things, such as adding the <code>pg</code> gem to your Gemfile, and pre-populating some of the database configuration properties in the <code>my_app/config/database.yml</code> file. We’ll need to edit that file a little. Go to <code>my_app/config/database.yml</code> and change the username for the development and test databases to ‘postgres’. What this does is ensure that when your Rails app uses the PostgreSQL client to try to access the database cluster served by your PostgreSQL server, it does so with the credentials of the user who owns that cluster, namely the ‘postgres’ user.</p>
-<p>While you’re in that file, you can get rid of the section for the production database altogether if you’re deploying to Cloud Foundry or Heroku, since they will overwrite whatever you have there anyways.</p>
+<p>The standard <code>rails new my_app</code> does a whole bunch of initial setup and file creation for your Rails app. Adding the <code>--database=postgresql</code> flag ensures that your Rails setup includes some PostgreSQL-specific things, such as adding the <code>pg</code> gem to your Gemfile, and pre-populating some of the database configuration properties in the <code>my_app/config/database.yml</code> file. We'll need to edit that file a little. Go to <code>my_app/config/database.yml</code> and change the username for the development and test databases to 'postgres'. What this does is ensure that when your Rails app uses the PostgreSQL client to try to access the database cluster served by your PostgreSQL server, it does so with the credentials of the user who owns that cluster, namely the 'postgres' user.</p>
+<p>While you're in that file, you can get rid of the section for the production database altogether if you're deploying to Cloud Foundry or Heroku, since they will overwrite whatever you have there anyways.</p>
 <p>Finally, create the development and test databases that your Rails app will use. (These databases will be created within your default cluster).</p>
 <div class='bogus-wrapper'>
 <notextile>
@@ -259,7 +259,8 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>Now you’re totally ready to go!</p></div>
+<p>Now you're totally ready to go!</p>
+</div>
 
 
   <footer>
@@ -281,7 +282,7 @@ Shadowbox.init();
   
 
 
-<time datetime="2013-05-11T13:39:00-07:00" pubdate data-updated="true">May 11<span>th</span>, 2013</time>
+<time datetime="2013-05-11T13:39:00-07:00" pubdate data-updated="true"></time>
       
 
 
@@ -375,7 +376,7 @@ Shadowbox.init();
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Amit Kumar Gupta -
+  Copyright &copy; 2017 - Amit Kumar Gupta -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

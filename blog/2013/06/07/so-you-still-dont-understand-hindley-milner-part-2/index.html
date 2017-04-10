@@ -13,8 +13,8 @@
   <meta property="og:image" content="/imgaes/bigaleph.jpg">
 
   
-  <meta name="description" content="In Part 1, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually &hellip;">
-  <meta property="og:description" content="In Part 1, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually &hellip;">
+  <meta name="description" content="In Part 1, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we'll thoroughly define them, and actually &hellip;">
+  <meta property="og:description" content="In Part 1, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we'll thoroughly define them, and actually &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -36,8 +36,8 @@
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <!--- MathJax Configuration -->
-<script type="text/javascript"
-src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,http://drz.ac/javascripts/MathJaxLocal.js">
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML,http://drz.ac/javascripts/MathJaxLocal.js">
 </script>
 <!---Shadowbox Configuration -->
 <link rel="stylesheet" type="text/css" href="/stylesheets/shadowbox.css">
@@ -94,19 +94,19 @@ Shadowbox.init();
   
 
 
-<time datetime="2013-06-07T00:19:00-07:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
+<time datetime="2013-06-07T00:19:00-07:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>In <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">Part 1</a>, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we’ll thoroughly define them, and actually formulate the formalization:</p>
+<div class="entry-content"><p>In <a href="/blog/2013/05/14/so-you-still-dont-understand-hindley-milner/">Part 1</a>, we said what the building blocks of the Hindley-Milner formalization would be, and in this post we'll thoroughly define them, and actually formulate the formalization:</p>
 <h2 id="formalizing-the-concept-of-an-expression">Formalizing the concept of an expression</h2>
-<p>We’ll give a <a href="http://en.wikipedia.org/wiki/Recursive_definition">recursive definition</a> of what an expression is; in other words, we’ll state what the most basic kind of expression is, we’ll say how to create new, more complex expressions out of existing expressions, and we’ll say that only things made in this way are valid expressions.<br /><!--more--></p>
+<p>We'll give a <a href="http://en.wikipedia.org/wiki/Recursive_definition">recursive definition</a> of what an expression is; in other words, we'll state what the most basic kind of expression is, we'll say how to create new, more complex expressions out of existing expressions, and we'll say that only things made in this way are valid expressions.<br /><!--more--></p>
 <ol type="1">
 <li>Variables are valid expressions.<br /></li>
-<li>If <span class="math">\(e\)</span> is any expression, and <span class="math">\(x\)</span> is any variable, then <span class="math">\(\lambda x.e\)</span> is an expression. Here it helps to think of e as typically (thought not necessarily) a more complex expression involving <span class="math">\(x\)</span>, e.g. <span class="math">\(x^2+2\)</span>, and then <span class="math">\(\lambda x.e\)</span> as the anonymous function that takes an input <span class="math">\(x\)</span> and returns the result of evaluating the expression <span class="math">\(e\)</span> with the given value of <span class="math">\(x\)</span>. In other words, think of it like this:<br />
+<li>If <span class="math"><em>e</em></span> is any expression, and <span class="math"><em>x</em></span> is any variable, then <span class="math"><em>λ</em><em>x</em>. <em>e</em></span> is an expression. Here it helps to think of e as typically (thought not necessarily) a more complex expression involving <span class="math"><em>x</em></span>, e.g. <span class="math"><em>x</em><sup>2</sup> + 2</span>, and then <span class="math"><em>λ</em><em>x</em>. <em>e</em></span> as the anonymous function that takes an input <span class="math"><em>x</em></span> and returns the result of evaluating the expression <span class="math"><em>e</em></span> with the given value of <span class="math"><em>x</em></span>. In other words, think of it like this:<br />
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -116,13 +116,13 @@ Shadowbox.init();
 </span></code></pre></td></tr></table></div></figure>
 </notextile>
 </div></li>
-<li>If <span class="math">\(f\)</span> and <span class="math">\(e\)</span> are valid expressions, then <span class="math">\(f(e)\)</span> is a valid expression. This is called Application, for obvious reasons.</li>
-<li>If <span class="math">\(x\)</span> is a variable, and <span class="math">\(e_1\)</span> and <span class="math">\(e_0\)</span> are valid expressions, then substituting every occurrence of <span class="math">\(x\)</span> in <span class="math">\(e_0\)</span> for <span class="math">\(e_1\)</span> yields a valid expression. So, for example, if <span class="math">\(e_1\)</span> is the expression <span class="math">\(x^2 + 2\)</span>, and <span class="math">\(e_0\)</span> is the expression <span class="math">\(y/3\)</span>, then if we let <span class="math">\(x = e_0\)</span> in <span class="math">\(e_1\)</span>, we get the expression <span class="math">\((y/3)^2 + 2\)</span>.<br />[NB: This last clause is redundant and not officially a part of the Lambda Calculus definition of an expression, as substituting <span class="math">\(e_0\)</span> for <span class="math">\(x\)</span> in <span class="math">\(e_1\)</span> is equivalent to applying the abstraction <span class="math">\(\lambda x.e_1\)</span> to <span class="math">\(e_0\)</span>. It’s added to support something called <a href="https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner#Let-polymorphism">let-polymorphism</a>.]</li>
+<li>If <span class="math"><em>f</em></span> and <span class="math"><em>e</em></span> are valid expressions, then <span class="math"><em>f</em>(<em>e</em>)</span> is a valid expression. This is called Application, for obvious reasons.</li>
+<li>If <span class="math"><em>x</em></span> is a variable, and <span class="math"><em>e</em><sub>1</sub></span> and <span class="math"><em>e</em><sub>0</sub></span> are valid expressions, then substituting every occurrence of <span class="math"><em>x</em></span> in <span class="math"><em>e</em><sub>0</sub></span> for <span class="math"><em>e</em><sub>1</sub></span> yields a valid expression. So, for example, if <span class="math"><em>e</em><sub>1</sub></span> is the expression <span class="math"><em>x</em><sup>2</sup> + 2</span>, and <span class="math"><em>e</em><sub>0</sub></span> is the expression <span class="math"><em>y</em> / 3</span>, then if we let <span class="math"><em>x</em> = <em>e</em><sub>0</sub></span> in <span class="math"><em>e</em><sub>1</sub></span>, we get the expression <span class="math">(<em>y</em> / 3)<sup>2</sup> + 2</span>.<br />[NB: This last clause is redundant and not officially a part of the Lambda Calculus definition of an expression, as substituting <span class="math"><em>e</em><sub>0</sub></span> for <span class="math"><em>x</em></span> in <span class="math"><em>e</em><sub>1</sub></span> is equivalent to applying the abstraction <span class="math"><em>λ</em><em>x</em>. <em>e</em><sub>1</sub></span> to <span class="math"><em>e</em><sub>0</sub></span>. It's added to support something called <a href="https://en.wikipedia.org/wiki/Hindley%E2%80%93Milner#Let-polymorphism">let-polymorphism</a>.]</li>
 </ol>
 <p>And nothing else is a valid expression.</p>
-<p>Aside: anyone paying close attention will wonder, wait, how can I make any useful expressions out of this? How do I even get <span class="math">\(x^2 + 2\)</span>, or in fact <span class="math">\(2\)</span> for that matter, out of the above? Heck, what about <span class="math">\(0\)</span>? There is nothing in the rules above which <em>obviously</em> yield the expression <span class="math">\(0\)</span>. The solution is to create expressions in the Lambda Calculus which behave like <span class="math">\(0, 1, \dots, +, \times, -, /\)</span> when interpreted correctly. In other words, we have to encode numbers, numerical operations, strings, etc. into patterns we can create with the Lambda syntax. <a href="http://palmstroem.blogspot.com/2012/05/lambda-calculus-for-absolute-dummies.html">This blog post</a> has a nice little section on numbers and numerical operations. This is a great feature of the Lambda Calculus: we have a simple syntax which we can define recursively in 4 simple clauses, and this therefore allows us to prove many things about it inductively in 4 main steps, yet the language itself has the expressive power to capture numbers, strings, and all the types and operations we could ever care about.</p>
+<p>Aside: anyone paying close attention will wonder, wait, how can I make any useful expressions out of this? How do I even get <span class="math"><em>x</em><sup>2</sup> + 2</span>, or in fact <span class="math">2</span> for that matter, out of the above? Heck, what about <span class="math">0</span>? There is nothing in the rules above which <em>obviously</em> yield the expression <span class="math">0</span>. The solution is to create expressions in the Lambda Calculus which behave like <span class="math">0, 1, …,  + ,  × ,  − ,  / </span> when interpreted correctly. In other words, we have to encode numbers, numerical operations, strings, etc. into patterns we can create with the Lambda syntax. <a href="http://palmstroem.blogspot.com/2012/05/lambda-calculus-for-absolute-dummies.html">This blog post</a> has a nice little section on numbers and numerical operations. This is a great feature of the Lambda Calculus: we have a simple syntax which we can define recursively in 4 simple clauses, and this therefore allows us to prove many things about it inductively in 4 main steps, yet the language itself has the expressive power to capture numbers, strings, and all the types and operations we could ever care about.</p>
 <h2 id="formalizing-statements-about-types">Formalizing statements about types</h2>
-<p>Let <span class="math">\(e\)</span> be any expression, that is, “<span class="math">\(e\)</span>” is a variable in our meta-language which stands for any expression in our base language, like any of the following:</p>
+<p>Let <span class="math"><em>e</em></span> be any expression, that is, &quot;<span class="math"><em>e</em></span>&quot; is a variable in our meta-language which stands for any expression in our base language, like any of the following:</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -137,13 +137,13 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>Then if <span class="math">\(t\)</span> is any type, we can express “<span class="math">\(e\)</span> is of type <span class="math">\(t\)</span>” by</p>
-<p><span class="math">\[e:t\]</span></p>
-<p>Just like <span class="math">\(e\)</span>, <span class="math">\(t\)</span> is a variable in our meta-language, and it can stand for any type in the base language, like <span class="math">\(\mathrm{Int}\)</span>, <span class="math">\(\mathrm{String}\)</span>, etc. And just like <span class="math">\(e\)</span>, <span class="math">\(t\)</span> doesn’t necessarily need to stand for any one type in particular.</p>
-<p>One can give a formal definition for what counts as a type, just as we did for expressions above. However the abstraction gets fairly twisted, so we’ll leave it at that. I should just point out a few two key things to keep in mind:</p>
+<p>Then if <span class="math"><em>t</em></span> is any type, we can express &quot;<span class="math"><em>e</em></span> is of type <span class="math"><em>t</em></span>&quot; by</p>
+<p><br /><span class="math"><em>e</em>: <em>t</em></span><br /></p>
+<p>Just like <span class="math"><em>e</em></span>, <span class="math"><em>t</em></span> is a variable in our meta-language, and it can stand for any type in the base language, like <span class="math">Int</span>, <span class="math">String</span>, etc. And just like <span class="math"><em>e</em></span>, <span class="math"><em>t</em></span> doesn't necessarily need to stand for any one type in particular.</p>
+<p>One can give a formal definition for what counts as a type, just as we did for expressions above. However the abstraction gets fairly twisted, so we'll leave it at that. I should just point out a few two key things to keep in mind:</p>
 <ol type="1">
-<li>If <span class="math">\(s\)</span> and <span class="math">\(t\)</span> are types, then so is <span class="math">\(t \rightarrow s\)</span>; it’s the type of a function with <span class="math">\(t\)</span> inputs and <span class="math">\(s\)</span> outputs.<br /></li>
-<li>If <span class="math">\(r\)</span> is a type, possibly made up of other types (just as <span class="math">\(t \rightarrow s\)</span> is made up of <span class="math">\(t\)</span> and <span class="math">\(s\)</span>, which could each potentially have been made up of other types), and <span class="math">\(\alpha\)</span> is a variable for a type, then <span class="math">\(\forall \alpha.r\)</span> is a type. That makes no sense without an example:</li>
+<li>If <span class="math"><em>s</em></span> and <span class="math"><em>t</em></span> are types, then so is <span class="math"><em>t</em> → <em>s</em></span>; it's the type of a function with <span class="math"><em>t</em></span> inputs and <span class="math"><em>s</em></span> outputs.<br /></li>
+<li>If <span class="math"><em>r</em></span> is a type, possibly made up of other types (just as <span class="math"><em>t</em> → <em>s</em></span> is made up of <span class="math"><em>t</em></span> and <span class="math"><em>s</em></span>, which could each potentially have been made up of other types), and <span class="math"><em>α</em></span> is a variable for a type, then <span class="math">∀ <em>α</em>. <em>r</em></span> is a type. That makes no sense without an example:</li>
 </ol>
 <div class='bogus-wrapper'>
 <notextile>
@@ -155,29 +155,30 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>This function is type <span class="math">\(\mathrm{String} \rightarrow \mathrm{String}\)</span>. But it’s also <span class="math">\(\mathrm{Int} \rightarrow \mathrm{Int}\)</span>. In fact, for any type <span class="math">\(t\)</span>, it’s type <span class="math">\(t \rightarrow t\)</span>. We’re gonna say that it has type <span class="math">\(\forall t. t \rightarrow t\)</span>. Each of the types <span class="math">\(\mathrm{String} \rightarrow \mathrm{String}\)</span>, <span class="math">\(t \rightarrow t\)</span>, are “monotypes”. <span class="math">\(\forall t. t \rightarrow t\)</span> is a “polytype”. The identity function above has the abstract polytype <span class="math">\(\forall t. t \rightarrow t\)</span> which, in practice, means that for every real type <span class="math">\(t\)</span>, it has type <span class="math">\(t \rightarrow t\)</span>. If all of this has been sinking in, then we can compactly express this as:</p>
-<p><span class="math">\[\lambda x.x:\forall\alpha.\alpha \rightarrow \alpha\]</span></p>
+<p>This function is type <span class="math">String → String</span>. But it's also <span class="math">Int → Int</span>. In fact, for any type <span class="math"><em>t</em></span>, it's type <span class="math"><em>t</em> → <em>t</em></span>. We're gonna say that it has type <span class="math">∀ <em>t</em>. <em>t</em> → <em>t</em></span>. Each of the types <span class="math">String → String</span>, <span class="math"><em>t</em> → <em>t</em></span>, are &quot;monotypes&quot;. <span class="math">∀ <em>t</em>. <em>t</em> → <em>t</em></span> is a &quot;polytype&quot;. The identity function above has the abstract polytype <span class="math">∀ <em>t</em>. <em>t</em> → <em>t</em></span> which, in practice, means that for every real type <span class="math"><em>t</em></span>, it has type <span class="math"><em>t</em> → <em>t</em></span>. If all of this has been sinking in, then we can compactly express this as:</p>
+<p><br /><span class="math"><em>λ</em><em>x</em>. <em>x</em>: ∀ <em>α</em>. <em>α</em> → <em>α</em></span><br /></p>
 <h2 id="formalizing-statements-about-statements-about-types">Formalizing statements about statements about types</h2>
-<p>Now we’re going to want to formalize a bunch of rules for how we can go from some knowledge of expressions and their types to inferring types of more expressions. Remember how propositional calculus formalized Modus Ponens? We’re going to do something similar. For instance, say we want to formalize the following piece of reasoning:</p>
+<p>Now we're going to want to formalize a bunch of rules for how we can go from some knowledge of expressions and their types to inferring types of more expressions. Remember how propositional calculus formalized Modus Ponens? We're going to do something similar. For instance, say we want to formalize the following piece of reasoning:</p>
 <blockquote>
-<p>Suppose I’ve already been able to infer that a variable <code>duck</code> has type <code>Animal</code>.<br />Suppose furthermore that I’ve inferred that <code>speak</code> is a method of type <code>Animal -&gt; String</code>.<br />Then I can infer that <code>speak(duck)</code> has type String.</p>
+<p>Suppose I've already been able to infer that a variable <code>duck</code> has type <code>Animal</code>.<br />Suppose furthermore that I've inferred that <code>speak</code> is a method of type <code>Animal -&gt; String</code>.<br />Then I can infer that <code>speak(duck)</code> has type String.</p>
 <p>And any reasoning of this form is valid type inference.</p>
 </blockquote>
-<p>We’ll formalize that as follows:</p>
-<p><span class="math">\[\underline{\Gamma\vdash e_0:\tau\rightarrow\tau &#39;\ \ \ \Gamma\vdash e_1:\tau}\]</span> <span class="math">\[\Gamma\vdash e_0(e_1):\tau &#39;\]</span></p>
-<p>That rule has the name [App] (for application), and it’s one of the ones pictured in <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">that StackOverflow question</a>. We’ll talk about it and the rest of the rules in the next post. For now, let’s first get a handle on all the symbols you see above:</p>
+<p>We'll formalize that as follows:</p>
+<p><br /><span class="math">$\underline{\Gamma\vdash e_0:\tau\rightarrow\tau '\ \ \ \Gamma\vdash e_1:\tau}$</span><br /> <br /><span class="math">Γ  ⊢ <em>e</em><sub>0</sub>(<em>e</em><sub>1</sub>): <em>τ</em>ʹ</span><br /></p>
+<p>That rule has the name [App] (for application), and it's one of the ones pictured in <a href="http://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">that StackOverflow question</a>. We'll talk about it and the rest of the rules in the next post. For now, let's first get a handle on all the symbols you see above:</p>
 <ul>
-<li><span class="math">\(\Gamma\)</span>, this will stand for the collection of statements we already know, or perhaps, the statements we’re assuming. More generally, <span class="math">\(\Gamma\)</span> should just be thought of as some collection of statements (about expressions and their types). And of course, there’s nothing special about the letter <span class="math">\(\Gamma\)</span>; capital greek letters are commonly used for sets of statements however.<br /></li>
-<li><span class="math">\(\vdash\)</span>, the “turnstile”, denotes that something can be inferred. For instance, <span class="math">\(\Gamma \vdash x:t\)</span> says that if we take the statements in <span class="math">\(\Gamma\)</span> as our assumptions/axioms/current knowledge, then we can infer that <span class="math">\(x\)</span> has type <span class="math">\(t\)</span>.<br /></li>
-<li><span class="math">\(\in\)</span>, “epsilon”, denotes membership. <span class="math">\(x:t \in \Gamma\)</span> says that the statement <span class="math">\(x:t\)</span> is a member of <span class="math">\(\Gamma\)</span>.</li>
-<li>That long horizontal bar; this line tells us that we can make the conclusion below the line if the things above the line are taken as premises in the argument. It lets us express things like, “if we can infer such and such, then we can infer such and such”, e.g.</li>
+<li><span class="math">Γ </span>, this will stand for the collection of statements we already know, or perhaps, the statements we're assuming. More generally, <span class="math">Γ </span> should just be thought of as some collection of statements (about expressions and their types). And of course, there's nothing special about the letter <span class="math">Γ </span>; capital greek letters are commonly used for sets of statements however.<br /></li>
+<li><span class="math"> ⊢ </span>, the &quot;turnstile&quot;, denotes that something can be inferred. For instance, <span class="math">Γ  ⊢ <em>x</em>: <em>t</em></span> says that if we take the statements in <span class="math">Γ </span> as our assumptions/axioms/current knowledge, then we can infer that <span class="math"><em>x</em></span> has type <span class="math"><em>t</em></span>.<br /></li>
+<li><span class="math"> ∈ </span>, &quot;epsilon&quot;, denotes membership. <span class="math"><em>x</em>: <em>t</em> ∈ Γ </span> says that the statement <span class="math"><em>x</em>: <em>t</em></span> is a member of <span class="math">Γ </span>.</li>
+<li>That long horizontal bar; this line tells us that we can make the conclusion below the line if the things above the line are taken as premises in the argument. It lets us express things like, &quot;if we can infer such and such, then we can infer such and such&quot;, e.g.</li>
 </ul>
-<p><span class="math">\[\underline{\Gamma \vdash y:\sigma}\]</span> <span class="math">\[\Gamma \vdash x:\tau\]</span></p>
-<p>If we can infer that <span class="math">\(y\)</span> has type <span class="math">\(\sigma\)</span> from <span class="math">\(\Gamma\)</span>, then we can infer <span class="math">\(x\)</span> has type <span class="math">\(\tau\)</span> from <span class="math">\(\Gamma\)</span>.</p>
+<p><br /><span class="math">$\underline{\Gamma \vdash y:\sigma}$</span><br /> <br /><span class="math">Γ  ⊢ <em>x</em>: <em>τ</em></span><br /></p>
+<p>If we can infer that <span class="math"><em>y</em></span> has type <span class="math"><em>σ</em></span> from <span class="math">Γ </span>, then we can infer <span class="math"><em>x</em></span> has type <span class="math"><em>τ</em></span> from <span class="math">Γ </span>.</p>
 <p>Next up:</p>
 <ul>
 <li><a href="/blog/2013/06/07/so-you-still-dont-understand-hindley-milner-part-3/">Part 3</a>, where we put this all together and make sense of the inference rules used by the HM algorithm.</li>
-</ul></div>
+</ul>
+</div>
 
 
   <footer>
@@ -199,7 +200,7 @@ Shadowbox.init();
   
 
 
-<time datetime="2013-06-07T00:19:00-07:00" pubdate data-updated="true">Jun 7<span>th</span>, 2013</time>
+<time datetime="2013-06-07T00:19:00-07:00" pubdate data-updated="true"></time>
       
 
 
@@ -295,7 +296,7 @@ Shadowbox.init();
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Amit Kumar Gupta -
+  Copyright &copy; 2017 - Amit Kumar Gupta -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

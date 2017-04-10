@@ -13,8 +13,8 @@
   <meta property="og:image" content="/imgaes/bigaleph.jpg">
 
   
-  <meta name="description" content="I’ve been learning a bit of statistical computing with R lately on the side from Chris Paciorek’s Berkeley course. I just got introduced to knitr and &hellip;">
-  <meta property="og:description" content="I’ve been learning a bit of statistical computing with R lately on the side from Chris Paciorek’s Berkeley course. I just got introduced to knitr and &hellip;">
+  <meta name="description" content="I've been learning a bit of statistical computing with R lately on the side from Chris Paciorek's Berkeley course. I just got introduced to knitr and &hellip;">
+  <meta property="og:description" content="I've been learning a bit of statistical computing with R lately on the side from Chris Paciorek's Berkeley course. I just got introduced to knitr and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -36,8 +36,8 @@
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <!--- MathJax Configuration -->
-<script type="text/javascript"
-src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML,http://drz.ac/javascripts/MathJaxLocal.js">
+<script type="text/javascript" async
+src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML,http://drz.ac/javascripts/MathJaxLocal.js">
 </script>
 <!---Shadowbox Configuration -->
 <link rel="stylesheet" type="text/css" href="/stylesheets/shadowbox.css">
@@ -94,22 +94,22 @@ Shadowbox.init();
   
 
 
-<time datetime="2013-06-02T12:23:00-07:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2013</time>
+<time datetime="2013-06-02T12:23:00-07:00" pubdate data-updated="true"></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I’ve been learning a bit of statistical computing with R lately on the side from <a href="http://www.stat.berkeley.edu/~paciorek/teaching/teaching.html">Chris Paciorek’s Berkeley course</a>. I just got introduced to <a href="http://yihui.name/knitr/">knitr</a> and it’s damned sweet! It’s an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. It let’s you put math in your math, so you can math while you math.</p>
-<p>I’ve got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
+<div class="entry-content"><p>I've been learning a bit of statistical computing with R lately on the side from <a href="http://www.stat.berkeley.edu/~paciorek/teaching/teaching.html">Chris Paciorek's Berkeley course</a>. I just got introduced to <a href="http://yihui.name/knitr/">knitr</a> and it's damned sweet! It's an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. It let's you put math in your math, so you can math while you math.</p>
+<p>I've got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
 <ol type="1">
 <li>Runs a Python script which will use Selenium to scrape a web page for 2012 NFL passing statistics.</li>
-<li>“Knits” a TeX file with embedded R that cleans the raw scraped data, produces a histogram of touchown passes for teams, and displays the teams with the least and greatest number of touchdowns.</li>
+<li>&quot;Knits&quot; a TeX file with embedded R that cleans the raw scraped data, produces a histogram of touchown passes for teams, and displays the teams with the least and greatest number of touchdowns.</li>
 <li>Compiles the resulting TeX file and opens the resulting PDF.</li>
 <li>Cleans up any temporary work files. <!--more--></li>
 </ol>
-<p>Here’s what the pre-“knitted” LaTeX looks like with the embedded R:</p>
+<p>Here's what the pre-&quot;knitted&quot; LaTeX looks like with the embedded R:</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -168,8 +168,9 @@ Shadowbox.init();
 </notextile>
 </div>
 
-<p>You can comment out the line in the <code>factory</code> script that deletes the <code>tds2012-out.tex</code> file if you want to see what it looks like post-knit. The resulting TeX file basically contains a ton of new commonad definitions but the meat of it is what it does with your R code. It formats and displays the R code itself, and then it displays the output of the R code. Wherever the output is a graph, you’ll see <code>\includegraphics[...]{...}</code>. knitr will do the R computation, render the graphics, create a <code>figures</code> subdirectory and store them there for the <code>\includegraphics</code> to reference. Whenever the output is simply text or mathematical expressions, you’ll see the R output translated to pure LaTeX markup.</p>
-<p>Pretty cool stuff!</p></div>
+<p>You can comment out the line in the <code>factory</code> script that deletes the <code>tds2012-out.tex</code> file if you want to see what it looks like post-knit. The resulting TeX file basically contains a ton of new commonad definitions but the meat of it is what it does with your R code. It formats and displays the R code itself, and then it displays the output of the R code. Wherever the output is a graph, you'll see <code>\includegraphics[...]{...}</code>. knitr will do the R computation, render the graphics, create a <code>figures</code> subdirectory and store them there for the <code>\includegraphics</code> to reference. Whenever the output is simply text or mathematical expressions, you'll see the R output translated to pure LaTeX markup.</p>
+<p>Pretty cool stuff!</p>
+</div>
 
 
   <footer>
@@ -191,7 +192,7 @@ Shadowbox.init();
   
 
 
-<time datetime="2013-06-02T12:23:00-07:00" pubdate data-updated="true">Jun 2<span>nd</span>, 2013</time>
+<time datetime="2013-06-02T12:23:00-07:00" pubdate data-updated="true"></time>
       
 
 
@@ -287,7 +288,7 @@ Shadowbox.init();
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2016 - Amit Kumar Gupta -
+  Copyright &copy; 2017 - Amit Kumar Gupta -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
