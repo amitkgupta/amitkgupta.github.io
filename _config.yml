@@ -33,7 +33,7 @@ destination: public
 plugins: plugins
 code_dir: downloads/code
 category_dir: blog/categories
-markdown: pandoc
+markdown: Pandoc
 pandoc:
   skip: false
   flags: '--smart --mathjax'
@@ -102,3 +102,6 @@ google_analytics_tracking_id: UA-41581367-1
 
 # Facebook Like
 facebook_like: false
+
+gems:
+  - jekyll-pandoc
