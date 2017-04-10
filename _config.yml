@@ -42,7 +42,7 @@ pandoc:
 #    - autolink
 #    - footnotes
 #    - smart
-pygments: false # default python pygments have been replaced by pygments.rb
+highlighter: false # default python pygments have been replaced by pygments.rb
 
 paginate: 10          # Posts per page on the blog index
 paginate_path: "posts/:num"  # Directory base for pagination URLs eg. /posts/2/
