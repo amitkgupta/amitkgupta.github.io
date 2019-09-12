@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://akgupta.ca/sitemap.xml 
+Sitemap: http://legacy-blog.akgupta.ca/sitemap.xml 
