@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[[LEGACY] Amit's Blog]]></title>
+  <title><![CDATA[Amit's (old) blog]]></title>
   <link href="http://legacy-blog.akgupta.ca/atom.xml" rel="self"/>
   <link href="http://legacy-blog.akgupta.ca/"/>
   <updated>2017-04-09T20:10:07-07:00</updated>
