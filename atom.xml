@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="https://www.w3.org/2005/Atom">
 
   <title><![CDATA[Amit's (old) blog]]></title>
   <link href="https://legacy-blog.akgupta.ca/atom.xml" rel="self"/>
@@ -1248,7 +1248,7 @@
     <link href="https://legacy-blog.akgupta.ca/blog/2013/06/02/yo-dawg/"/>
     <updated>2013-06-02T12:23:00-07:00</updated>
     <id>https://legacy-blog.akgupta.ca/blog/2013/06/02/yo-dawg</id>
-    <content type="html"><![CDATA[<p>I've been learning a bit of statistical computing with R lately on the side from <a href="http://www.stat.berkeley.edu/~paciorek/teaching/teaching.html">Chris Paciorek's Berkeley course</a>. I just got introduced to <a href="http://yihui.name/knitr/">knitr</a> and it's damned sweet! It's an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. It let's you put math in your math, so you can math while you math.</p>
+    <content type="html"><![CDATA[<p>I've been learning a bit of statistical computing with R lately on the side from <a href="https://www.stat.berkeley.edu/~paciorek/teaching/teaching.html">Chris Paciorek's Berkeley course</a>. I just got introduced to <a href="https://yihui.name/knitr/">knitr</a> and it's damned sweet! It's an R package which takes a LaTeX file with embedded R, and produces a pure LaTeX file (similar to how Rails renders an <code>.html.erb</code> file into a <code>.html</code> file), where the resulting LaTeX file has the output of the R code. It makes it super easy to embed statistical calculations, graphs, and all the good stuff R gives you right into your TeX files. It let's you put math in your math, so you can math while you math.</p>
 <p>I've got a <a href="https://github.com/amitkgupta/knit_tds">little project</a> which:</p>
 <ol type="1">
 <li>Runs a Python script which will use Selenium to scrape a web page for 2012 NFL passing statistics.</li>
