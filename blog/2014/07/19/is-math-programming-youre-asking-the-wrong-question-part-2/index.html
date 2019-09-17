@@ -23,8 +23,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2">
-  <meta property="og:url" content="http://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2">
+  <link rel="canonical" href="https://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2">
+  <meta property="og:url" content="https://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2">
   <link href="/images/aleph.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Amit's (old) blog" type="application/atom+xml">
@@ -108,7 +108,7 @@ Shadowbox.init();
 <p>I can argue that a mathematical foundation can help give you a deep, valuable understanding of certain programming problems. No one can argue that you need math to build anything of substance. Especially if &quot;substance&quot; is correlated with VC funding. <del>Yes, you can build &quot;Yo!&quot; without a deep understanding of anything.</del> Worthwhile endeavours and opportunities for gainful employment abound, which don't require understanding much math, or any deep understanding of the programming problems at hand.</p>
 <p>She has a point when she says &quot;computer science is not programming&quot;. Yes. But understanding some math, and mathy computer science concepts, can certainly be valuable when it comes to reasoning about a programming problem, and communicating that reasoning with your collaborators.</p>
 <p>Here's an example from something I was working on recently. We were building an appliance for our enterprise clients, to streamline the process of deploying <a href="https://www.gopivotal.com/platform-as-a-service/cloud-foundry">Cloud Foundry</a> to their on-premise datacenters. Users would enter configuration, including an IP subnet in CIDR notation and a set of blacklisted IP ranges in a format like <code>10.10.0.0-10.10.0.15, 10.10.0.129-10.10.0.255</code>. They would then select and configure any number of distributed services to be deployed, such as the Cloud Foundry PaaS, an add-on MySQL DBaaS cluster, and let's say a <a href="http://www.gopivotal.com/big-data/pivotal-hd">Pivotal HD</a> Hadoop cluster. Our appliance would spin up VMs on which to run these services, assigning IPs to these VMs within the given subnet, but outside the blacklist.</p>
-<p>Everything was fine and dandy, until a field rep told us that one of his customers was experiencing some really slow performance. We noticed that they were using a <code>/16</code> subnet. First off, tell me that a solid confidence and facility with numbers doesn't make understanding <a href="http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_blocks">CIDR blocks</a> a walk in the park. Anyways, after some debugging we traced the problem to some code that looked like this:</p>
+<p>Everything was fine and dandy, until a field rep told us that one of his customers was experiencing some really slow performance. We noticed that they were using a <code>/16</code> subnet. First off, tell me that a solid confidence and facility with numbers doesn't make understanding <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_blocks">CIDR blocks</a> a walk in the park. Anyways, after some debugging we traced the problem to some code that looked like this:</p>
 <div class='bogus-wrapper'>
 <notextile>
 <figure class='code'><figcaption>
@@ -198,7 +198,7 @@ Shadowbox.init();
 <p>As evidence for the claim that understanding math doesn't help much with understanding programming, Sarah cites her experience: &quot;I have found little connection between a person’s formal qualifications and the depth of their understanding.&quot;</p>
 <h4 id="stawman-argument">Stawman Argument</h4>
 <p>Formal qualifications and understanding math are <em>not</em> the same thing! She talks specifically about big O in this context. So here's a challenge: amongst all your colleagues, think about the ones who have limited formal education (e.g. early college dropout) but whom you admire for their skills and passion for solving hard and interesting problems. Now amongst those folks, find one who doesn't get big O notation or who doesn't care to think about runtime analysis. Can you even find one?</p>
-<p>I think the example above and the two examples in Part 1 all show how a mathematical approach can certainly help you better understand and tackle certain problems that come up, even in your day-to-day, non-mathy work. Here's yet another example: <a href="http://blog.gopivotal.com/cloud-foundry-pivotal/products/app-placement-in-cloud-foundry-diego-a-classical-optimization-problem">Using the framework of classical optimization theory to understand the problem of designing a PaaS to schedule resources for running user applications in a highly available manner</a>.</p>
+<p>I think the example above and the two examples in Part 1 all show how a mathematical approach can certainly help you better understand and tackle certain problems that come up, even in your day-to-day, non-mathy work. Here's yet another example: <a href="https://blog.gopivotal.com/cloud-foundry-pivotal/products/app-placement-in-cloud-foundry-diego-a-classical-optimization-problem">Using the framework of classical optimization theory to understand the problem of designing a PaaS to schedule resources for running user applications in a highly available manner</a>.</p>
 <h2 id="learning-math-to-improve-how-you-approach-programming-problems">Learning math to improve how you approach programming problems</h2>
 <p>You'll often hear that even if you don't use math as a programmer, math teaches you abstract thinking and problem solving, and you need that for programming. Sarah retorts: &quot;learning to program is more like learning a new language than it is like doing math problems.&quot;</p>
 <h4 id="another-strawman-argument">Another Strawman Argument</h4>
@@ -250,7 +250,7 @@ Shadowbox.init();
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/" data-via="" data-counturl="http://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="https://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/" data-via="" data-counturl="https://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/" >Tweet</a>
   
   
   
@@ -268,7 +268,7 @@ Shadowbox.init();
 
   <section>
     <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
   </section>
 
@@ -348,8 +348,8 @@ Shadowbox.init();
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/';
-        var disqus_url = 'http://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/';
+        var disqus_identifier = 'https://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/';
+        var disqus_url = 'https://legacy-blog.akgupta.ca/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-2/';
         var disqus_script = 'embed.js';
       
     (function () {

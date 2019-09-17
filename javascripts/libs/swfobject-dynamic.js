@@ -1,4 +1,4 @@
-/*!	SWFObject v2.2 <http://code.google.com/p/swfobject/>
+/*!	SWFObject v2.2 <https://code.google.com/p/swfobject/>
 	is released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
 */
 
@@ -218,7 +218,7 @@ var swfobject = function() {
 
 	return {
 		/* Public API
-			- Reference: http://code.google.com/p/swfobject/wiki/documentation
+			- Reference: https://code.google.com/p/swfobject/wiki/documentation
 		*/
 
 		embedSWF: function(swfUrlStr, replaceElemIdStr, widthStr, heightStr, swfVersionStr, flashvarsObj, parObj, attObj, callbackFn) {
