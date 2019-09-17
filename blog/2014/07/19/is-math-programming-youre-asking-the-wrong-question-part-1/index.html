@@ -208,7 +208,7 @@ Shadowbox.init();
 <p>How many outcomes are false negatives? There's two kinds. The kind where you only ever hit one of the instances, so <code>[1, 1, ...]</code>, <code>[2, 2, ...]</code>, and <code>[3, 3, ...]</code>. There's just 3 of those. The other kind is where you only hit two of the three instances. So you either only hit 1 and 2, or only 2 and 3, or only 1 and 3. By symmetry, you can see that the number of outcomes for each of those three cases is the same, so let's just count one case and multiply by 3. How many ways to only hit 1 and 2? This means that you hit instance 1 somewhere between 1 and <span class="math"><em>N</em> − 1</span> times, and instance 2 the rest. Breaking it down further, for some <span class="math"><em>k</em></span> between 1 and <span class="math"><em>N</em> − 1</span>, how many outcomes involve hitting 1 <span class="math"><em>k</em></span> times, and hitting instance 2 <span class="math"><em>N</em> − <em>k</em></span> times? It's easy to see that it's just <span class="math">${N \choose k}$</span>. So the inequality we want to solve is:</p>
 <p><br /><span class="math">$\frac{3 + 3\sum_{k=1}^{N-1}{N \choose k}}{3^N} \leq 0.001$</span><br /></p>
 <p>Now here's something neat. We're almost looking at <span class="math">$\sum_{k=0}^{N}{N \choose k}$</span>, which you might recognize is the sum of the <span class="math"><em>N</em><sup>th</sup></span> row in <a href="https://en.wikipedia.org/wiki/Pascal&#39;s_triangle">Pascal's Triangle</a>. And that sum reduces to <span class="math">2<sup><em>N</em></sup></span> because given a set of size <span class="math"><em>N</em></span>, the number of ways to choose a subset of size <span class="math">0</span>, plus the number of ways to choose a subset of size <span class="math">1</span>, ..., plus the number of ways to choose a subset of size <span class="math"><em>N</em></span>, is simply the total number of ways to choose a subset. And an equivalent way to choose a subset is to look at each element and make the binary choice &quot;yes, you're in the subset&quot; or &quot;no, you're out&quot;, and there's <span class="math">2<sup><em>N</em></sup></span> ways to do that. This kind of argument is called a <a href="https://en.wikipedia.org/wiki/Combinatorial_proof">combinatorial argument</a>, where you prove two things are equal by showing that they represent two ways to count the same thing.</p>
-<p><img src="/images/pascals-triangle.gif"></img><br /><em><sub><sup>Source: http://www.mathsisfun.com/images/pascals-triangle-4.gif</sup></sub></em></p>
+<p><img src="/images/pascals-triangle.gif"></img><br /><em><sub><sup>Source: https://www.mathsisfun.com/images/pascals-triangle-4.gif</sup></sub></em></p>
 <p>An alternative argument uses the <a href="https://en.wikipedia.org/wiki/Binomial_theorem">Binomial Theorem</a> and the observation that <span class="math">(1 + 1)<sup><em>N</em></sup> = 2<sup><em>N</em></sup></span>. At any rate, we get:</p>
 <p><br /><span class="math">$\frac{3 + 3\cdot(2^N - {N \choose 0} - {N \choose N})}{3^N} \leq 0.001$</span><br /> <br /><span class="math">$\frac{2^N - 1}{3^{N-1}} \leq 0.001$</span><br /> <br /><span class="math"><em>N</em> = 20</span><br /></p>
 <p>And that's indeed what we do. We <a href="https://github.com/cloudfoundry-incubator/inigo/blob/7ddcdbfbc259e79538a23deea73ded8eecfe5a00/helpers/route_helpers.go#L59-L86">poll 20 times</a>, and then <a href="https://github.com/cloudfoundry-incubator/inigo/blob/7ddcdbfbc259e79538a23deea73ded8eecfe5a00/lrp_consistency_test.go#L112-L126">assert that we see all 3 instances</a>. By the way, did you guess 20?</p>
@@ -351,7 +351,7 @@ Shadowbox.init();
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
@@ -367,7 +367,7 @@ Shadowbox.init();
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = 'https://platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>

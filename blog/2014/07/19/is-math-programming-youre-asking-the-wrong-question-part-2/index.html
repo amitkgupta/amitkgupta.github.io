@@ -106,7 +106,7 @@ Shadowbox.init();
 <h4 id="moving-the-goalposts">Moving the Goalposts</h4>
 <p>I can argue that a mathematical foundation can help give you a deep, valuable understanding of certain programming problems. No one can argue that you need math to build anything of substance. Especially if &quot;substance&quot; is correlated with VC funding. <del>Yes, you can build &quot;Yo!&quot; without a deep understanding of anything.</del> Worthwhile endeavours and opportunities for gainful employment abound, which don't require understanding much math, or any deep understanding of the programming problems at hand.</p>
 <p>She has a point when she says &quot;computer science is not programming&quot;. Yes. But understanding some math, and mathy computer science concepts, can certainly be valuable when it comes to reasoning about a programming problem, and communicating that reasoning with your collaborators.</p>
-<p>Here's an example from something I was working on recently. We were building an appliance for our enterprise clients, to streamline the process of deploying <a href="https://www.gopivotal.com/platform-as-a-service/cloud-foundry">Cloud Foundry</a> to their on-premise datacenters. Users would enter configuration, including an IP subnet in CIDR notation and a set of blacklisted IP ranges in a format like <code>10.10.0.0-10.10.0.15, 10.10.0.129-10.10.0.255</code>. They would then select and configure any number of distributed services to be deployed, such as the Cloud Foundry PaaS, an add-on MySQL DBaaS cluster, and let's say a <a href="http://www.gopivotal.com/big-data/pivotal-hd">Pivotal HD</a> Hadoop cluster. Our appliance would spin up VMs on which to run these services, assigning IPs to these VMs within the given subnet, but outside the blacklist.</p>
+<p>Here's an example from something I was working on recently. We were building an appliance for our enterprise clients, to streamline the process of deploying <a href="https://www.gopivotal.com/platform-as-a-service/cloud-foundry">Cloud Foundry</a> to their on-premise datacenters. Users would enter configuration, including an IP subnet in CIDR notation and a set of blacklisted IP ranges in a format like <code>10.10.0.0-10.10.0.15, 10.10.0.129-10.10.0.255</code>. They would then select and configure any number of distributed services to be deployed, such as the Cloud Foundry PaaS, an add-on MySQL DBaaS cluster, and let's say a Hadoop cluster. Our appliance would spin up VMs on which to run these services, assigning IPs to these VMs within the given subnet, but outside the blacklist.</p>
 <p>Everything was fine and dandy, until a field rep told us that one of his customers was experiencing some really slow performance. We noticed that they were using a <code>/16</code> subnet. First off, tell me that a solid confidence and facility with numbers doesn't make understanding <a href="https://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing#CIDR_blocks">CIDR blocks</a> a walk in the park. Anyways, after some debugging we traced the problem to some code that looked like this:</p>
 <div class='bogus-wrapper'>
 <notextile>
@@ -353,7 +353,7 @@ Shadowbox.init();
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = 'https://' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
@@ -369,7 +369,7 @@ Shadowbox.init();
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      twitterWidgets.src = 'https://platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
