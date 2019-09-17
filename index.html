@@ -103,7 +103,7 @@ Shadowbox.init();
   </header>
 
 
-  <div class="entry-content"><p>In <a href="/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/">Part 1</a> I started to address <a href="https://twitter.com/sarahmei">Sarah Mei</a>'s recent blog post about how <a href="http://www.sarahmei.com/blog/2014/07/15/programming-is-not-math/">programming is not math</a>. In this post, I'll continue my critique of her article and highlight the ways in which math can be valuable to a programmer.</p>
+  <div class="entry-content"><p>In <a href="/blog/2014/07/19/is-math-programming-youre-asking-the-wrong-question-part-1/">Part 1</a> I started to address <a href="https://twitter.com/sarahmei">Sarah Mei</a>'s recent blog post about how <a href="https://www.sarahmei.com/blog/2014/07/15/programming-is-not-math/">programming is not math</a>. In this post, I'll continue my critique of her article and highlight the ways in which math can be valuable to a programmer.</p>
 <h2 id="understanding-math-to-understand-programming-problems">Understanding math to understand programming problems</h2>
 <p>In her article, Sarah attacks the claim that &quot;without a mathematical foundation, you’ll have only a surface understanding of programming&quot; by first reducing it to an alleged &quot;common variation&quot; of the same sentiment: &quot;without a CS degree, you can’t build anything substantial.&quot; But wait, those aren't the same thing at all. </div>
   
@@ -144,7 +144,7 @@ Shadowbox.init();
   </header>
 
 
-  <div class="entry-content"><p>A couple days ago, my former colleague <a href="https://twitter.com/sarahmei">Sarah Mei</a> trolled nerds everywhere, claiming <a href="http://www.sarahmei.com/blog/2014/07/15/programming-is-not-math/">programming is not math</a>. In her post, she argues that the value proffered to a programmer by learning/knowing/doing math is greatly diminished compared to what widely held beliefs about math and programming would suggest. In particular, she claims that:</p>
+  <div class="entry-content"><p>A couple days ago, my former colleague <a href="https://twitter.com/sarahmei">Sarah Mei</a> trolled nerds everywhere, claiming <a href="https://www.sarahmei.com/blog/2014/07/15/programming-is-not-math/">programming is not math</a>. In her post, she argues that the value proffered to a programmer by learning/knowing/doing math is greatly diminished compared to what widely held beliefs about math and programming would suggest. In particular, she claims that:</p>
 <ol type="1">
 <li>Most developers don't require any applications of math in nearly all of the problems they need to solve.</li>
 <li>Understanding math-flavoured concepts from computer science, such as big O analysis, has little correlation with a solid understanding of the problems most developers need to solve.</li>
@@ -192,7 +192,7 @@ Shadowbox.init();
 
 
   <div class="entry-content"><p>There's been a recent string of blog posts featuring implementations of the <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">k-Nearest Neighbour algorithm</a> in several languages (for k = 1), and it's been cool to see how the solutions are expressed differently in different languages, as well as the vast differences in performance. The k-Nearest Neighbour algorithm is cool in itself, it's a dead simple technique for classifying (or labelling) a collection of observed data by searching the previously observed collections of data whose classifications/labels are already known, and finding the one which most nearly resembles our not-yet-classified collection (for some definition of &quot;nearly resembles&quot;). It's an example of a <a href="https://en.wikipedia.org/wiki/Machine_learning">machine learning</a> classification algorithm, one of those things that lives in the fun intersection of math and programming.</p>
-<p>We're gonna take a look at a concrete application of the k-NN algorithm, compare the performance of the implementations from those aforementioned blog posts with new implementations in <a href="http://golang.org">Golang</a> and <a href="http://www.haskell.org/">Haskell</a>, and take a look at an optimized version which takes a logical shortcut and also leverages Golang's built-in support for <a href="http://www.golang-book.com/10/index.htm">concurrency</a>.</p>
+<p>We're gonna take a look at a concrete application of the k-NN algorithm, compare the performance of the implementations from those aforementioned blog posts with new implementations in <a href="http://golang.org">Golang</a> and <a href="https://www.haskell.org/">Haskell</a>, and take a look at an optimized version which takes a logical shortcut and also leverages Golang's built-in support for <a href="https://www.golang-book.com/10/index.htm">concurrency</a>.</p>
 <p>All the code and datasets can be found on <a href="https://github.com/amitkgupta/nearest_neighbour">Github</a>. The Golang and Haskell code is also at the bottom of this post.</p>
 <p><strong>TL;DR</strong>: Golang wins, or, in honor of the World Cup: <strong><em>GOOOOOOOOOOLLLLLLLang!!!</em></strong></p>
 </div>
@@ -318,7 +318,7 @@ Shadowbox.init();
   </header>
 
 
-  <div class="entry-content"><p>My colleague <a href="http://pivotallabs.com/author/msierchio/">Mike Sierchio</a> wrote a <a href="http://pivotallabs.com/entropy-is-not-entropy/">cool post</a> on password strength, and the concept of entropy. As he points out, entropy isn't always entropy. That confusion is apparently not uncommon, as it's been asked about <a href="http://security.stackexchange.com/questions/21143/confused-about-password-entropy">on IT Security Stack Exchange</a> as well. So what's really going on?</p>
+  <div class="entry-content"><p>My colleague <a href="http://pivotallabs.com/author/msierchio/">Mike Sierchio</a> wrote a <a href="http://pivotallabs.com/entropy-is-not-entropy/">cool post</a> on password strength, and the concept of entropy. As he points out, entropy isn't always entropy. That confusion is apparently not uncommon, as it's been asked about <a href="https://security.stackexchange.com/questions/21143/confused-about-password-entropy">on IT Security Stack Exchange</a> as well. So what's really going on?</p>
 <p>Let's step back for a sec and fill in some context. What are we trying to do? We'd like some way to measure how hard it is to guess our passwords, a number that serves as a heuristic standard of password strength. But there are two fundamentally different things we might want to measure:</p>
 <ol type="1">
 <li><p>How hard would it be for someone to guess your password with essentially no knowledge of how you created your password?</p></li>
@@ -452,7 +452,7 @@ Shadowbox.init();
 
   <div class="entry-content"><p>I was out for drinks with <a href="https://twitter.com/starbuxman">Josh Long</a> and some other friends from work, when he found out I &quot;speak math.&quot; He had come across <a href="https://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
 <p><img src="http://i.stack.imgur.com/hZhjl.png" /><br /><br></p>
-<p>Before we figure out what it means, let's get an idea for why we care in the first place. <a href="http://www.codecommit.com/blog/scala/what-is-hindley-milner-and-why-is-it-cool">Daniel Spiewak's blog post</a> gives a really nice explanation of the purpose of the HM algorithm, in addition to an in-depth example of its application:</p>
+<p>Before we figure out what it means, let's get an idea for why we care in the first place. Daniel Spiewak's blog post (link broken) gives a really nice explanation of the purpose of the HM algorithm, in addition to an in-depth example of its application:</p>
 <blockquote>
 <p>Functionally speaking, Hindley-Milner (or “Damas-Milner”) is an algorithm for inferring value types based on use.  It literally formalizes the intuition that a type can be deduced by the functionality it supports.</p>
 </blockquote>

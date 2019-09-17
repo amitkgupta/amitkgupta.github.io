@@ -1,5 +1,5 @@
 /*!	SWFObject v2.2 <https://code.google.com/p/swfobject/>
-	is released under the MIT License <http://www.opensource.org/licenses/mit-license.php>
+	is released under the MIT License <https://www.opensource.org/licenses/mit-license.php>
 */
 
 var swfobject = function() {
