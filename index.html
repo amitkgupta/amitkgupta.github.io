@@ -17,7 +17,7 @@
   <meta property="og:description" content="In Part 1 I started to address Sarah Mei's recent blog post about how programming is not math. In this post, I'll continue my critique of her article &hellip;">
   
 
-  <!-- http://t.co/dKP3o1e -->
+  <!-- https://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -63,7 +63,7 @@ Shadowbox.init();
 
 <body   >
   <header role="banner"><hgroup>
-  <h1><a href="/">Amit's (old) blog</a> &gt;&gt; go to <a href="http://akgupta.ca">akgupta.ca</a></h1>
+  <h1><a href="/">Amit's (old) blog</a> &gt;&gt; go to <a href="https://akgupta.ca">akgupta.ca</a></h1>
   
     <h2>Math, Code, etc.</h2>
   
@@ -192,7 +192,7 @@ Shadowbox.init();
 
 
   <div class="entry-content"><p>There's been a recent string of blog posts featuring implementations of the <a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">k-Nearest Neighbour algorithm</a> in several languages (for k = 1), and it's been cool to see how the solutions are expressed differently in different languages, as well as the vast differences in performance. The k-Nearest Neighbour algorithm is cool in itself, it's a dead simple technique for classifying (or labelling) a collection of observed data by searching the previously observed collections of data whose classifications/labels are already known, and finding the one which most nearly resembles our not-yet-classified collection (for some definition of &quot;nearly resembles&quot;). It's an example of a <a href="https://en.wikipedia.org/wiki/Machine_learning">machine learning</a> classification algorithm, one of those things that lives in the fun intersection of math and programming.</p>
-<p>We're gonna take a look at a concrete application of the k-NN algorithm, compare the performance of the implementations from those aforementioned blog posts with new implementations in <a href="http://golang.org">Golang</a> and <a href="https://www.haskell.org/">Haskell</a>, and take a look at an optimized version which takes a logical shortcut and also leverages Golang's built-in support for <a href="https://www.golang-book.com/10/index.htm">concurrency</a>.</p>
+<p>We're gonna take a look at a concrete application of the k-NN algorithm, compare the performance of the implementations from those aforementioned blog posts with new implementations in <a href="https://golang.org">Golang</a> and <a href="https://www.haskell.org/">Haskell</a>, and take a look at an optimized version which takes a logical shortcut and also leverages Golang's built-in support for <a href="https://www.golang-book.com/10/index.htm">concurrency</a>.</p>
 <p>All the code and datasets can be found on <a href="https://github.com/amitkgupta/nearest_neighbour">Github</a>. The Golang and Haskell code is also at the bottom of this post.</p>
 <p><strong>TL;DR</strong>: Golang wins, or, in honor of the World Cup: <strong><em>GOOOOOOOOOOLLLLLLLang!!!</em></strong></p>
 </div>
@@ -318,7 +318,7 @@ Shadowbox.init();
   </header>
 
 
-  <div class="entry-content"><p>My colleague <a href="http://pivotallabs.com/author/msierchio/">Mike Sierchio</a> wrote a <a href="http://pivotallabs.com/entropy-is-not-entropy/">cool post</a> on password strength, and the concept of entropy. As he points out, entropy isn't always entropy. That confusion is apparently not uncommon, as it's been asked about <a href="https://security.stackexchange.com/questions/21143/confused-about-password-entropy">on IT Security Stack Exchange</a> as well. So what's really going on?</p>
+  <div class="entry-content"><p>My colleague <a href="https://content.pivotal.io/authors/michael-sierchio">Mike Sierchio</a> wrote a <a href="https://content.pivotal.io/blog/entropy-is-not-entropy">cool post</a> on password strength, and the concept of entropy. As he points out, entropy isn't always entropy. That confusion is apparently not uncommon, as it's been asked about <a href="https://security.stackexchange.com/questions/21143/confused-about-password-entropy">on IT Security Stack Exchange</a> as well. So what's really going on?</p>
 <p>Let's step back for a sec and fill in some context. What are we trying to do? We'd like some way to measure how hard it is to guess our passwords, a number that serves as a heuristic standard of password strength. But there are two fundamentally different things we might want to measure:</p>
 <ol type="1">
 <li><p>How hard would it be for someone to guess your password with essentially no knowledge of how you created your password?</p></li>
@@ -451,7 +451,7 @@ Shadowbox.init();
 
 
   <div class="entry-content"><p>I was out for drinks with <a href="https://twitter.com/starbuxman">Josh Long</a> and some other friends from work, when he found out I &quot;speak math.&quot; He had come across <a href="https://stackoverflow.com/questions/12532552/what-part-of-milner-hindley-do-you-not-understand">this StackOverflow question</a> and asked me what it meant:</p>
-<p><img src="http://i.stack.imgur.com/hZhjl.png" /><br /><br></p>
+<p><img src="https://i.stack.imgur.com/hZhjl.png" /><br /><br></p>
 <p>Before we figure out what it means, let's get an idea for why we care in the first place. Daniel Spiewak's blog post (link broken) gives a really nice explanation of the purpose of the HM algorithm, in addition to an in-depth example of its application:</p>
 <blockquote>
 <p>Functionally speaking, Hindley-Milner (or “Damas-Milner”) is an algorithm for inferring value types based on use.  It literally formalizes the intuition that a type can be deduced by the functionality it supports.</p>
