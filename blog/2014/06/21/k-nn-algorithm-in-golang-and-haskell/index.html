@@ -102,7 +102,7 @@ Shadowbox.init();
 <h2 id="the-problem">The problem</h2>
 <p>In this particular example, we've got 5000 pixelated (28x28) greyscale (0-255) &quot;drawings&quot; of the digits 0 through 9. Some of them might look like this:</p>
 <figure>
-<img src="https://onlinecourses.science.psu.edu/stat857/sites/onlinecourses.science.psu.edu.stat857/files/image_01.png" />
+<img src="https://online.stat.psu.edu/stat857/sites/onlinecourses.science.psu.edu.stat857/files/image_01/index.png" />
 </figure>
 <p><em><sub><sup>Source: https://onlinecourses.science.psu.edu/stat857/node/186</sup></sub></em></p>
 <p>These 5000 digit drawings constitute our <strong>training set</strong>. We're then given a bunch of new drawings where (let's pretend for a moment) we don't know what digits they're supposed to represent, but we know the greyscale values at each pixel. Given any such unclassified drawing, our goal is to make a reasonable guess as to what digit it's supposed to represent. The way this algorithm works is to find the drawing in the training set which most nearly resembles our unclassified drawing, then our reasonable guess is that the unclassified drawing in question represents the same digit as the nearest drawing in the training set. At this point, we can say that we've <strong>classified</strong> our previously unclassified drawing.</p>
